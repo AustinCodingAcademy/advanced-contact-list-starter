@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.App {
+  text-align: center;
+  width: 500px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.search-bar {
+  height: 35px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.contact-list {
+  padding: 0;
+}
+
+.contact {
+  list-style-type: none;
+  display: flex;
+  display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.contact:first-child {
+  border-top: 1px solid #ddd;
+}
+
+.contact h2 {
+  margin-top: 0;
+}
+
+.contact .image-cropper {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.contact img {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+
+.contact .contact-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 35px;
+}
