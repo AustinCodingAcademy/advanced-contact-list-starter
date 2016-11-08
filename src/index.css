@@ -1,3 +1,8 @@
+html, body, #root, .router {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -37,6 +42,11 @@ body {
   border-top: 1px solid #ddd;
 }
 
+.contact-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .contact h2 {
   margin-top: 0;
 }
@@ -63,4 +73,59 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding-left: 35px;
+}
+
+.profile {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 50px;
+}
+
+.profile .image-cropper {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.profile img {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+
+.new-contact-form {
+  margin-bottom: 10px;
+}
+
+.new-contact-form label {
+  width: 100%;
+  display: inline-block;
+  text-align: left;
+}
+
+.new-contact-form input {
+  margin: 5px 0;
+  height: 35px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.new-contact-form input[type="submit"] {
+  background: black;
+  color: white;
+}
+
+.new-contact-form input[type="submit"]:disabled {
+  background: gray;
+  color: white;
 }
