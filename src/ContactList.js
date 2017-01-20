@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Conact from './Contact';
 
 class ContactList extends Component {
-  contstructor() {
-    super();
+  contstructor(props) {
+    super(props);
 
     this.state = {
       contacts: [
