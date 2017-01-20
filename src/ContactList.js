@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Conact from './Contact';
+import Contact from './Contact.js';
 
 class ContactList extends Component {
-  contstructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       contacts: [
