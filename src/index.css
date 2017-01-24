@@ -38,6 +38,21 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
+.contact .remove {
+  align-self: center;
+  background-color: #ff1a1a;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 12px;
+}
+
+.contact .remove:hover {
+  background-color: #ff8080;
+}
+
 .contact:first-child {
   border-top: 1px solid #ddd;
 }
