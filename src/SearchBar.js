@@ -1,30 +1,20 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 
-class SearchBar extends Component {
-  constructor() {
-    super();
+SearchBar.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.function.isRequired
+};
 
-    this.state = {
-      value: ''
-    };
-  }
+const SearchBar = (props) => {
 
-  handleChange(event) {
-    this.setState({
-      value: event.target.value
-    });
-  }
-
-  render() {
-    return (
-      <input
-        className="search-bar"
-        type="text"
-        value={this.state.value}
-        onChange={ (event) => this.handeChange(event) }
-      />
-    );
-  }
-}
+  return (
+    <input
+      className="search-bar"
+      type="text"
+      value={props.value}
+      onChange={(event) => props.onChange(event)}
+    />
+  );
+};
 
 export default SearchBar;
