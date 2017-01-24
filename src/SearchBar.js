@@ -21,7 +21,7 @@ class SearchBar extends Component {
         className='search-bar'
         type="text"
         value={this.state.value}
-        onChange={event => this.handleChange(event)}
+        onChange={event => this.props.onChange(event)}
       />
     );
   }
