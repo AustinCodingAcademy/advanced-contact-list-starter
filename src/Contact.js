@@ -1,17 +1,19 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const Contact = (props) => {
+class Contact extends Component {
+  render() {
     return (
       <li className="contact">
         <div className="image-cropper">
-          <img src={this.props.avatar} alt="avatar" />
+          <img src={this.props.avatar} alt="avatar"/>
         </div>
         <div className="contact-info">
-          <h2>{props.name}</h2>
-          {props.occupation}
+          <h2>{this.props.name}</h2>
+          {this.props.occupation}
         </div>
       </li>
     );
+  }
 }
 
 export default Contact;

@@ -52,15 +52,16 @@ class App extends Component {
 
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
-    return this.state.contacts.filter( contact => {return contact.name.toLowerCase().indexOf(term) > 0;
+    return this.state.contacts.filter( contact => {
+      return contact.name.toLowerCase().indexOf(term) >= 0;
     });
   }
 
   render() {
     return (
       <div className="App">
-        <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)}/>
-        <ContactList contacts={this.state.contacts}/>
+        <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
+        <ContactList contacts={this.getFilteredContacts}/>
       </div>
     );
   }
