@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import RemoveContactButton from './RemoveContactButton.js';
 
 const Contact = (props) => {
   return (
@@ -10,6 +11,7 @@ const Contact = (props) => {
         <h2>{props.name}</h2>
         {props.occupation}
       </div>
+      <RemoveContactButton onRemove={() => props.onRemove(props._id)} />
     </li>
   );
 };
@@ -18,7 +20,8 @@ Contact.propTypes = {
   avatar: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   occupation: PropTypes.string.isRequired,
-  key: PropTypes.number.isRequired
+  _id: PropTypes.number.isRequired,
+  onRemove: PropTypes.func.isRequired
 };
 
 

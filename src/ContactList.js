@@ -6,8 +6,10 @@ const ContactList = (props) => {
     <ul className="contact-list">
       {props.contacts.map(contact => {
         return (
-          <Contact {...contact}
+          <Contact
+            {...contact}
             key={contact._id}
+            onRemove={(index) => props.onRemove(index)}
             // name={contact.name}
             // avatar={contact.avatar}
             // occupation={contact.occupation}

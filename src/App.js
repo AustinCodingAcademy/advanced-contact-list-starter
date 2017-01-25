@@ -46,17 +46,22 @@ class App extends Component {
     };
   }
 
+  handleRemoveContact(index) {
+    this.setState({
+      contacts: this.state.contacts.filter(contact => contact._id !== index)
+    });
+  }
+
   handleSearchBarChange(event) {
     this.setState({
-      searchText: event.target.value,
-      contacts: this.state.contacts
+      searchText: event.target.value
     });
   }
 
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
 
-    return this.state.contacts.filter( contact => {
+    return this.state.contacts.filter(contact => {
       return contact.name.toLowerCase().indexOf(term) >= 0;
     });
   }
@@ -68,7 +73,10 @@ class App extends Component {
           value={this.state.searchText}
           onChange={this.handleSearchBarChange.bind(this)}
         />
-        <ContactList contacts={this.getFilteredContacts()} />
+        <ContactList
+          contacts={this.getFilteredContacts()}
+          onRemove={this.handleRemoveContact.bind(this)}
+        />
       </div>
     );
   }
