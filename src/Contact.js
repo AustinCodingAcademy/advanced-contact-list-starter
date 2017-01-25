@@ -17,7 +17,8 @@ const Contact = (props) => {
 Contact.propTypes = {
   avatar: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  occupation: PropTypes.string.isRequired
+  occupation: PropTypes.string.isRequired,
+  key: PropTypes.number.isRequired
 };
 
 
