@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ContactList from './ContactList.js';
+import SearchBar from './SearchBar.js';
 
 class App extends Component {
   render() {
@@ -7,6 +9,8 @@ class App extends Component {
         <h1>
           Contact List!
         </h1>
+        <SearchBar />
+        <ContactList />
       </div>
     );
   }
