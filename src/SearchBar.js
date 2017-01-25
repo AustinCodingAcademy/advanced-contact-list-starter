@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 const SearchBar = (props) => {
   return (
@@ -6,9 +6,14 @@ const SearchBar = (props) => {
       className="search-bar"
       type="text"
       value={props.value}
-      onChange={ (event) => props.onChange(event) }
+      onChange={(event) => props.onChange(event)}
     />
   );
-}
+};
+
+SearchBar.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+};
 
 export default SearchBar;

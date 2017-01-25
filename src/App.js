@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ContactList from './ContactList.js';
-import SearchBar from './SearchBar.js'
+import SearchBar from './SearchBar.js';
+
+/* eslint max-len: [1, {"ignoreUrls": true}] */
 
 class App extends Component {
   constructor() {
@@ -46,8 +48,8 @@ class App extends Component {
 
   handleSearchBarChange(event) {
     this.setState({
-      contacts: this.state.contacts,
-      searchText: event.target.value
+      searchText: event.target.value,
+      contacts: this.state.contacts
     });
   }
 
@@ -56,13 +58,16 @@ class App extends Component {
 
     return this.state.contacts.filter( contact => {
       return contact.name.toLowerCase().indexOf(term) >= 0;
-    })
+    });
   }
 
   render() {
     return (
       <div className="App">
-        <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
+        <SearchBar
+          value={this.state.searchText}
+          onChange={this.handleSearchBarChange.bind(this)}
+        />
         <ContactList contacts={this.getFilteredContacts()} />
       </div>
     );

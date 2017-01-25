@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 const Contact = (props) => {
   return (
@@ -12,7 +12,13 @@ const Contact = (props) => {
       </div>
     </li>
   );
-}
+};
+
+Contact.propTypes = {
+  avatar: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  occupation: PropTypes.string.isRequired
+};
 
 
 export default Contact;
