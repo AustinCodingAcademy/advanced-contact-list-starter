@@ -13,6 +13,9 @@ class SearchBar extends Component {
     this.setState({
       value: event.target.value
     });
+    if(this.props.onChange) {
+      this.props.onChange(event.target.value);
+    }
   }
 
   render() {
@@ -21,10 +24,14 @@ class SearchBar extends Component {
         className="search-bar"
         type="text"
         value={this.state.value}
-        onChange={ (event) => this.handleChange(event) }
+        onChange={ (event) => this.onChange(event) }
       />
     );
   }
+}
+searchBar.propTypes ={
+  //
+  onChange={event => this.handleChange(event)}
 }
 
 export default SearchBar;
