@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const SearchBar = (props) => {
+const SearchBar = props => {
   return (
     <input
       className="search-bar"

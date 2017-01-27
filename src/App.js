@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import ContactList from './ContactList.js';
 import SearchBar from './SearchBar.js';
+import SelectedContactsList from './SelectedContactsList.js';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       searchText: '',
@@ -42,8 +42,31 @@ class App extends Component {
           occupation: 'FBI Agent',
           avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg'
         }
-      ]
+      ],
+      selectedContacts: []
     };
+  }
+
+  handleSelectContact(index) {
+    const clickedContact = this.state.contacts.filter(
+      contact => contact._id === index
+    );
+    this.setState({
+      contacts: this.state.contacts.filter(contact => contact._id !== index),
+      selectedContacts: this.state.selectedContacts.concat(clickedContact)
+    });
+  }
+
+  handleDeselectContact(index) {
+    const clickedContact = this.state.selectedContacts.filter(
+      contact => contact._id === index
+    );
+    this.setState({
+      contacts: this.state.contacts.concat(clickedContact),
+      selectedContacts: this.state.selectedContacts.filter(
+        contact => contact._id !== index
+      )
+    });
   }
 
   handleRemoveContact(index) {
@@ -69,22 +92,28 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <h1>
+          Searchable Contacts List
+        </h1>
         <SearchBar
           value={this.state.searchText}
           onChange={this.handleSearchBarChange.bind(this)}
         />
         <ContactList
           contacts={this.getFilteredContacts()}
-          onRemove={this.handleRemoveContact.bind(this)}
+          onClickRemove={this.handleRemoveContact.bind(this)}
+          onClickSelect={this.handleSelectContact.bind(this)}
+        />
+        <h1>
+          Selected Contacts
+        </h1>
+        <SelectedContactsList
+          selectedContacts={this.state.selectedContacts}
+          onClickDeselect={this.handleDeselectContact.bind(this)}
         />
       </div>
     );
   }
 }
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
 
 export default App;

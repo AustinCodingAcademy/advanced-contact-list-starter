@@ -1,15 +1,15 @@
 import React, {PropTypes} from 'react';
 
-const RemoveContactButton = (props) => {
+const RemoveContactButton = props => {
   return (
-    <button className="remove-contact" type="button" onClick={() => props.onRemove()}>
+    <button className="remove-contact" type="button" onClick={() => props.onClickRemove()}>
       Remove
     </button>
   );
 };
 
 RemoveContactButton.propTypes = {
-  onRemove: PropTypes.func.isRequired
+  onClickRemove: PropTypes.func.isRequired
 };
 
 export default RemoveContactButton;
