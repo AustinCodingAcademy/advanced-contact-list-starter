@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Contact from './Contact.js';
 
-class ContactList extends Component {
-  render() {
+const ContactList = props => {
     return (
       <ul className="contact-list">
-        {this.props.contacts.map(contact => {
+        {props.contacts.map(contact => {
           return (
             <Contact
               key={contact._id}
@@ -17,7 +16,6 @@ class ContactList extends Component {
         })}
       </ul>
     );
-  }
 }
 
 export default ContactList;
