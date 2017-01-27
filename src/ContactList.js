@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Contact from './Contact';
 
 class ContactList extends Component {
   constructor() {
@@ -43,7 +44,16 @@ class ContactList extends Component {
   render() {
     return (
       <ul className="contact-list">
-        {this.state.contacts.map(contact => <li key={contact._id}>{contact.name}</li>)}
+        {this.state.contacts.map(contact => {
+          return (
+            <Contact
+              key={contact._id}
+              name={contact.name}
+              avatar={contact.avatar}
+              occupation={contact.occupation}
+            />
+          );
+        })}
       </ul>
     );
   }
