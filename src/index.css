@@ -38,23 +38,40 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
-.contact .remove {
+.button {
   align-self: center;
-  background-color: #ff1a1a;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
   height: 35px;
   line-height: 35px;
+  margin-right: 15px;
   padding: 0 12px;
 }
 
-.contact .remove:hover {
-  background-color: #ff8080;
+.button:hover {
+  opacity: 0.7;
+}
+
+.reset {
+  background-color: #ffc61a;
+  margin: 10px auto;
+}
+
+.remove {
+  background-color: #ff1a1a;
+}
+
+.unselect {
+  background-color: #0080ff;
 }
 
 .contact:first-child {
   border-top: 1px solid #ddd;
+}
+
+.contact:hover {
+  background-color: aliceblue;
 }
 
 .contact-link {
@@ -88,6 +105,10 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding-left: 35px;
+}
+
+.contact .contact-info .highlight {
+  background-color: yellow;
 }
 
 .profile {
@@ -143,4 +164,39 @@ body {
 .new-contact-form input[type="submit"]:disabled {
   background: gray;
   color: white;
+}
+
+@media all and (min-width: 1200px){
+  .App {
+    min-width: 500px;
+    width: 60vw;
+    margin: 0;
+    padding-left: 3vw;
+  }
+
+  .selected-contact {
+    padding-top: 50px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 35vw;
+  }
+
+  .selected-contact .contact {
+    padding: 5px 0;
+  }
+
+  .selected-contact h1 {
+    margin: 0;
+  }
+
+  .selected-contact .contact .image-cropper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .selected-contact .contact-info h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
 }

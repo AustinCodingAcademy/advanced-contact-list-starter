@@ -1,9 +1,6 @@
 import React, { PropTypes } from 'react';
 
-SearchBar.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.function.isRequired
-};
+
 
 const SearchBar = (props) => {
 
@@ -15,6 +12,11 @@ const SearchBar = (props) => {
       onChange={(event) => props.onChange(event)}
     />
   );
+};
+
+SearchBar.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default SearchBar;
