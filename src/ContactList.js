@@ -25,7 +25,7 @@ const ContactList = (props) => {
             key={contact._id}
             searchValue={props.searchValue}
             onRemove={(e, id) => props.onRemove(e, id)}
-            onSelect={id => props.onSelect(id)}
+            onSelect={props.onSelect}
           />
         );
 
