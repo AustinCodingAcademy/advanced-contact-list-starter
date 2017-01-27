@@ -2,20 +2,6 @@ import React, { Component } from 'react';
 import ContactList from './ContactList.js';
 
 class SearchBar extends Component {
-  // constructor() {
-  //   super();
-  //
-  //   this.state = {
-  //     value: ''
-  //   };
-  // }
-
-  // handleChange(event) {
-  //   this.setState({
-  //     value: event.target.value
-  //   });
-  // }
-
   render() {
     return (
       <input
