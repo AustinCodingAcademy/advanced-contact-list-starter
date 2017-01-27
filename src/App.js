@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ContactList from './ContactList.js';
 import SearchBar from './SearchBar.js';
 import SelectedContactsList from './SelectedContactsList.js';
+import ResetButton from './ResetButton.js';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -9,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+
+    this._initialState = {
       searchText: '',
       contacts: [
         {
@@ -45,6 +47,12 @@ class App extends Component {
       ],
       selectedContacts: []
     };
+
+    this.state = this._initialState;
+  }
+
+  handleReset() {
+    this.setState(this._initialState);
   }
 
   handleSelectContact(index) {
@@ -110,6 +118,9 @@ class App extends Component {
         <SelectedContactsList
           selectedContacts={this.state.selectedContacts}
           onClickDeselect={this.handleDeselectContact.bind(this)}
+        />
+        <ResetButton
+          onClickReset={this.handleReset.bind(this)}
         />
       </div>
     );
