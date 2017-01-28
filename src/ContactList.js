@@ -37,7 +37,8 @@ const ContactList = (props) => {
 ContactList.propTypes = {
   searchValue: PropTypes.string,
   selectable: PropTypes.bool,
-  contacts: PropTypes.array.isRequired
+  contacts: PropTypes.array.isRequired,
+  onSelect: PropTypes.func
 };
 
 export default ContactList;

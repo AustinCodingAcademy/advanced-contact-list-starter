@@ -1,19 +1,9 @@
 import React, { PropTypes } from 'react';
+import ContactName from './ContactName';
 
 
 
 const Contact = props => {
-  const name = props.name;
-  let nameStart;
-  let nameMiddle;
-  let nameEnd;
-  if (props.searchValue.length > 0) {
-    const term = props.searchValue.toLowerCase();
-    const valueIndex = name.toLowerCase().indexOf(term);
-    nameStart = name.slice(0, valueIndex);
-    nameMiddle = name.slice(valueIndex, valueIndex + term.length);
-    nameEnd = name.slice(valueIndex + term.length);
-  }
 
   return (
     <li className="contact" onClick={() => props.onSelect(props._id)}>
@@ -21,16 +11,11 @@ const Contact = props => {
         <img src={props.avatar} alt="avatar" />
       </div>
       <div className="contact-info">
-        <h2>
-          {/*
-            nameMiddle is the one that gets highlighted, so check for truthiness there.
-            If nameMiddle is truthy we put spans around it. Otherwise spans go at the end
-            of the name
-          */}
-          {nameMiddle ? nameStart : name}
-          <span className="highlight">{nameMiddle ? nameMiddle : null}</span>
-          {nameMiddle ? nameEnd : null}
-        </h2>
+        <ContactName
+          name={props.name}
+          searchValue={props.searchValue}
+          id={props._id}
+        />
         {props.occupation}
       </div>
       <div className="button remove" onClick={e => props.onRemove(e, props._id)}>
