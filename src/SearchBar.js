@@ -6,7 +6,7 @@ const SearchBar = props => {
       className="search-bar"
       type="text"
       value={props.value}
-      onChange={(event) => props.onChange(event)}
+      onChange={event => props.onChange(event)}
     />
   );
 };

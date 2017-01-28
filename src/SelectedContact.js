@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 const SelectedContact = props => {
   return (
-    <li className="contact">
+    <li className="contact selected-contact">
       <div className="image-cropper">
         <img src={props.avatar} alt="avatar" />
       </div>

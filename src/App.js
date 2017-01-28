@@ -49,6 +49,7 @@ class App extends Component {
     };
 
     this.state = this._initialState;
+
   }
 
   handleReset() {
@@ -59,16 +60,26 @@ class App extends Component {
     const clickedContact = this.state.contacts.filter(
       contact => contact._id === index
     );
+
     this.setState({
       contacts: this.state.contacts.filter(contact => contact._id !== index),
       selectedContacts: this.state.selectedContacts.concat(clickedContact)
     });
   }
 
+  checkForSelectedContact() {
+    if (this.state.selectedContacts.length === 0) {
+      return (
+        <p>No contacts selected, I am empty!</p>
+      );
+    }
+  }
+
   handleDeselectContact(index) {
     const clickedContact = this.state.selectedContacts.filter(
       contact => contact._id === index
     );
+
     this.setState({
       contacts: this.state.contacts.concat(clickedContact),
       selectedContacts: this.state.selectedContacts.filter(
@@ -100,6 +111,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <ResetButton
+          onClickReset={this.handleReset.bind(this)}
+        />
         <h1>
           Searchable Contacts List
         </h1>
@@ -118,9 +132,7 @@ class App extends Component {
         <SelectedContactsList
           selectedContacts={this.state.selectedContacts}
           onClickDeselect={this.handleDeselectContact.bind(this)}
-        />
-        <ResetButton
-          onClickReset={this.handleReset.bind(this)}
+          checkForSelectedContact={this.checkForSelectedContact()}
         />
       </div>
     );

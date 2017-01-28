@@ -4,6 +4,7 @@ import SelectedContact from './SelectedContact.js';
 const SelectedContactsList = props => {
   return (
     <ul className="selected-contacts-list">
+      {props.checkForSelectedContact}
       {props.selectedContacts.map(contact => {
         return (
           <SelectedContact
@@ -18,7 +19,8 @@ const SelectedContactsList = props => {
 };
 
 SelectedContactsList.propTypes = {
-  selectedContacts: PropTypes.array.isRequired
+  selectedContacts: PropTypes.array.isRequired,
+  checkForSelectedContact: PropTypes.func.isRequired
 };
 
 export default SelectedContactsList;
