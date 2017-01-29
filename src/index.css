@@ -11,19 +11,23 @@ body {
 
 .App {
   text-align: center;
-  width: 500px;
+  width: 1000px;
   margin: 0 auto;
   padding-top: 50px;
 }
 
 .search-bar {
   height: 35px;
-  width: 100%;
+  width: 50%;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 18px;
   padding: 0 10px;
   box-sizing: border-box;
+}
+
+.contact-container {
+  float: left;
 }
 
 .contact-list {
@@ -56,7 +60,7 @@ body {
   height: 100px;
   position: relative;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 5%;
 }
 
 .contact img {

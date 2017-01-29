@@ -7,8 +7,11 @@ const Contact = props => {
           <img src={props.avatar} alt="avatar"/>
         </div>
         <div className="contact-info">
-          <h2>{props.name}</h2>
+          <h2>{props.number} {props.name}</h2>          
           {props.occupation}
+        </div>
+        <div className="add-start">
+          Start
         </div>
       </li>
     );

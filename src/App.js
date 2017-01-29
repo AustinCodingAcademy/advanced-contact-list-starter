@@ -10,34 +10,94 @@ class App extends Component {
       searchText: '',
       contacts: [
         {
-          _id: 1,
-          name: 'Dale Cooper',
-          occupation: 'FBI Agent',
-          avatar: 'https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg'
+          _id: 12,
+          name: 'LaMarcus Aldridge',
+          occupation: 'Forward',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/200746.png'
         },
         {
-          _id: 2,
-          name: 'Spike Spiegel',
-          occupation: 'Bounty Hunter',
-          avatar: 'http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337'
+          _id: 1,
+          name: 'Kyle Anderson',
+          occupation: 'Guard-Forward',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203937.png'
+        },
+        {
+          _id: 30,
+          name: 'Joel Anthony',
+          occupation: 'Center',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201202.png'
+        },
+        {
+          _id: 42,
+          name: 'Davis Bertans',
+          occupation: 'Center',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202722.png'
         },
         {
           _id: 3,
-          name: 'Wirt',
-          occupation: 'adventurer',
-          avatar: 'http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg'
+          name: 'Dewayne Dedmon',
+          occupation: 'Center',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203473.png'
         },
         {
-          _id: 4,
-          name: 'Michael Myers',
-          occupation: 'Loving little brother',
-          avatar: 'http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746'
+          _id: 11,
+          name: 'Bryn Forbes',
+          occupation: 'Guard',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1627854.png'
+        },
+        {
+          _id: 16,
+          name: 'Paul Gasol',
+          occupation: 'Center',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2200.png'
+        },
+        {
+          _id: 20,
+          name: 'Manu Ginobili',
+          occupation: 'Guard',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1938.png'
+        },
+        {
+          _id: 14,
+          name: 'Danny Green',
+          occupation: 'Guard',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201980.png'
+        },
+        {
+          _id: 10,
+          name: 'David Lee',
+          occupation: 'Forward-Center',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/101135.png'
+        },
+        {
+          _id: 2,
+          name: 'Kawhi Leonard',
+          occupation: 'Forward',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202695.png'
+        },
+        {
+          _id: 8,
+          name: 'Patty Mills',
+          occupation: 'Guard',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201988.png'
         },
         {
           _id: 5,
-          name: 'Dana Scully',
-          occupation: 'FBI Agent',
-          avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg'
+          name: 'Dejounte Murray',
+          occupation: 'Guard',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1627749.png'
+        },
+        {
+          _id: 9,
+          name: 'Tony Parker',
+          occupation: 'Guard',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2225.png'
+        },
+        {
+          _id: 17,
+          name: 'Jonathan Simmons',
+          occupation: 'Guard-Forward',
+          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203613.png'
         }
       ]
     };
@@ -61,7 +121,8 @@ class App extends Component {
     return (
       <div className="App">
         <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
-        <ContactList contacts={this.getFilteredContacts()} />
+        <ContactList contacts={this.getFilteredContacts()} listName='Spurs Roster' />
+        <ContactList contacts={this.state.contacts} listName='Starting Lineup'/>
       </div>
     );
   }
