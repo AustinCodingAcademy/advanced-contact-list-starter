@@ -133,3 +133,11 @@ body {
   background: gray;
   color: white;
 }
+
+.added-item {
+  height:50px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 18px;
+}

@@ -10,7 +10,7 @@ class ContactList extends Component {
   }
   render() {
     return (
-      <div>
+      <div onClick={() => this.props.onChange(this.state.AddedContacts)}>
         <ul className="contact-list">
           {this.props.contacts.map(contact => {
             return (
@@ -19,6 +19,7 @@ class ContactList extends Component {
                 name={contact.name}
                 avatar={contact.avatar}
                 occupation={contact.occupation}
+                active={contact.active}
                 onChange={this.AddContact.bind(this)}
               />
             );
@@ -29,7 +30,9 @@ class ContactList extends Component {
           <div>
             {this.state.AddedContacts.map(name => {
               return (
-                <div key={name}>{name}</div>
+                <div className="added-item" key={name}>
+                  <p>{name}</p>
+                </div>
               );
             })}
           </div>
@@ -57,4 +60,5 @@ export default ContactList;
 
 ContactList.proptypes = {
   contacts: PropTypes.object,
+  onChange: PropTypes.func
 };
