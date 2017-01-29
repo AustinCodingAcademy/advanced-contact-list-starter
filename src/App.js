@@ -38,7 +38,8 @@ class App extends Component {
           occupation: 'FBI Agent',
           avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg'
         }
-      ]
+      ],
+
     };
   }
 
