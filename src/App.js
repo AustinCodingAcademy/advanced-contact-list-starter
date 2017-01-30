@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ContactList from './ContactList.js';
 import SearchBar from './SearchBar.js';
 import SelectedContactsList from './SelectedContactsList.js';
@@ -9,7 +9,6 @@ import ResetButton from './ResetButton.js';
 class App extends Component {
   constructor(props) {
     super(props);
-
 
     this._initialState = {
       searchText: '',
@@ -125,6 +124,7 @@ class App extends Component {
           contacts={this.getFilteredContacts()}
           onClickRemove={this.handleRemoveContact.bind(this)}
           onClickSelect={this.handleSelectContact.bind(this)}
+          searchText={this.state.searchText}
         />
         <h1>
           Selected Contacts

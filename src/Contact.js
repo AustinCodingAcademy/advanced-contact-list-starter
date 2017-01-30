@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import RemoveContactButton from './RemoveContactButton.js';
+import ContactName from './ContactName.js';
 
 const Contact = props => {
   return (
@@ -8,7 +9,12 @@ const Contact = props => {
         <img src={props.avatar} alt="avatar" />
       </div>
       <div className="contact-info">
-        <h2 onClick={() => props.onClickSelect(props._id)}>{props.name}</h2>
+        <ContactName
+          name={props.name}
+          _id={props._id}
+          onClickSelect={index => props.onClickSelect(index)}
+          searchText={props.searchText}
+        />
         {props.occupation}
       </div>
       <RemoveContactButton onClickRemove={() => props.onClickRemove(props._id)} />
@@ -21,7 +27,9 @@ Contact.propTypes = {
   name: PropTypes.string.isRequired,
   occupation: PropTypes.string.isRequired,
   _id: PropTypes.number.isRequired,
-  onClickRemove: PropTypes.func.isRequired
+  onClickRemove: PropTypes.func.isRequired,
+  onClickSelect: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired
 };
 
 

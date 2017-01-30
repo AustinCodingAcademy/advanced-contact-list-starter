@@ -20,7 +20,7 @@ const SelectedContactsList = props => {
 
 SelectedContactsList.propTypes = {
   selectedContacts: PropTypes.array.isRequired,
-  checkForSelectedContact: PropTypes.func.isRequired
+  checkForSelectedContact: PropTypes.object
 };
 
 export default SelectedContactsList;

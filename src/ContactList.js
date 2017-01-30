@@ -11,6 +11,7 @@ const ContactList = props => {
             key={contact._id}
             onClickRemove={index => props.onClickRemove(index)}
             onClickSelect={index => props.onClickSelect(index)}
+            searchText={props.searchText}
             // name={contact.name}
             // avatar={contact.avatar}
             // occupation={contact.occupation}
@@ -22,7 +23,10 @@ const ContactList = props => {
 };
 
 ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired
+  contacts: PropTypes.array.isRequired,
+  onClickRemove: PropTypes.func.isRequired,
+  onClickSelect: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired
 };
 
 export default ContactList;
