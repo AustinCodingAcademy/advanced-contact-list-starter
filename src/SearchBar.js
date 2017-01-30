@@ -1,32 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
-class SearchBar extends Component {
-  constructor(props) {
-    super(props);
+const SearchBar = props => {
 
-    this.state = {
-      value: ''
-    };
-  }
 
-  handleChange(event) {
-    this.setState({
-      value: event.target.value
-    });
-  }
+  //   this.state = {
+  //     value: ''
+  //   };
+  // }
+  //
+  // handleChange(event) {
+  //   this.setState({
+  //     value: event.target.value
+  //   });
+  //
+  //   if (this.props.onChange) {
+  //     this.props.onChange(event.target.value);
+  //   }
+  // }
 
-  render() {
-    return (
-      <input
-        className='search-bar'
-        type="text"
-        value={this.state.value}
-        onChange={event => this.handleChange(event)}
+
+  return (
+    <input
+      className="search-bar"
+      type="text"
+      value={props.value}
+      onChange={event => props.onChange(event)}
       />
-    );
-  }
-}
+  );
+};
+
+
+// SearchBar.propTypes = {
+//   onChange: PropTypes.func.isRequired
+// };
 
 export default SearchBar;
