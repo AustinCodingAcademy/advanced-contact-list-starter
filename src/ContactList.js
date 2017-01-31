@@ -1,7 +1,7 @@
+/* eslint max-len: ["error", 1000]*/
+
 import React, {Component} from 'react';
 import Contact from './Contact';
-
-/* eslint max-len: ["error", 1000]*/
 
 export default class ContactList extends Component {
   constructor() {

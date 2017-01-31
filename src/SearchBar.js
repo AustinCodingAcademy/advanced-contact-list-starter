@@ -1,3 +1,5 @@
+/* eslint max-len: ["error", 1000]*/
+
 import React, { Component } from 'react';
 
 export default class SearchBar extends Component {
