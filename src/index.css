@@ -10,10 +10,11 @@ body {
 }
 
 .App {
+  box-sizing: border-box;
   text-align: center;
   width: 500px;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 15px;
 }
 
 .search-bar {
@@ -30,7 +31,7 @@ body {
   padding: 0;
 }
 
-.contact {
+.contact, .action {
   list-style-type: none;
   display: flex;
   display: flex;
@@ -58,8 +59,13 @@ body {
   margin: 10px auto;
 }
 
-.remove {
+.remove, .clear-actions, .ex-button {
   background-color: #ff1a1a;
+}
+
+.clear-actions {
+  margin: auto;
+  width: 90%;
 }
 
 .unselect {
@@ -109,6 +115,21 @@ body {
 
 .contact .contact-info .highlight {
   background-color: yellow;
+}
+
+.ex-button {
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  line-height: 15px;
+  position: absolute;
+  right: 0px;
+  top: 9px;
 }
 
 .profile {
@@ -166,24 +187,52 @@ body {
   color: white;
 }
 
+/*|*******************|*/
+/*| ON LARGER SCREENS |*/
+/*|*******************|*/
+
 @media all and (min-width: 1200px){
   .App {
+    border: 5px solid #cce7ff;
+    overflow: hidden;
+    overflow-y: scroll;
     min-width: 500px;
-    width: 60vw;
+    width: 65vw;
+    height: 100vh;
     margin: 0;
-    padding-left: 3vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
   }
 
-  .selected-contact {
-    padding-top: 50px;
+  .side-bar {
+    box-sizing: border-box;
+    border: 5px solid #cce7ff;
+    border-left: none;
+    height: 50vh;
+    overflow: hidden;
     position: fixed;
-    top: 0;
     right: 0;
     width: 35vw;
   }
 
+  .side-bar h3 {
+    margin-top: 10px;
+  }
+
+  .side-bar-scroll {
+    overflow-y: scroll;
+    position: absolute;
+    bottom: 0;
+    top: 35px;
+    width: 100%;
+  }
+
+  .selected-contact {
+    top: 0;
+  }
+
   .selected-contact .contact {
-    padding: 5px 0;
+    padding: 5px 0 5px 5px;
   }
 
   .selected-contact h1 {
@@ -199,4 +248,41 @@ body {
     font-size: 1.2em;
     margin-bottom: 10px;
   }
+
+  .action-history {
+    bottom: 0;
+    border-top: none;
+  }
+
+  .action-history .side-bar-scroll {
+    bottom: 35px;
+  }
+
+  .action {
+    position: relative;
+    padding: 7px 0;
+  }
+
+  .opaque-container {
+    background-color: #fff;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /* Stolen from CSS-Tricks */
+  /* https://css-tricks.com/custom-scrollbars-in-webkit/ */
+
+  ::-webkit-scrollbar {
+      width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #99cfff;
+  }
+
 }

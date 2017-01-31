@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar.js';
 import SelectedContactList from './SelectedContactList';
 import ResetButton from './ResetButton';
+import ActionHistory from './ActionHistory';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -12,66 +14,27 @@ class App extends Component {
 
     this.state = {
       searchText: '',
-      contacts: [
-        {
-          _id: 9,
-          name: 'Jane Elliott',
-          occupation: 'Educator',
-          avatar: 'http://images.smh.com.au/2010/06/28/1651760/jane-elliott-420x0.jpg'
-        },
-        {
-          _id: 1,
-          name: 'Dale Cooper',
-          occupation: 'FBI Agent',
-          avatar: 'https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg'
-        },
-        {
-          _id: 8,
-          name: 'Sylvia Rivera',
-          occupation: 'Y\'all better quiet down!',
-          avatar: 'http://lgbtweekly.com/wp-content/uploads/2014/04/wpid-145_4205_5852.jpg'
-        },
-        {
-          _id: 2,
-          name: 'Spike Spiegel',
-          occupation: 'Bounty Hunter',
-          avatar: 'http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337'
-        },
-        {
-          _id: 6,
-          name: 'James Baldwin',
-          occupation: 'Novelist, social critic',
-          avatar: 'https://pbs.twimg.com/profile_images/732030948712300548/vk5RU7x2.jpg'
-        },
-        {
-          _id: 3,
-          name: 'Wirt',
-          occupation: 'Adventurer',
-          avatar: 'http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg'
-        },
-        {
-          _id: 7,
-          name: 'Linda Martin Alcoff',
-          occupation: 'Philosopher, author',
-          avatar: 'http://static.wixstatic.com/media/09416d_81e7b64789714aaeadc8742b597dff72.png_srz_474_474_85_22_0.50_1.20_0.00_png_srz'
-        },
-        {
-          _id: 4,
-          name: 'Michael Myers',
-          occupation: 'Loving little brother',
-          avatar: 'http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746'
-        },
-        {
-          _id: 5,
-          name: 'Dana Scully',
-          occupation: 'FBI Agent',
-          avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg'
-        }
-
-      ],
+      contacts: [],
       selectedContacts: [],
+      currentActionId: 2000,
+      actionHistory: [],
+      originalState: {}
     };
-    this.originalState = JSON.parse(JSON.stringify(this.state));
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:4000/contacts')
+      .then(response => {
+        this.setState({
+          contacts: response.data,
+          originalState: {
+            searchText: '',
+            contacts: response.data,
+            selectedContacts: []
+          }
+        });
+      })
+      .catch(err => console.log(`Error! ${err}`));
   }
 
   handleSearchBarChange(event) {
@@ -83,20 +46,83 @@ class App extends Component {
   handleSelect(id) {
     this.addContact(id, this.state.selectedContacts);
     this.removeContact(id, this.state.contacts);
+    this.addAction('select', id);
   }
 
   handleUnselect(id) {
     this.addContact(id, this.state.contacts);
     this.removeContact(id, this.state.selectedContacts);
+    this.addAction('unselect', id);
   }
 
   handleReset() {
-    this.setState(JSON.parse(JSON.stringify(this.originalState)));
+    this.setState(this.state.originalState);
+    this.addAction('reset');
   }
 
-  handleRemove(e, id) {
+  handleRemoveContact(e, id) {
     e.stopPropagation();
     this.removeContact(id, this.state.contacts);
+    this.addAction('remove', id);
+  }
+
+  handleClear() {
+    this.setState({
+      actionHistory: []
+    });
+  }
+
+  handleRemoveAction(id) {
+    const oldHist = this.state.actionHistory;
+    const newHistory = oldHist.filter(action => action._id !== id);
+    const newState = {
+      actionHistory: newHistory
+    };
+
+    this.setState(newState);
+
+  }
+
+  addAction(actionType, id) {
+    const contacts = this.state.originalState.contacts;
+    const target = contacts.filter(contact => contact._id === id);
+    const name = id ? target[0].name : null;
+    const newId = this.state.currentActionId + 1;
+    const time = Math.floor(Date.now() / 1000);
+
+    let actionMessage;
+
+    switch (actionType) {
+      case 'select':
+        actionMessage = `Selected ${name}`;
+        break;
+      case 'unselect':
+        actionMessage = `Unselected ${name}`;
+        break;
+      case 'remove':
+        actionMessage = `Removed ${name}`;
+        break;
+      case 'reset':
+        actionMessage = 'Reset application to initial state';
+        break;
+      default:
+        actionMessage = 'Some idiot programmer forgot to supply an actionType';
+        break;
+    }
+
+    const newHistory = [{
+      _id: newId,
+      time,
+      actionMessage
+    }].concat(this.state.actionHistory);
+
+    this.setState((prevState) => {
+      return {
+        currentActionId: prevState.currentActionId + 1,
+        actionHistory: newHistory
+      };
+    });
+
   }
 
   addContact(id, list = this.state.contacts) {
@@ -146,12 +172,17 @@ class App extends Component {
         <ContactList
           contacts={this.getFilteredContacts()}
           searchValue={this.state.searchText}
-          onRemove={this.handleRemove.bind(this)}
+          onRemove={this.handleRemoveContact.bind(this)}
           onSelect={this.handleSelect.bind(this)}
         />
         <SelectedContactList
           contacts={this.state.selectedContacts}
           onUnselect={this.handleUnselect.bind(this)}
+        />
+        <ActionHistory
+          actions={this.state.actionHistory}
+          onClear={this.handleClear.bind(this)}
+          onRemove={this.handleRemoveAction.bind(this)}
         />
       </div>
     );

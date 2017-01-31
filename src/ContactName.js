@@ -13,9 +13,10 @@ const ContactName = (props) => {
     const term = searchValue.toLowerCase();
     const name = origString.toLowerCase();
 
+
     const element = [];
 
-    while ((name.indexOf(term, startIndex) >= 0) && (term.length > 0)) {
+    while ((name.indexOf(term, startIndex) >= 0) && (searchValue.length > 0)) {
       hitIndex = name.indexOf(term, startIndex);
       noHit = origString.slice(startIndex, hitIndex);
       hit = origString.slice(hitIndex, hitIndex + term.length);
@@ -30,14 +31,9 @@ const ContactName = (props) => {
     return element;
   };
 
-  const testArr = [];
-  testArr.push(<span className="highlight">test</span>);
-  testArr.push('another test');
-  testArr.push(<span className="highlight">last test</span>);
-
   return (
     <h2>
-      {highlightHits(props.name, props.searchValue)}
+      {props.searchValue ? highlightHits(props.name, props.searchValue) : props.name}
     </h2>
   );
 };
@@ -46,6 +42,6 @@ export default ContactName;
 
 ContactName.propTypes = {
   name: PropTypes.string.isRequired,
-  searchValue: PropTypes.string.isRequired,
+  searchValue: PropTypes.string,
   id: PropTypes.number.isRequired
 };
