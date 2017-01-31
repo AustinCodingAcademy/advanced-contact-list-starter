@@ -1,33 +1,29 @@
-import React, {PropTypes, Component} from 'react';
+import React, {PropTypes} from 'react';
 
-class ContactName extends Component {
+const ContactName = props => {
 
-  highlightSearchTerm() {
-    const contactName = this.props.name;
-    const checkName = this.props.name.toLowerCase();
-    const stringToHighlight = this.props.searchText.toLowerCase();
-    const searchTermStartIndex = checkName.indexOf(stringToHighlight);
-    const searchTermEndIndex = searchTermStartIndex + stringToHighlight.length;
+  const contactName = props.name;
+  const checkName = props.name.toLowerCase();
+  const stringToHighlight = props.searchText.toLowerCase();
+  const searchTermStartIndex = checkName.indexOf(stringToHighlight);
+  const searchTermEndIndex = searchTermStartIndex + stringToHighlight.length;
 
-    if (this.props.name.toLowerCase().indexOf(stringToHighlight) >= 0) {
-      const highlightedContactBeginning = contactName.slice(0, searchTermStartIndex);
-      const highlightedContactEnd = contactName.slice(searchTermEndIndex);
-      const highlightedContactMiddle = contactName.slice(searchTermStartIndex, searchTermEndIndex);
+  if (props.name.toLowerCase().indexOf(stringToHighlight) >= 0) {
+    const highlightedContactBeginning = contactName.slice(0, searchTermStartIndex);
+    const highlightedContactEnd = contactName.slice(searchTermEndIndex);
+    const highlightedContactMiddle = contactName.slice(searchTermStartIndex, searchTermEndIndex);
 
-      return (
-        `${highlightedContactBeginning}<span className="highlight-search-term">${highlightedContactMiddle}</span>${highlightedContactEnd}`
-      );
-    }
-  }
-
-  render() {
     return (
-      <h2 onClick={() => this.props.onClickSelect(this.props._id)}>
-        {this.highlightSearchTerm()}
+      <h2 onClick={() => props.onClickSelect(props._id)}>
+        {highlightedContactBeginning}
+        <span className="highlight-search-term">
+          {highlightedContactMiddle}
+        </span>
+        {highlightedContactEnd}
       </h2>
     );
   }
-}
+};
 
 ContactName.propTypes = {
   _id: PropTypes.number.isRequired,
