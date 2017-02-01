@@ -4,6 +4,8 @@ import SearchBar from './SearchBar';
 import ActionHistory from './ActionHistory';
 import uuid from 'uuid';
 import update from 'immutability-helper';
+import moment from 'moment';
+
 import axios from 'axios';
 
 class App extends Component {
@@ -25,9 +27,11 @@ class App extends Component {
 
         this.getContacts();
 
+        setInterval(this.removeStaleActionHistory.bind(this), 5000)
     }
 
     getContacts() {
+
         axios.get('http://localhost:4000/contacts')
             .then((response) => {
 
@@ -40,6 +44,20 @@ class App extends Component {
             }).catch((err) => {
             console.log(err);
         })
+    }
+
+    removeStaleActionHistory() {
+
+        if (this.state.actionHistory.length > 0) {
+            let now = moment();
+
+            this.setState({
+                actionHistory: this.state.actionHistory.filter((action)=>{
+                    return action.expirationMoment.isAfter(now)
+                })
+            })
+        }
+
     }
 
     buildBackup() {
@@ -174,7 +192,7 @@ class App extends Component {
         console.log(id);
 
         this.setState({
-            actionHistory: this.state.actionHistory.filter((action) =>{
+            actionHistory: this.state.actionHistory.filter((action) => {
                 return action._id !== id;
             })
         });
@@ -186,7 +204,10 @@ class App extends Component {
         const action = {
             description: description || 'A default action',
             _id: uuid.v4(),
+            expirationMoment: moment().add(60, 's')
         };
+
+        console.log(action);
 
         return action;
     }
