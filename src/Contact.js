@@ -4,9 +4,14 @@
 import React, { Component } from 'react';
 
 class Contact extends Component {
+
+
+
     render() {
         return (
-            <li className="contact">
+            <li
+                className="contact"
+            >
                 <div className="image-cropper">
                     <img src={this.props.avatar} alt="avatar"/>
                 </div>
@@ -14,6 +19,10 @@ class Contact extends Component {
                     <h2>{this.props.name}</h2>
                     {this.props.occupation}
                 </div>
+                <button
+                    id={this.props.id}
+                    onClick={(event) => this.props.handleSelectContactClick(event)}>Select
+                </button>
             </li>
         );
     }
