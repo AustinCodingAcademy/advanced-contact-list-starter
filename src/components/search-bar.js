@@ -1,31 +1,20 @@
-import React from "react";
+import React from 'react';
 
-export default class SearchBar extends React.Component{
-    constructor(){
-        super();
-    
-    
-    this.state={
-        value:''
-    }
-    }
-    
-    handleChange(e){
-        this.setState({
-            value: e.target.value
-        });
-    }
-    
-    render(){
-        
-        return(
-        <input
-        className='search-bar'
+export default class SearchBar extends React.Component {
+
+
+  render() {
+    return (
+      <input className="search-bar"
         type="text"
-        value={this.state.value}
-        onChange={ (event) => this.handleChange(event) }
+        value={this.props.value}
+        onChange={event => this.props.handleSearch(event.target.value)}
       />
-      );
-        
-    }
+    );
+  }
 }
+
+SearchBar.propTypes = {
+  value: React.PropTypes.string,
+  handleSearch: React.PropTypes.isfunc,
+};
