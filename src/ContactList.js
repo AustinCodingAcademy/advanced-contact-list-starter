@@ -12,6 +12,7 @@ class ContactList extends Component {
                 {this.props.contacts.map(contact => {
                     return (
                         <Contact
+                            value={this.props.value}
                             id={contact._id}
                             key={contact._id}
                             name={contact.name}

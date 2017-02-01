@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
+
+
 import axios from 'axios';
 
 class App extends Component {
@@ -173,11 +175,13 @@ class App extends Component {
                 <SearchBar value={this.state.searchText}
                            onChange={this.handleSearchBarChange.bind(this)}/>
                 <ContactList
-                    title={"Selected Contacts"}
+                    value={this.state.searchText}
+                    title={this.state.selectedContacts.length > 0 ? "Selected Contacts" : "No selected contacts"}
                     contacts={this.getFilteredContacts(this.state.selectedContacts)}
                     handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
                 />
                 <ContactList
+                    value={this.state.searchText}
                     title={"Available Contacts"}
                     contacts={this.getFilteredContacts(this.state.contacts)}
                     handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}

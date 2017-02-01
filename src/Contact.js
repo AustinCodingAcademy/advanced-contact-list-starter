@@ -1,11 +1,10 @@
 /**
  * Created by brianmichael on 1/23/17.
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import Highlighter from './Highlighter';
 
 class Contact extends Component {
-
-
 
     render() {
         return (
@@ -16,9 +15,13 @@ class Contact extends Component {
                     <img src={this.props.avatar} alt="avatar"/>
                 </div>
                 <div className="contact-info">
-                    <h2>{this.props.name}</h2>
-                    {this.props.occupation}
+                    <h2>
+                        <Highlighter searchWords={this.props.value} textToHighlight={this.props.name}>
+                        </Highlighter>
+                    </h2>
+                    <h3>{this.props.occupation}</h3>
                 </div>
+
                 <button
                     className="select-button"
                     id={this.props.id}
