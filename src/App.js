@@ -17,24 +17,7 @@ class App extends Component {
             contacts: [],
             selectedContacts: [],
             backupContacts: [],
-            actionHistory: [
-                {
-                    description: "A default action",
-                    _id: uuid.v4()
-                },
-                {
-                    description: "A default action",
-                    _id: uuid.v4()
-                },
-                {
-                    description: "A default action",
-                    _id: uuid.v4()
-                },
-                {
-                    description: "A default action",
-                    _id: uuid.v4()
-                },
-            ],
+            actionHistory: [],
         };
     }
 
@@ -92,9 +75,8 @@ class App extends Component {
         this.addSelectedContact(id);
         this.removeAvailableContact(id);
 
-        //Action History
         const addedContact = this.findContactById(id, this.state.contacts);
-        this.addActionToHistory(`Added ${addedContact.name} to Selected Contacts`)
+        this.addActionToHistory(`Added ${addedContact.name} to selected contacts`)
     }
 
     handleRemoveSelectedClick(event) {
@@ -104,9 +86,8 @@ class App extends Component {
         this.addAvailableContact(id);
         this.removeSelectedContact(id);
 
-        //Action history
         const removedContact = this.findContactById(id, this.state.selectedContacts);
-        this.addActionToHistory(`Removed ${removedContact.name} from Selected Contacts`)
+        this.addActionToHistory(`Removed ${removedContact.name} from selected contacts`)
 
     }
 
