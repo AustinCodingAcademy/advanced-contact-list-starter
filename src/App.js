@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
-
-
+import ActionHistory from './ActionHistory';
+import uuid from 'uuid';
+import update from 'immutability-helper';
 import axios from 'axios';
 
 class App extends Component {
 
     constructor() {
+
         super();
 
         this.state = {
@@ -15,29 +17,49 @@ class App extends Component {
             contacts: [],
             selectedContacts: [],
             backupContacts: [],
+            actionHistory: [
+                {
+                    description: "A default action",
+                    _id: uuid.v4()
+                },
+                {
+                    description: "A default action",
+                    _id: uuid.v4()
+                },
+                {
+                    description: "A default action",
+                    _id: uuid.v4()
+                },
+                {
+                    description: "A default action",
+                    _id: uuid.v4()
+                },
+            ],
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
-       this.getContacts();
+        this.getContacts();
 
     }
 
-    getContacts(){
+    getContacts() {
         axios.get('http://localhost:4000/contacts')
-            .then((response)=>{
+            .then((response) => {
+
                 this.setState({
                     contacts: response.data
                 });
 
                 this.buildBackup();
-            }).catch((err)=>{
+
+            }).catch((err) => {
             console.log(err);
         })
     }
 
-    buildBackup(){
+    buildBackup() {
 
         //build a backup of contacts to enable resetting
         this.setState({
@@ -58,7 +80,6 @@ class App extends Component {
         const searchTerm = this.state.searchText.trim().toLowerCase();
 
         return contactsArray.filter(contact => {
-            console.log(contact);
             return contact.name.toLowerCase().indexOf(searchTerm) >= 0;
         });
 
@@ -70,6 +91,10 @@ class App extends Component {
 
         this.addSelectedContact(id);
         this.removeAvailableContact(id);
+
+        //Action History
+        const addedContact = this.findContactById(id, this.state.contacts);
+        this.addActionToHistory(`Added ${addedContact.name} to Selected Contacts`)
     }
 
     handleRemoveSelectedClick(event) {
@@ -78,6 +103,11 @@ class App extends Component {
 
         this.addAvailableContact(id);
         this.removeSelectedContact(id);
+
+        //Action history
+        const removedContact = this.findContactById(id, this.state.selectedContacts);
+        this.addActionToHistory(`Removed ${removedContact.name} from Selected Contacts`)
+
     }
 
     addSelectedContact(id) {
@@ -87,6 +117,8 @@ class App extends Component {
         this.setState({
             selectedContacts: this.state.selectedContacts.concat(contact)
         });
+
+        return contact;
     }
 
     removeSelectedContact(id) {
@@ -107,6 +139,8 @@ class App extends Component {
         this.setState({
             contacts: this.state.contacts.concat(contact)
         });
+
+        return contact;
     }
 
     removeAvailableContact(id) {
@@ -130,12 +164,50 @@ class App extends Component {
         })
     }
 
-    reset(){
+    reset() {
+
         this.setState({
             contacts: Object.assign([], this.state.backupContacts),
             selectedContacts: [],
-            searchText: ''
+            searchText: '',
+            actionHistory: []
         });
+
+        this.addActionToHistory("Reset application");
+    }
+
+    addActionToHistory(description) {
+
+        const newAction = this.buildNewAction(description);
+
+        //Using immutability helper to return new array.
+        let newState = update(this.state.actionHistory, {$unshift: [newAction]});
+
+        this.setState({
+            actionHistory: newState.slice(0, 9)
+        })
+
+    }
+
+    handleRemoveActionFromHistoryClick(event, id) {
+        console.log(id);
+
+        this.setState({
+            actionHistory: this.state.actionHistory.filter((action) =>{
+                return action._id !== id;
+            })
+        });
+
+    }
+
+    buildNewAction(description) {
+
+        const action = {
+            description: description || 'A default action',
+            _id: uuid.v4(),
+        };
+
+        return action;
     }
 
 
@@ -145,6 +217,15 @@ class App extends Component {
             <div className="App">
                 <SearchBar value={this.state.searchText}
                            onChange={this.handleSearchBarChange.bind(this)}/>
+                <button
+                    className="reset-button"
+                    onClick={this.reset.bind(this)}
+                >Reset
+                </button>
+                <ActionHistory
+                    actions={this.state.actionHistory}
+                    removeAction={this.handleRemoveActionFromHistoryClick.bind(this)}
+                />
                 <ContactList
                     value={this.state.searchText}
                     title={this.state.selectedContacts.length > 0 ? "Selected Contacts" : "No selected contacts"}
@@ -157,11 +238,7 @@ class App extends Component {
                     contacts={this.getFilteredContacts(this.state.contacts)}
                     handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}
                 />
-                <button
-                    className="reset-button"
-                    onClick={this.reset.bind(this)}
-                >Reset
-                </button>
+
             </div>
         );
     }

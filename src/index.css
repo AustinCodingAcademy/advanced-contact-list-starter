@@ -16,6 +16,13 @@ body {
   padding-top: 50px;
 }
 
+.action-history {
+  position: fixed;
+  right: 50px;
+  width: 200px;
+  right: 50px;
+}
+
 .search-bar {
   height: 35px;
   width: 100%;
@@ -131,6 +138,7 @@ body {
 }
 
 .reset-button {
+  margin-top: 5px;
   -moz-box-shadow:inset 0px 39px 0px -24px #e67a73;
   -webkit-box-shadow:inset 0px 39px 0px -24px #e67a73;
   box-shadow:inset 0px 39px 0px -24px #e67a73;
@@ -144,7 +152,7 @@ body {
   color:#ffffff;
   font-family:Verdana;
   font-size:22px;
-  padding:14px 34px;
+  padding:14px 40px;
   text-decoration:none;
   text-shadow:0px 1px 0px #b23e35;
 }
