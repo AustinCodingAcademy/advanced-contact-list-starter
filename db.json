@@ -29,36 +29,24 @@
       "name": "Dana Scully",
       "occupation": "FBI Agent",
       "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
-    }
-  ],
-  "selectedContacts": [
+    },
     {
       "_id": 6,
-      "name": "Dale Cooper",
-      "occupation": "FBI Agent",
-      "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
+      "name": "Boba Fett",
+      "occupation": "A Better Bounty Hunter",
+      "avatar": "https://upload.wikimedia.org/wikipedia/en/3/3e/FettbobaJB.png"
     },
     {
       "_id": 7,
-      "name": "Spike Spiegel",
-      "occupation": "Bounty Hunter",
-      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
+      "name": "Tiny Rick",
+      "occupation": "Being trapped in bodies",
+      "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp"
     },
-    [
-      {
-        "_id": 1,
-        "name": "Dale Cooper",
-        "occupation": "FBI Agent",
-        "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
-      }
-    ],
-    [
-      {
-        "_id": 2,
-        "name": "Spike Spiegel",
-        "occupation": "Bounty Hunter",
-        "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
-      }
-    ]
+    {
+      "_id": 8,
+      "name": "Morty",
+      "occupation": "Wacky Adventures",
+      "avatar": "https://i.ytimg.com/vi/Zw1Du7OmoU8/maxresdefault.jpg"
+    }
   ]
 }

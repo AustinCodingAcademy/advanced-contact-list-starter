@@ -12,62 +12,32 @@ class App extends Component {
 
         this.state = {
             searchText: '',
-            contacts: [
-                {
-                    "_id": 1,
-                    "name": "Dale Cooper",
-                    "occupation": "FBI Agent",
-                    "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
-                },
-                {
-                    "_id": 2,
-                    "name": "Spike Spiegel",
-                    "occupation": "Bounty Hunter",
-                    "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
-                },
-                {
-                    "_id": 3,
-                    "name": "Wirt",
-                    "occupation": "adventurer",
-                    "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
-                },
-                {
-                    "_id": 4,
-                    "name": "Michael Myers",
-                    "occupation": "Loving little brother",
-                    "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
-                },
-                {
-                    "_id": 5,
-                    "name": "Dana Scully",
-                    "occupation": "FBI Agent",
-                    "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
-                },
-                {
-                    "_id": 6,
-                    "name": "Boba Fett",
-                    "occupation": "A Better Bounty Hunter",
-                    "avatar": "https://upload.wikimedia.org/wikipedia/en/3/3e/FettbobaJB.png"
-                },
-                {
-                    "_id": 7,
-                    "name": "Tiny Rick",
-                    "occupation": "Being trapped in bodies",
-                    "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp"
-                },
-                {
-                    "_id": 8,
-                    "name": "Morty",
-                    "occupation": "Wacky Adventures",
-                    "avatar": "https://i.ytimg.com/vi/Zw1Du7OmoU8/maxresdefault.jpg"
-                }
-            ],
+            contacts: [],
             selectedContacts: [],
             backupContacts: [],
         };
     }
 
-    componentWillMount(){
+    componentDidMount(){
+
+       this.getContacts();
+
+    }
+
+    getContacts(){
+        axios.get('http://localhost:4000/contacts')
+            .then((response)=>{
+                this.setState({
+                    contacts: response.data
+                });
+
+                this.buildBackup();
+            }).catch((err)=>{
+            console.log(err);
+        })
+    }
+
+    buildBackup(){
 
         //build a backup of contacts to enable resetting
         this.setState({
@@ -163,7 +133,8 @@ class App extends Component {
     reset(){
         this.setState({
             contacts: Object.assign([], this.state.backupContacts),
-            selectedContacts: []
+            selectedContacts: [],
+            searchText: ''
         });
     }
 
