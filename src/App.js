@@ -58,7 +58,9 @@ class App extends Component {
 
         const searchTerm = this.state.searchText.trim().toLowerCase();
 
+
         return contactsArray.filter(contact => {
+            console.log(contact);
             return contact.name.toLowerCase().indexOf(searchTerm) >= 0;
         });
 
@@ -68,17 +70,20 @@ class App extends Component {
 
         let id = event.target.id;
 
-        console.log("Handle add to selected clicked");
-
-        this.addToSelectedContact(id);
-        this.removeContactFromAvailable(id);
+        this.addSelectedContact(id);
+        this.removeAvailableContact(id);
     }
 
-    handleRemoveSelectedClick() {
+    handleRemoveSelectedClick(event) {
+
+        let id = event.target.id;
+
+        this.addAvailableContact(id);
+        this.removeSelectedContact(id);
 
     }
 
-    addToSelectedContact(id) {
+    addSelectedContact(id) {
 
         let contact = this.findContactById(id, this.state.contacts);
 
@@ -88,7 +93,31 @@ class App extends Component {
 
     }
 
-    removeContactFromAvailable(id) {
+    removeSelectedContact(id){
+
+        let parsedId = parseInt(id);
+
+        let contactIndex = this.findIndexById(id, this.state.selectedContacts);
+
+        this.setState({
+            selectedContacts: this.state.selectedContacts.filter((contact)=>{
+                return contact._id !== parsedId;
+            })
+        })
+    }
+
+    addAvailableContact(id){
+
+        let contact = this.findContactById(id, this.state.selectedContacts);
+
+        this.setState({
+            contacts: this.state.contacts.concat(contact)
+        });
+
+        console.log(this.state.contacts + " aftering adding available")
+    }
+
+    removeAvailableContact(id) {
 
         let parsedId = parseInt(id);
 
@@ -109,15 +138,15 @@ class App extends Component {
         })
     }
 
-    findIndexById(id, array) {
+    findIndexById(id, array){
 
         let parsedId = parseInt(id);
 
-        return array.findIndex((contact) => {
+        return array.findIndex((contact)=>{
             return contact._id === parsedId;
         })
-
     }
+
 
 
     render() {
