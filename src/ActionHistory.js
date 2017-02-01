@@ -20,7 +20,9 @@ const ActionHistory = (props) => {
         </ul>
       </div>
       <div className="opaque-container">
-        <div className="button clear-actions" onClick={() => props.onClear()}>
+        <div className="button clear-actions"
+          title="Clear action history"
+          onClick={() => props.onClear()}>
           Clear Actions
         </div>
       </div>

@@ -18,7 +18,9 @@ const Contact = props => {
         />
         {props.occupation}
       </div>
-      <div className="button remove" onClick={e => props.onRemove(e, props._id)}>
+      <div className="button remove"
+        title="Remove contact"
+        onClick={e => props.onRemove(e, props._id)}>
         Remove
       </div>
     </li>

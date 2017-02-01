@@ -37,6 +37,7 @@ body {
   display: flex;
   padding: 15px 0;
   border-bottom: 1px solid #ddd;
+  overflow: hidden;
 }
 
 .button {
@@ -50,8 +51,12 @@ body {
   padding: 0 12px;
 }
 
-.button:hover {
+.button:hover, .ex-button:hover {
   opacity: 0.7;
+}
+
+.button:active, .ex-button:active {
+  opacity: 1;
 }
 
 .reset {
@@ -59,7 +64,7 @@ body {
   margin: 10px auto;
 }
 
-.remove, .clear-actions, .ex-button {
+.remove, .clear-actions {
   background-color: #ff1a1a;
 }
 
@@ -68,7 +73,7 @@ body {
   width: 90%;
 }
 
-.unselect {
+.unselect, .ex-button {
   background-color: #0080ff;
 }
 
@@ -128,8 +133,9 @@ body {
   text-align: center;
   line-height: 15px;
   position: absolute;
-  right: 0px;
+  right: 5px;
   top: 9px;
+  z-index: 1;
 }
 
 .profile {
@@ -186,6 +192,40 @@ body {
   background: gray;
   color: white;
 }
+
+/* Action Animation */
+
+.action-message {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  cursor: default;
+}
+
+.action-slider {
+  background-color: #ff1a1a;
+  opacity: 0.5;
+  position: absolute;
+  height: auto;
+  top: 5px;
+  bottom: 5px;
+  width: 100%;
+  z-index: 0;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+  animation-name: expire;
+}
+
+@keyframes expire {
+  0% {
+    transform: translate3d(-100%, 0px, 0px);
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
 
 /*|*******************|*/
 /*| ON LARGER SCREENS |*/

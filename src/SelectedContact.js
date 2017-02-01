@@ -18,7 +18,9 @@ const SelectedContact = props => {
         />
         {props.occupation}
       </div>
-      <div className="button unselect" onClick={() => props.onUnselect(props._id)}>
+      <div className="button unselect"
+        title="Unselect contact"
+        onClick={() => props.onUnselect(props._id)}>
         Unselect
       </div>
     </li>
