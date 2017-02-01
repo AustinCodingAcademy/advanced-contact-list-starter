@@ -27,6 +27,7 @@ body {
 }
 
 .contact-container {
+  margin: 5 auto;
   float: left;
 }
 
@@ -36,7 +37,6 @@ body {
 
 .contact {
   list-style-type: none;
-  display: flex;
   display: flex;
   padding: 15px 0;
   border-bottom: 1px solid #ddd;
@@ -77,6 +77,12 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding-left: 35px;
+}
+
+.add-start {
+  height: 18px;
+  width: 50px;
+  border: 1px solid black;
 }
 
 .profile {
