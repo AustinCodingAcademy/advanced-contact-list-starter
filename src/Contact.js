@@ -4,7 +4,6 @@ class Contact extends Component {
   render() {
     return (
       <li className="contact"
-        onClick={() => this.props.onChange(this.props.name)}
         style={{display: this.props.active}}>
         <div className="image-cropper">
           <img src={this.props.avatar} alt="avatar" />
@@ -12,6 +11,9 @@ class Contact extends Component {
         <div className="contact-info" name={this.props.name}>
           <h2>{this.props.name}</h2>
           {this.props.occupation}
+        </div>
+        <div>
+          <button onClick={this.props.onButtonClick}>Add Contact</button>
         </div>
       </li>
     );
@@ -24,6 +26,6 @@ Contact.propTypes = {
   name: PropTypes.string,
   avatar: PropTypes.string,
   occupation: PropTypes.string,
-  onChange: PropTypes.func,
-  active: PropTypes.string
+  active: PropTypes.string,
+  onButtonClick: PropTypes.func
 };
