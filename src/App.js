@@ -40,12 +40,39 @@ class App extends Component {
                     "name": "Dana Scully",
                     "occupation": "FBI Agent",
                     "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
+                },
+                {
+                    "_id": 6,
+                    "name": "Boba Fett",
+                    "occupation": "A Better Bounty Hunter",
+                    "avatar": "https://upload.wikimedia.org/wikipedia/en/3/3e/FettbobaJB.png"
+                },
+                {
+                    "_id": 7,
+                    "name": "Tiny Rick",
+                    "occupation": "Being trapped in bodies",
+                    "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp"
+                },
+                {
+                    "_id": 8,
+                    "name": "Morty",
+                    "occupation": "Wacky Adventures",
+                    "avatar": "https://i.ytimg.com/vi/Zw1Du7OmoU8/maxresdefault.jpg"
                 }
             ],
-            selectedContacts: []
+            selectedContacts: [],
+            backupContacts: [],
         };
     }
 
+    componentWillMount(){
+
+        //build a backup of contacts to enable resetting
+        this.setState({
+            backupContacts: Object.assign([], this.state.contacts)
+        })
+
+    }
 
     handleSearchBarChange(event) {
 
@@ -57,7 +84,6 @@ class App extends Component {
     getFilteredContacts(contactsArray) {
 
         const searchTerm = this.state.searchText.trim().toLowerCase();
-
 
         return contactsArray.filter(contact => {
             console.log(contact);
@@ -80,7 +106,6 @@ class App extends Component {
 
         this.addAvailableContact(id);
         this.removeSelectedContact(id);
-
     }
 
     addSelectedContact(id) {
@@ -90,31 +115,26 @@ class App extends Component {
         this.setState({
             selectedContacts: this.state.selectedContacts.concat(contact)
         });
-
     }
 
-    removeSelectedContact(id){
+    removeSelectedContact(id) {
 
         let parsedId = parseInt(id);
 
-        let contactIndex = this.findIndexById(id, this.state.selectedContacts);
-
         this.setState({
-            selectedContacts: this.state.selectedContacts.filter((contact)=>{
+            selectedContacts: this.state.selectedContacts.filter((contact) => {
                 return contact._id !== parsedId;
             })
         })
     }
 
-    addAvailableContact(id){
+    addAvailableContact(id) {
 
         let contact = this.findContactById(id, this.state.selectedContacts);
 
         this.setState({
             contacts: this.state.contacts.concat(contact)
         });
-
-        console.log(this.state.contacts + " aftering adding available")
     }
 
     removeAvailableContact(id) {
@@ -138,15 +158,12 @@ class App extends Component {
         })
     }
 
-    findIndexById(id, array){
-
-        let parsedId = parseInt(id);
-
-        return array.findIndex((contact)=>{
-            return contact._id === parsedId;
-        })
+    reset(){
+        this.setState({
+            contacts: Object.assign([], this.state.backupContacts),
+            selectedContacts: []
+        });
     }
-
 
 
     render() {
@@ -165,6 +182,11 @@ class App extends Component {
                     contacts={this.getFilteredContacts(this.state.contacts)}
                     handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}
                 />
+                <button
+                    className="reset-button"
+                    onClick={this.reset.bind(this)}
+                >Reset
+                </button>
             </div>
         );
     }

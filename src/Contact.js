@@ -20,6 +20,7 @@ class Contact extends Component {
                     {this.props.occupation}
                 </div>
                 <button
+                    className="select-button"
                     id={this.props.id}
                     onClick={(event) => this.props.handleSelectContactClick(event)}>Select
                 </button>
