@@ -29,14 +29,13 @@ const Contact = (props) => {
   );
 };
 
-
 Contact.propTypes = {
-  avatar: React.propTypes.string,
-  value: React.propTypes.string,
-  name: React.propTypes.string,
-  occupation: React.propTypes.string,
-  id: React.propTypes.string,
-  handleSelectContactClick: React.propTypes.function
+  avatar: React.PropTypes.string,
+  value: React.PropTypes.string,
+  name: React.PropTypes.string,
+  occupation: React.PropTypes.string,
+  id: React.PropTypes.number,
+  handleSelectContactClick: React.PropTypes.func
 };
 
 export default Contact;

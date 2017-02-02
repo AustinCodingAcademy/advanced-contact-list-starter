@@ -9,7 +9,7 @@ const ActionHistory = (props) => {
     <section className="action-history">
       <h3>Action History</h3>
       {
-          this.props.actions.map(action => {
+          props.actions.map(action => {
             return (<p
               key={action._id}
               onClick={(event) => props.removeAction(event, action._id)}>
@@ -25,8 +25,8 @@ const ActionHistory = (props) => {
 
 
 ActionHistory.propTypes = {
-  actions: React.PropTypes.object,
-  removeAction: React.PropTypes.function
+  actions: React.PropTypes.array,
+  removeAction: React.PropTypes.func
 };
 
 

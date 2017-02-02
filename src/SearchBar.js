@@ -5,7 +5,7 @@ const SearchBar = (props) => {
     <input
       className="search-bar"
       type="text"
-      value={this.props.value}
+      value={props.value}
       onChange={(event) => props.onChange(event)}
       />
   );
@@ -13,7 +13,7 @@ const SearchBar = (props) => {
 
 SearchBar.propTypes = {
   value: React.PropTypes.string,
-  onChange: React.PropTypes.function
+  onChange: React.PropTypes.func
 };
 
 export default SearchBar;

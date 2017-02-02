@@ -29,9 +29,9 @@ const ContactList = (props) => {
 
 ContactList.propTypes = {
   title: React.PropTypes.string,
-  contacts: React.PropTypes.object,
+  contacts: React.PropTypes.array,
   value: React.PropTypes.string,
-  handleSelectContactClick: React.PropTypes.function
+  handleSelectContactClick: React.PropTypes.func
 };
 
 export default ContactList;
