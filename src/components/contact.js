@@ -3,11 +3,10 @@ import Text from './text.js';
 
 const divStyle = {
   color: 'red',
-  float: 'left'
 };
 
 const divStyle2 = {
-  float: 'left'
+  
 };
 
 
@@ -48,11 +47,12 @@ export default class Contact extends React.Component {
         </div>
         <div className="contact-info">
 
-          <h2>
+          <h2><span>
             <Text divStyle={divStyle2} text={this.text1()} />
             <Text divStyle={divStyle} text={this.text2()} />
             <Text divStyle={divStyle2} text={this.text3()} />
-          </h2>
+          </span>
+                </h2>
           {this.props.occupation}
         </div>
       </li>
