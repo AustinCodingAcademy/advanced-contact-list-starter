@@ -60,7 +60,7 @@ body {
   height: 100px;
   position: relative;
   overflow: hidden;
-  border-radius: 5%;
+  border-radius: 50%;
 }
 
 .contact img {

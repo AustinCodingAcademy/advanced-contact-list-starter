@@ -10,109 +10,39 @@ class App extends Component {
       searchText: '',
       contacts: [
         {
-          _id: 12,
-          name: 'LaMarcus Aldridge',
-          occupation: 'Forward',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/200746.png',
-          status: 'bench'
-        },
-        {
           _id: 1,
-          name: 'Kyle Anderson',
-          occupation: 'Guard-Forward',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203937.png',
-          status: 'bench'
-        },
-        {
-          _id: 30,
-          name: 'Joel Anthony',
-          occupation: 'Center',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201202.png',
-          status: 'bench'
-        },
-        {
-          _id: 42,
-          name: 'Davis Bertans',
-          occupation: 'Center',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202722.png',
-          status: 'bench'
-        },
-        {
-          _id: 3,
-          name: 'Dewayne Dedmon',
-          occupation: 'Center',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203473.png',
-          status: 'bench'
-        },
-        {
-          _id: 11,
-          name: 'Bryn Forbes',
-          occupation: 'Guard',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1627854.png',
-          status: 'bench'
-        },
-        {
-          _id: 16,
-          name: 'Paul Gasol',
-          occupation: 'Center',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2200.png',
-          status: 'bench'
-        },
-        {
-          _id: 20,
-          name: 'Manu Ginobili',
-          occupation: 'Guard',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1938.png',
-          status: 'bench'
-        },
-        {
-          _id: 14,
-          name: 'Danny Green',
-          occupation: 'Guard',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201980.png',
-          status: 'bench'
-        },
-        {
-          _id: 10,
-          name: 'David Lee',
-          occupation: 'Forward-Center',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/101135.png',
-          status: 'bench'
+          name: 'Dale Cooper',
+          occupation: 'FBI Agent',
+          avatar: 'https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg',
+          favorite: false
         },
         {
           _id: 2,
-          name: 'Kawhi Leonard',
-          occupation: 'Forward',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202695.png',
-          status: 'bench'
+          name: 'Spike Spiegel',
+          occupation: 'Bounty Hunter',
+          avatar: 'http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337',
+          favorite: false
         },
         {
-          _id: 8,
-          name: 'Patty Mills',
-          occupation: 'Guard',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201988.png',
-          status: 'bench'
+          _id: 3,
+          name: 'Wirt',
+          occupation: 'adventurer',
+          avatar: 'http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg',
+          favorite: false
+        },
+        {
+          _id: 4,
+          name: 'Michael Myers',
+          occupation: 'Loving little brother',
+          avatar: 'http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746',
+          favorite: false
         },
         {
           _id: 5,
-          name: 'Dejounte Murray',
-          occupation: 'Guard',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1627749.png',
-          status: 'bench'
-        },
-        {
-          _id: 9,
-          name: 'Tony Parker',
-          occupation: 'Guard',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2225.png',
-          status: 'bench'
-        },
-        {
-          _id: 17,
-          name: 'Jonathan Simmons',
-          occupation: 'Guard-Forward',
-          avatar: 'http://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203613.png',
-          status: 'bench'
+          name: 'Dana Scully',
+          occupation: 'FBI Agent',
+          avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg',
+          favorite: false
         }
       ]
     };
@@ -125,56 +55,48 @@ class App extends Component {
     });
   }
 
-  handleLineupChange() {
-    if(this.contact.status === 'bench') {
-      if(this.getStartingLineup().length < 5) {
-        this.setState({
-          status: 'starting'
-        });
-      } else {
-        return;
-        //put a warning here
-      }
+  addToFavorites() {
+    /*if(!this.state.favorite) {
+      this.setState({
+        favorite: true
+      });
     } else {
       this.setState({
-        status: 'bench'
+        favorite: false
       });
-    }
-  }
-
-  getStartingLineup() {
-    let starters = this.getFilteredContacts();
-    return starters.filter(contact => {
-      return contact.status === 'starting';
+    }*/
+    this.setState({
+      favorite: true
     });
   }
 
-  getRoster() {
-    let roster = this.getFilteredContacts();
-    return roster.filter(contact => {
-      return contact.status === 'bench';
+  getFavorites() {
+    let favs = this.getFilteredContacts();
+    return favs.filter(contact => {
+      return contact.favorite === true;
+    });
+  }
+
+  getContacts() {
+    let cons = this.getFilteredContacts();
+    return cons.filter(contact => {
+      return contact.favorite === false;
     });
   }
 
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
-    return this.state.contacts.filter( contact => {
+    return this.state.contacts.filter(contact => {
       return contact.name.toLowerCase().indexOf(term) >= 0;
     });
-  }
-
-  checkMaxLineup(array) {
-    if (array.length < 5) {
-      return true;
-    };
   }
 
   render() {
     return (
       <div className="App">
         <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
-        <ContactList contacts={this.getRoster()} listName='Spurs Roster' buttonText='Start' onClick={this.handleLineupChange()}/>
-        <ContactList contacts={this.getStartingLineup()} listName='Starting Lineup' buttonText='Bench' onClick={this.handleLineupChange()}/>
+        <ContactList contacts={this.getContacts()} listName='Contacts' buttonText='Fav' onClick={this.addToFavorites()}/>
+        <ContactList contacts={this.getFavorites()} listName='Favorites' buttonText='Unfav' onClick={this.addToFavorites()}/>
       </div>
     );
   }
