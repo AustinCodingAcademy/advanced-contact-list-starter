@@ -13,6 +13,7 @@ export default class ContactList extends Component {
               name={contact.name}
               occupation={contact.occupation}
               avatar={contact.avatar}
+              onSelectClick={() => this.props.onSelectContact(contact)}
             />
           );
         })}
@@ -22,5 +23,6 @@ export default class ContactList extends Component {
 }
 
 ContactList.propTypes = {
-  contacts: PropTypes.func,
+  contacts: PropTypes.array.isRequired,
+  onSelectContact: PropTypes.func.isRequired
 };

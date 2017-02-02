@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-const Contact = props => {
+const SelectedContact = props => {
   return (
-    <li className="contact" onClick={props.onSelectClick}>
+    <li className="contact">
       <div className="image-cropper">
         <img src={props.avatar} alt="avatar" />
       </div>
@@ -10,15 +10,16 @@ const Contact = props => {
         <h2>{props.name}</h2>
         {props.occupation}
       </div>
+      <button onClick={props.onUnselectClick}> remove </button>
     </li>
   );
 };
 
-Contact.propTypes = {
-  name: PropTypes.string.isRequired,
-  occupation: PropTypes.string.isRequired,
+SelectedContact.propTypes = {
   avatar: PropTypes.string.isRequired,
-  onSelectClick: PropTypes.func.isRequired,
+  onUnselectClick: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  occupation: PropTypes.string.isRequired
 };
 
-export default Contact;
+export default SelectedContact;
