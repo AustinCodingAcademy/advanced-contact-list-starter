@@ -161,7 +161,13 @@ class App extends Component {
     });
   }
 
-  reset() {
+  handleResetClick() {
+
+    this.resetApplicationState();
+    this.addActionToHistory('Reset application');
+  }
+
+  resetApplicationState() {
 
     this.setState({
       contacts: Object.assign([], this.state.backupContacts),
@@ -169,8 +175,6 @@ class App extends Component {
       searchText: '',
       actionHistory: []
     });
-
-    this.addActionToHistory('Reset application');
   }
 
   addActionToHistory(description) {
@@ -216,7 +220,7 @@ class App extends Component {
           onChange={this.handleSearchBarChange.bind(this)} />
         <button
           className="reset-button"
-          onClick={this.reset.bind(this)}
+          onClick={this.handleResetClick.bind(this)}
           >Reset
           </button>
         <ActionHistory
