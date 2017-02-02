@@ -29,4 +29,11 @@ class ContactList extends Component {
   }
 }
 
+ContactList.propTypes = {
+  title: React.PropTypes.string,
+  contacts: React.PropTypes.object,
+  value: React.PropTypes.string,
+  handleSelectContactClick: React.PropTypes.function
+};
+
 export default ContactList;

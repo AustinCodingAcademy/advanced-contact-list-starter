@@ -31,4 +31,13 @@ class Contact extends Component {
   }
 }
 
+Contact.propTypes = {
+  avatar: React.propTypes.string,
+  value: React.propTypes.string,
+  name: React.propTypes.string,
+  occupation: React.propTypes.string,
+  id: React.propTypes.string,
+  handleSelectContactClick: React.propTypes.function
+};
+
 export default Contact;

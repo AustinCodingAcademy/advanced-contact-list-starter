@@ -9,22 +9,29 @@ class ActionHistory extends Component {
 
   render() {
     return (
-        <section className="action-history">
-          <h3>Action History</h3>
-          {
+      <section className="action-history">
+        <h3>Action History</h3>
+        {
             this.props.actions.map(action => {
               return (<p
-                  key={action._id}
-                  onClick={(event) => this.props.removeAction(event, action._id)}>{action.description}
+                key={action._id}
+                onClick={(event) => this.props.removeAction(event, action._id)}>
+                {action.description}
                 <FontAwesome
-                    name='times'/>
-              </p>)
+                  name="times" />
+              </p>);
             })
           }
-        </section>
-    )
+      </section>
+    );
   }
 
 }
+
+ActionHistory.propTypes = {
+  actions: React.PropTypes.object,
+  removeAction: React.PropTypes.function
+};
+
 
 export default ActionHistory;

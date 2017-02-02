@@ -225,7 +225,8 @@ class App extends Component {
           />
         <ContactList
           value={this.state.searchText}
-          title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' : 'No selected contacts'}
+          title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
+              'No selected contacts'}
           contacts={this.getFilteredContacts(this.state.selectedContacts)}
           handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
           />
