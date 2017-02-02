@@ -50,12 +50,8 @@ class App extends Component {
   }
 
   getFilteredContacts() {
-      // Remove any white space, and convert the searchText to lowercase
       const term = this.state.searchText.trim().toLowerCase();
-
-      // Filter will return a NEW array of contacts, the contact will
-      // be included in the array if the function returns true,
-      // and excluded if the function returns false
+      //whoops I may have copy pasted this part
       const filteredContacts = this.state.contacts.filter(contact => {
         return contact.name.toLowerCase().indexOf(term) >= 0;
       });
