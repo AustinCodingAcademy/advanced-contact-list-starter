@@ -10,7 +10,7 @@ const SearchBar = props => {
   //   };
   // }
   //
-  // handleChange(event) {
+  // handleChange(event)
   //   this.setState({
   //     value: event.target.value
   //   });
@@ -32,8 +32,9 @@ const SearchBar = props => {
 };
 
 
-// SearchBar.propTypes = {
-//   onChange: PropTypes.func.isRequired
-// };
+SearchBar.propTypes = {
+  value: React.PropTypes.string.isRequired,
+  onChange: React.PropTypes.func.isRequired
+};
 
 export default SearchBar;
