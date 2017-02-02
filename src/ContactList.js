@@ -1,7 +1,7 @@
 import React from 'react';
 import Contact from './Contact';
 
-const ContactList = (props) => {
+const ContactList = props => {
 
   return (
     <section>
@@ -28,10 +28,10 @@ const ContactList = (props) => {
 };
 
 ContactList.propTypes = {
-  title: React.PropTypes.string,
-  contacts: React.PropTypes.array,
-  value: React.PropTypes.string,
-  handleSelectContactClick: React.PropTypes.func
+  title: React.PropTypes.string.isRequired,
+  contacts: React.PropTypes.array.isRequired,
+  value: React.PropTypes.string.isRequired,
+  handleSelectContactClick: React.PropTypes.func.isRequired
 };
 
 export default ContactList;

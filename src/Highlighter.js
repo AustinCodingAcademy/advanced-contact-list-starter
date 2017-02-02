@@ -33,11 +33,14 @@ class Highlighter extends Component {
   }
 
   render() {
+
+    const builtSpans = this.buildSpans();
+
     return (
       <div className="highlighter">
-        <span>{this.buildSpans().firstChunk}</span>
-        <span><mark>{this.buildSpans().highlightedChunk}</mark></span>
-        <span>{this.buildSpans().lastChunk}</span>
+        <span>{builtSpans.firstChunk}</span>
+        <span><mark>{builtSpans.highlightedChunk}</mark></span>
+        <span>{builtSpans.lastChunk}</span>
       </div>
     );
   }
@@ -45,8 +48,8 @@ class Highlighter extends Component {
 }
 
 Highlighter.propTypes = {
-  searchWords: React.PropTypes.string,
-  textToHighlight: React.PropTypes.string
+  searchWords: React.PropTypes.string.isRequired,
+  textToHighlight: React.PropTypes.string.isRequired
 };
 
 export default Highlighter;

@@ -4,7 +4,7 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 
-const ActionHistory = (props) => {
+const ActionHistory = props => {
   return (
     <section className="action-history">
       <h3>Action History</h3>
@@ -25,8 +25,8 @@ const ActionHistory = (props) => {
 
 
 ActionHistory.propTypes = {
-  actions: React.PropTypes.array,
-  removeAction: React.PropTypes.func
+  actions: React.PropTypes.array.isRequired,
+  removeAction: React.PropTypes.func.isRequired
 };
 
 

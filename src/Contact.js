@@ -4,7 +4,7 @@
 import React from 'react';
 import Highlighter from './Highlighter';
 
-const Contact = (props) => {
+const Contact = props => {
 
   return (
     <li
@@ -30,12 +30,12 @@ const Contact = (props) => {
 };
 
 Contact.propTypes = {
-  avatar: React.PropTypes.string,
-  value: React.PropTypes.string,
-  name: React.PropTypes.string,
-  occupation: React.PropTypes.string,
-  id: React.PropTypes.number,
-  handleSelectContactClick: React.PropTypes.func
+  avatar: React.PropTypes.string.isRequired,
+  value: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
+  occupation: React.PropTypes.string.isRequired,
+  id: React.PropTypes.number.isRequired,
+  handleSelectContactClick: React.PropTypes.func.isRequired
 };
 
 export default Contact;
