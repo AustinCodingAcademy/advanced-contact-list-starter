@@ -34,7 +34,7 @@ Contact.propTypes = {
   value: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   occupation: React.PropTypes.string.isRequired,
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.any.isRequired,
   handleSelectContactClick: React.PropTypes.func.isRequired
 };
 

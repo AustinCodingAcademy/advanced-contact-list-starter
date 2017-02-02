@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import ContactList from './ContactList';
-import SearchBar from './SearchBar';
-import ActionHistory from './ActionHistory';
 import uuid from 'uuid';
 import update from 'immutability-helper';
 import moment from 'moment';
-
 import axios from 'axios';
+
+import ContactList from './ContactList';
+import SearchBar from './SearchBar';
+import ActionHistory from './ActionHistory';
+import AddContactForm from './AddContactForm';
+
 
 class App extends Component {
 
@@ -16,6 +18,12 @@ class App extends Component {
 
     this.state = {
       searchText: '',
+      contact: {
+        _id: uuid.v4(),
+        name: '',
+        occupation: '',
+        avatar: ''
+      },
       contacts: [],
       selectedContacts: [],
       backupContacts: [],
@@ -45,6 +53,7 @@ class App extends Component {
         });
   }
 
+
   removeStaleActionHistory() {
 
     if (this.state.actionHistory.length > 0) {
@@ -67,6 +76,38 @@ class App extends Component {
 
   }
 
+  handleAddContactSubmit(evt) {
+
+    evt.preventDefault();
+    const contacts = [ ...this.state.contacts, this.state.contact];
+
+    console.log("Before adding to state");
+    console.log(contacts);
+
+    this.setState({
+      contacts: contacts,
+      contact: {
+        _id: uuid.v4(),
+        name: '',
+        occupation: '',
+        avatar: ''
+      }
+    });
+
+    console.log(this.state.contacts);
+
+
+  }
+
+  onInputChange(evt) {
+    const contact = this.state.contact;
+    contact[evt.target.name] = evt.target.value;
+    this.setState({contact: contact});
+
+    console.log("After being set on input change");
+    console.log(this.state.contact);
+  }
+
   handleSearchBarChange(event) {
 
     this.setState({
@@ -75,6 +116,8 @@ class App extends Component {
   }
 
   getFilteredContacts(contactsArray) {
+
+    console.log(this.state.contacts);
 
     const searchTerm = this.state.searchText.trim().toLowerCase();
 
@@ -211,13 +254,17 @@ class App extends Component {
     return action;
   }
 
-
   render() {
 
     return (
       <div className="App">
         <SearchBar value={this.state.searchText}
           onChange={this.handleSearchBarChange.bind(this)} />
+        <AddContactForm
+          handleAddContactSubmit={this.handleAddContactSubmit.bind(this)}
+          contact={this.state.contact}
+          onNameChange={this.onInputChange.bind(this)}
+          />
         <button
           className="reset-button"
           onClick={this.handleResetClick.bind(this)}
@@ -230,7 +277,7 @@ class App extends Component {
         <ContactList
           value={this.state.searchText}
           title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
-              'No selected contacts'}
+                  'No selected contacts'}
           contacts={this.getFilteredContacts(this.state.selectedContacts)}
           handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
           />
