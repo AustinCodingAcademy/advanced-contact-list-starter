@@ -1,35 +1,34 @@
 /**
-	* Created by brianmichael on 1/23/17.
-	*/
-import React, {Component} from 'react';
+ * Created by brianmichael on 1/23/17.
+ */
+import React from 'react';
 import Highlighter from './Highlighter';
 
-class Contact extends Component {
+const Contact = (props) => {
 
-  render() {
-    return (
-      <li
-        className="contact"
-								>
-        <div className="image-cropper">
-          <img src={this.props.avatar} alt="avatar" />
-        </div>
-        <div className="contact-info">
-          <h2>
-            <Highlighter searchWords={this.props.value} textToHighlight={this.props.name} />
-          </h2>
-          <h3>{this.props.occupation}</h3>
-        </div>
+  return (
+    <li
+      className="contact"
+      >
+      <div className="image-cropper">
+        <img src={props.avatar} alt="avatar" />
+      </div>
+      <div className="contact-info">
+        <h2>
+          <Highlighter searchWords={props.value} textToHighlight={props.name} />
+        </h2>
+        <h3>{props.occupation}</h3>
+      </div>
 
-        <button
-          className="select-button"
-          id={this.props.id}
-          onClick={(event) => this.props.handleSelectContactClick(event)}>Select
-										</button>
-      </li>
-    );
-  }
-}
+      <button
+        className="select-button"
+        id={props.id}
+        onClick={(event) => props.handleSelectContactClick(event)}>Select
+        </button>
+    </li>
+  );
+};
+
 
 Contact.propTypes = {
   avatar: React.propTypes.string,
