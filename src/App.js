@@ -124,7 +124,7 @@ class App extends Component {
 
   getSelectedContacts() {
 
-    axios.get('http://localhost:4000/selectedContacts/')
+    axios.get('http://localhost:4000/selectedContacts')
         .then((response) => {
           this.setState({
             selectedContacts: response.data
@@ -240,13 +240,16 @@ class App extends Component {
   /* eslint-disable max-len */
   resetApplicationState() {
 
+    // These parrallel promises are sometimes buggy it seems with the Json server
+    // on a normal server this could be done in a single promise by sending back an object containing the contacts
+    // and Id's.
+    // Not a race condition because the batchableRemoves/batchableAdds don't modify state
     axios.all(this.state.selectedContacts.map(selectedContact => this.constructor.batchableAddAvailableContact(selectedContact)),
-       this.state.selectedContacts.map(selectedContact => this.constructor.batchableRemoveSelectedContact(selectedContact._id)))
-       .then((resp) => {
-         console.log(resp);
-         this.getContacts();
-         this.getSelectedContacts();
-       })
+        this.state.selectedContacts.map(selectedContact => this.constructor.batchableRemoveSelectedContact(selectedContact._id)))
+        .then(() => {
+          this.getContacts();
+          this.getSelectedContacts();
+        })
         .catch(err => console.log(err));
   }
 
@@ -270,7 +273,7 @@ class App extends Component {
 
   addActionToHistory(description) {
 
-    const newAction = this.buildNewAction(description);
+    const newAction = this.constructor.buildNewAction(description);
 
     // Using immutability helper to return new array.
     const newState = update(this.state.actionHistory, {$unshift: [newAction]});
@@ -291,7 +294,7 @@ class App extends Component {
 
   }
 
-  buildNewAction(description) {
+  static buildNewAction(description) {
 
     const action = {
       description: description || 'A default action',
