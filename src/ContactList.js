@@ -16,7 +16,7 @@ const ContactList = props => {
               name={contact.name}
               avatar={contact.avatar}
               occupation={contact.occupation}
-              handleSelectContactClick={props.handleSelectContactClick}
+              handleSelectContactClick={() => props.handleSelectContactClick(contact)}
                 />
           );
         })}

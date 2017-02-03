@@ -22,19 +22,18 @@ const Contact = props => {
 
       <button
         className="select-button"
-        id={props.id}
-        onClick={(event) => props.handleSelectContactClick(event)}>Select
+        onClick={props.handleSelectContactClick}>Select
         </button>
     </li>
   );
 };
-
+// {/*onClick={(event) => props.handleSelectContactClick(event)}>Select*/}
 Contact.propTypes = {
   avatar: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   occupation: React.PropTypes.string.isRequired,
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.any.isRequired,
   handleSelectContactClick: React.PropTypes.func.isRequired
 };
 
