@@ -10,7 +10,8 @@ class AddContactForm extends Component {
     return (
       <section>
         <h3>Add a new Contact</h3>
-        <form onSubmit={(evt) => this.props.handleAddContactSubmit(evt)}>
+        <form className="new-contact-form"
+          onSubmit={(evt) => this.props.handleAddContactSubmit(evt)}>
           <input
             placeholder="Name"
             name="name"

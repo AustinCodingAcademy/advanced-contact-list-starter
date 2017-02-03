@@ -6,6 +6,7 @@ const SearchBar = (props) => {
       className="search-bar"
       type="text"
       value={props.value}
+      placeholder="Enter a search term..."
       onChange={(event) => props.onChange(event)}
       />
   );

@@ -12,7 +12,7 @@ const ActionHistory = props => {
           props.actions.map(action => {
             return (<p
               key={action._id}
-              onClick={(event) => props.removeAction(event, action._id)}>
+              onClick={() => props.removeAction(action._id)}>
               {action.description}
               <FontAwesome
                 name="times" />

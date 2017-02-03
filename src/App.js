@@ -18,7 +18,7 @@ class App extends Component {
 
     this.state = {
       searchText: '',
-      contact: this.getEmptyContact(),
+      contact: this.buildNewContact(),
       validationErrors: {},
       contacts: [],
       selectedContacts: [],
@@ -27,7 +27,7 @@ class App extends Component {
     };
 
     // Done in constructor instead of in onEvent(s) for performance,
-    // as if passed in the bind will be redone every render?
+    // if passed in the bind will be redone every render?
     this.handleSearchBarChange = this.handleSearchBarChange.bind(this);
     this.handleAddContactSubmit = this.handleAddContactSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
@@ -47,15 +47,6 @@ class App extends Component {
   }
 
 
-
-  buildBackup() {
-    // build a backup of contacts to enable resetting
-    this.setState({
-      backupContacts: Object.assign([], this.state.contacts)
-    });
-
-  }
-
   /*
    Add Contact Input Form
    */
@@ -63,7 +54,7 @@ class App extends Component {
   handleAddContactSubmit(evt) {
 
     const isFormSubmit = true;
-    const validationErrors = this.validate(this.state.contact);
+    const validationErrors = this.validateInputForm(this.state.contact);
 
     this.setState({validationErrors});
 
@@ -77,7 +68,7 @@ class App extends Component {
   }
 
 
-  validate(contact) {
+  validateInputForm(contact) {
     const errors = {};
     if (!contact.name) {
       errors.name = 'Name required';
@@ -91,7 +82,7 @@ class App extends Component {
     return errors;
   }
 
-  getEmptyContact() {
+  buildNewContact() {
     return {
       _id: uuid.v4(),
       name: '',
@@ -133,10 +124,10 @@ class App extends Component {
 
   getSelectedContacts() {
 
-    return axios.get('http://localhost:4000/selectedContacts/')
-        .then((resp) => {
+    axios.get('http://localhost:4000/selectedContacts/')
+        .then((response) => {
           this.setState({
-            selectedContacts: resp.data
+            selectedContacts: response.data
           });
         })
         .catch(err => console.log(err));
@@ -152,7 +143,7 @@ class App extends Component {
 
   addSelectedContact(contact) {
 
-    return axios.post('http://localhost:4000/selectedContacts/', contact)
+    axios.post('http://localhost:4000/selectedContacts/', contact)
         .then((resp) => {
           this.setState({
             selectedContacts: this.state.selectedContacts.concat(resp.data)
@@ -175,7 +166,7 @@ class App extends Component {
 
   removeSelectedContact(id) {
 
-    return axios.delete(`http://localhost:4000/selectedContacts/${id}`)
+    axios.delete(`http://localhost:4000/selectedContacts/${id}`)
         .then(() => {
           this.setState({
             selectedContacts: this.state.selectedContacts.filter((contact) => {
@@ -198,8 +189,6 @@ class App extends Component {
             contacts: response.data
           });
 
-          this.buildBackup();
-
         }).catch((err) => {
           console.log(err);
         });
@@ -207,11 +196,11 @@ class App extends Component {
 
   addAvailableContact(contact, isFormSubmit) {
 
-    return axios.post('http://localhost:4000/contacts/', contact)
+    axios.post('http://localhost:4000/contacts/', contact)
         .then((resp) => {
           this.setState({
             contacts: this.state.contacts.concat(resp.data),
-            contact: isFormSubmit ? this.getEmptyContact() : Object.assign({}, this.state.contact)
+            contact: isFormSubmit ? this.buildNewContact() : Object.assign({}, this.state.contact)
           });
         }).catch(err => console.log(err));
 
@@ -219,7 +208,7 @@ class App extends Component {
 
   removeAvailableContact(id) {
 
-    return axios.delete(`http://localhost:4000/contacts/${id}`)
+    axios.delete(`http://localhost:4000/contacts/${id}`)
         .then(() => {
           this.setState({
             contacts: this.state.contacts.filter((contact) => {
@@ -240,19 +229,19 @@ class App extends Component {
     this.addActionToHistory('Reset application');
   }
 
-  batchableRemoveSelectedContact(id) {
+  static batchableRemoveSelectedContact(id) {
     return axios.delete(`http://localhost:4000/selectedContacts/${id}`);
   }
 
-  batchableAddAvailableContact(contact) {
+  static batchableAddAvailableContact(contact) {
     return axios.post('http://localhost:4000/contacts/', contact);
   }
 
   /* eslint-disable max-len */
   resetApplicationState() {
 
-    axios.all(this.state.selectedContacts.map(selectedContact => this.batchableAddAvailableContact(selectedContact)),
-       this.state.selectedContacts.map(selectedContact => this.batchableRemoveSelectedContact(selectedContact._id)))
+    axios.all(this.state.selectedContacts.map(selectedContact => this.constructor.batchableAddAvailableContact(selectedContact)),
+       this.state.selectedContacts.map(selectedContact => this.constructor.batchableRemoveSelectedContact(selectedContact._id)))
        .then((resp) => {
          console.log(resp);
          this.getContacts();
@@ -292,7 +281,7 @@ class App extends Component {
 
   }
 
-  handleRemoveActionFromHistoryClick(event, id) {
+  handleRemoveActionFromHistoryClick(id) {
 
     this.setState({
       actionHistory: this.state.actionHistory.filter((action) => {
