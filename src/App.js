@@ -118,6 +118,7 @@ class App extends Component {
           Contact List!
         </h1>
         <ContactForm onSubmit={this.handleSubmitContact.bind(this)} />
+        <h2>Search</h2>
         <SearchBar value={this.state.searchText} onChange={this.handleChange.bind(this)} />
         <ResetButton
           onResetClick={this.resetContacts.bind(this)}
@@ -126,6 +127,7 @@ class App extends Component {
           contacts={this.getFilteredContacts()}
           onRemoveContact={this.handleRemoveContact.bind(this)}
           onSelectContact={this.handleSelectContact.bind(this)}
+          searchText={this.state.searchText}
         />
         <SelectedContactList
           selectedContacts={this.state.selectedContacts}

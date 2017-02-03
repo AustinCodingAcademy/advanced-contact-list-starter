@@ -3,7 +3,7 @@ import SelectedContact from './SelectedContact';
 
 const SelectedContactList = props => {
   return (
-    <div className="App">
+    <div className="selected-contact-list">
       <h1>{props.selectedContacts.length > 0 ? 'Selected Contacts' : 'No Contacts Selected'}</h1>
       <ul>
         {props.selectedContacts.map(selectedContact => {

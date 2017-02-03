@@ -10,7 +10,7 @@ const SelectedContact = props => {
         <h2>{props.name}</h2>
         {props.occupation}
       </div>
-      <button onClick={props.onUnselectClick}>Unselect</button>
+      <button className="unselect-button" onClick={props.onUnselectClick}>Unselect</button>
     </li>
   );
 };

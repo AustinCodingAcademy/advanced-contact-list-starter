@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ContactName from './ContactName';
 
 const Contact = props => {
   return (
@@ -7,11 +8,14 @@ const Contact = props => {
         <img src={props.avatar} alt="avatar" />
       </div>
       <div className="contact-info">
-        <h2>{props.name}</h2>
+        <ContactName
+          name={props.name}
+          searchText={props.searchText}
+        />
         {props.occupation}
       </div>
-      <button onClick={props.onSelectClick}>Select</button>
-      <button onClick={props.onRemoveClick}>Remove</button>
+      <button className="select-button" onClick={props.onSelectClick}>Select</button>
+      <button className="remove-button" onClick={props.onRemoveClick}>Remove</button>
     </li>
   );
 };
@@ -21,7 +25,8 @@ Contact.propTypes = {
   occupation: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   onSelectClick: PropTypes.func.isRequired,
-  onRemoveClick: PropTypes.func.isRequired
+  onRemoveClick: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired
 };
 
 export default Contact;
