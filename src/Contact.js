@@ -11,7 +11,10 @@ const Contact = props => {
           {props.occupation}
         </div>
         <div className="add-start" onClick={props.onClick}>
-          {props.buttonText}
+          <span>Fav</span>
+        </div>
+        <div className="add-start" onClick={() => props.onClick2(props.id)}>
+          <span> - </span>
         </div>
       </li>
     );

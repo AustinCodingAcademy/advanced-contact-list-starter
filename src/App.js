@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
+import ContactForm from './ContactForm';
 import axios from 'axios';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
       axios.get('http://localhost:4000/contacts')
         .then(resp => {
           this.setState({
+            searchText: this.state.searchText,
             contacts: resp.data
           })
         })
@@ -25,9 +27,8 @@ class App extends Component {
         })
     }
 
-    handleSearchBarChange(event) {
+    handleChange(event) {
         this.setState({
-            contacts: this.state.contacts,
             searchText: event.target.value
         });
     }
@@ -74,18 +75,42 @@ class App extends Component {
         });
     }
 
+    handleAddContact(attributes) {
+      axios.post('http://localhost:4000/contacts', attributes)
+      .then((resp) => {
+        this.setState({
+          contacts: [...this.state.contacts, resp.data]
+        });
+      })
+      .catch(err => console.log(err));
+    }
+
+    handleDeleteContact(_id) {
+      axios.delete(`http://localhost:4000/contacts/${_id}`)
+        .then(() => {
+          const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
+
+          this.setState({
+            contacts: newContacts
+          });
+        })
+        .catch(err => console.log(`ERROR! ${err}`));
+    }
+
     render() {
         return (
           <div className="App">
+            <ContactForm onSubmit={this.handleAddContact.bind(this)} />
             <SearchBar
               value={this.state.searchText}
-              onChange={this.handleSearchBarChange.bind(this)}
+              onChange={this.handleChange.bind(this)}
             />
             <ContactList
               contacts={this.getFilteredContacts()}
               listName='Contacts'
               buttonText='Fav'
               onClick={this.addToFavorites()}
+              onClick2={this.handleDeleteContact.bind(this)}
             />
             <ContactList contacts={this.getFavorites()}
               listName='Favorites'
