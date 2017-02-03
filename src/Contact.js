@@ -27,7 +27,7 @@ const Contact = props => {
     </li>
   );
 };
-// {/*onClick={(event) => props.handleSelectContactClick(event)}>Select*/}
+
 Contact.propTypes = {
   avatar: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
