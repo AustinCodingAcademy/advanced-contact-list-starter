@@ -16,3 +16,4 @@ then..
 1. Implement field component with own validations
 2. Implement deselect button style for selected items
 3. Add bootstrap and style for basic appeal
+4. Check for URL in avatar link

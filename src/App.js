@@ -7,7 +7,7 @@ import axios from 'axios';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import ActionHistory from './ActionHistory';
-import AddContactForm from './AddContactForm';
+import ToggleableContactForm from './ToggleableContactForm';
 
 
 class App extends Component {
@@ -312,12 +312,12 @@ class App extends Component {
       <div className="App">
         <SearchBar value={this.state.searchText}
           onChange={this.handleSearchBarChange} />
-        <AddContactForm
+        <ToggleableContactForm
           handleAddContactSubmit={this.handleAddContactSubmit}
           contact={this.state.contact}
           validationErrors={this.state.validationErrors}
-          onNameChange={this.onInputChange}
-          />
+          onInputChange={this.onInputChange} />
+
         <button
           className="reset-button"
           onClick={this.handleResetClick}
