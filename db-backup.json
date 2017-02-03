@@ -1,18 +1,6 @@
-{
-  "history": [],
-  "selectedContacts": [
-    {
-      "_id": "14d3bcc2-b4d5-4566-8ef8-8937ce3d8069",
-      "name": "Tiny Rick",
-      "occupation": "Being trapped in bodies",
-      "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp"
-    },
-    {
-      "_id": "97da3033-94d7-464f-96ab-317b2c5a2ece",
-      "name": "Morty",
-      "occupation": "Wacky Adventures",
-      "avatar": "https://i.ytimg.com/vi/Zw1Du7OmoU8/maxresdefault.jpg"
-    },
+{ "history":[],
+  "selectedContacts":[],
+  "contacts": [
     {
       "_id": "a5a854d1-8331-4f39-a583-e6fb5171923f",
       "name": "Dale Cooper",
@@ -24,9 +12,7 @@
       "name": "Spike Spiegel",
       "occupation": "Bounty Hunter",
       "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
-    }
-  ],
-  "contacts": [
+    },
     {
       "_id": "30ddb497-e264-4863-938c-29414beb6860",
       "name": "Wirt",
@@ -52,10 +38,17 @@
       "avatar": "https://upload.wikimedia.org/wikipedia/en/3/3e/FettbobaJB.png"
     },
     {
-      "_id": "3b658002-8c39-40a8-86c1-c557d84556c9",
-      "name": "Test addition",
-      "occupation": "Tester",
-      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
+      "_id": "14d3bcc2-b4d5-4566-8ef8-8937ce3d8069",
+      "name": "Tiny Rick",
+      "occupation": "Being trapped in bodies",
+      "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp"
+    },
+    {
+      "_id": "97da3033-94d7-464f-96ab-317b2c5a2ece",
+      "name": "Morty",
+      "occupation": "Wacky Adventures",
+      "avatar": "https://i.ytimg.com/vi/Zw1Du7OmoU8/maxresdefault.jpg"
     }
   ]
 }
+

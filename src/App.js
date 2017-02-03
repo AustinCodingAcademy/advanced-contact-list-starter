@@ -35,7 +35,6 @@ class App extends Component {
 
   getContacts() {
 
-    console.log('get contacts ran');
     axios.get('http://localhost:4000/contacts')
         .then((response) => {
 
@@ -46,8 +45,8 @@ class App extends Component {
           this.buildBackup();
 
         }).catch((err) => {
-          console.log(err);
-        });
+      console.log(err);
+    });
   }
 
 
@@ -75,28 +74,41 @@ class App extends Component {
 
   handleAddContactSubmit(evt) {
 
-
-    const contacts = [ ...this.state.contacts, this.state.contact];
     const validationErrors = this.validate(this.state.contact);
 
     this.setState({validationErrors});
 
     evt.preventDefault();
 
-    if (Object.keys(validationErrors).length) {return;}
+    if (Object.keys(validationErrors).length) {
+      return;
+    }
 
-    this.setState({
-      contacts,
-      contact: this.getEmptyContact()
-    });
+    this.postContact(this.state.contact);
+  }
 
+  postContact(contact) {
+    axios.post('http://localhost:4000/contacts', contact)
+        .then(resp => {
+          this.setState({
+            contacts: [...this.state.contacts, resp.data],
+            contact: this.getEmptyContact()
+          });
+        })
+        .catch(err => console.log(err));
   }
 
   validate(contact) {
     const errors = {};
-    if (!contact.name) {errors.name = 'Name required';}
-    if (!contact.occupation) {errors.occupation = 'Occupation required';}
-    if (!contact.avatar) {errors.avatar = 'Avatar link required';}
+    if (!contact.name) {
+      errors.name = 'Name required';
+    }
+    if (!contact.occupation) {
+      errors.occupation = 'Occupation required';
+    }
+    if (!contact.avatar) {
+      errors.avatar = 'Avatar link required';
+    }
     return errors;
   }
 
@@ -113,9 +125,6 @@ class App extends Component {
     const contact = this.state.contact;
     contact[evt.target.name] = evt.target.value;
     this.setState({contact});
-
-    console.log('After being set on input change');
-    console.log(this.state.contact);
   }
 
   handleSearchBarChange(event) {
@@ -127,8 +136,6 @@ class App extends Component {
 
   getFilteredContacts(contactsArray) {
 
-    console.log(this.state.contacts);
-
     const searchTerm = this.state.searchText.trim().toLowerCase();
 
     return contactsArray.filter(contact => {
@@ -137,68 +144,72 @@ class App extends Component {
 
   }
 
-  handleAddToSelectedClick(event) {
+  handleAddToSelectedClick(contact) {
 
-    const id = event.target.id;
+    this.addSelectedContact(contact);
+    this.removeAvailableContact(contact._id);
 
-    this.addSelectedContact(id);
-    this.removeAvailableContact(id);
-
-    const addedContact = this.findContactById(id, this.state.contacts);
-    this.addActionToHistory(`Added ${addedContact.name} to selected contacts`);
+    this.addActionToHistory(`Added ${contact.name} to selected contacts`);
   }
 
-  handleRemoveSelectedClick(event) {
+  addSelectedContact(contact) {
 
-    const id = event.target.id;
+    axios.post('http://localhost:4000/selectedContacts/', contact)
+        .then((resp) => {
+          this.setState({
+            selectedContacts: this.state.selectedContacts.concat(resp.data)
+          });
+        })
+        .catch(err => console.log(err));
 
-    this.addAvailableContact(id);
+
+  }
+
+  handleRemoveSelectedClick(contact) {
+
+    const id = contact._id;
+
+    this.addAvailableContact(contact);
     this.removeSelectedContact(id);
 
-    const removedContact = this.findContactById(id, this.state.selectedContacts);
-    this.addActionToHistory(`Removed ${removedContact.name} from selected contacts`);
+    this.addActionToHistory(`Removed ${contact.name} from selected contacts`);
 
-  }
-
-  addSelectedContact(id) {
-
-    const contact = this.findContactById(id, this.state.contacts);
-
-    this.setState({
-      selectedContacts: this.state.selectedContacts.concat(contact)
-    });
-
-    return contact;
   }
 
   removeSelectedContact(id) {
 
-    this.setState({
-      selectedContacts: this.state.selectedContacts.filter((contact) => {
-        return contact._id !== id;
-      })
-    });
+    axios.delete(`http://localhost:4000/selectedContacts/${id}`)
+        .then(() => {
+          this.setState({
+            selectedContacts: this.state.selectedContacts.filter((contact) => {
+              return contact._id !== id;
+            })
+          });
+        }).catch(err => console.log(err));
+
   }
 
-  addAvailableContact(id) {
+  addAvailableContact(contact) {
 
-    const contact = this.findContactById(id, this.state.selectedContacts);
+    axios.post('http://localhost:4000/contacts/', contact)
+        .then((resp) => {
+          this.setState({
+            contacts: this.state.contacts.concat(resp.data)
+          });
+        }).catch(err => console.log(err));
 
-    this.setState({
-      contacts: this.state.contacts.concat(contact)
-    });
-
-    return contact;
   }
 
   removeAvailableContact(id) {
 
-    this.setState({
-      contacts: this.state.contacts.filter((contact) => {
-        return contact._id !== id;
-      })
-    });
-
+    axios.delete(`http://localhost:4000/contacts/${id}`)
+        .then(() => {
+          this.setState({
+            contacts: this.state.contacts.filter((contact) => {
+              return contact._id !== id;
+            })
+          });
+        }).catch(err => console.log(err));
   }
 
   findContactById(id, array) {
@@ -261,39 +272,39 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
-        <SearchBar value={this.state.searchText}
-          onChange={this.handleSearchBarChange.bind(this)} />
-        <AddContactForm
-          handleAddContactSubmit={this.handleAddContactSubmit.bind(this)}
-          contact={this.state.contact}
-          validationErrors={this.state.validationErrors}
-          onNameChange={this.onInputChange.bind(this)}
+        <div className="App">
+          <SearchBar value={this.state.searchText}
+                     onChange={this.handleSearchBarChange.bind(this)}/>
+          <AddContactForm
+              handleAddContactSubmit={this.handleAddContactSubmit.bind(this)}
+              contact={this.state.contact}
+              validationErrors={this.state.validationErrors}
+              onNameChange={this.onInputChange.bind(this)}
           />
-        <button
-          className="reset-button"
-          onClick={this.handleResetClick.bind(this)}
+          <button
+              className="reset-button"
+              onClick={this.handleResetClick.bind(this)}
           >Reset
           </button>
-        <ActionHistory
-          actions={this.state.actionHistory}
-          removeAction={this.handleRemoveActionFromHistoryClick.bind(this)}
+          <ActionHistory
+              actions={this.state.actionHistory}
+              removeAction={this.handleRemoveActionFromHistoryClick.bind(this)}
           />
-        <ContactList
-          value={this.state.searchText}
-          title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
+          <ContactList
+              value={this.state.searchText}
+              title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
                   'No selected contacts'}
-          contacts={this.getFilteredContacts(this.state.selectedContacts)}
-          handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
+              contacts={this.getFilteredContacts(this.state.selectedContacts)}
+              handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
           />
-        <ContactList
-          value={this.state.searchText}
-          title={'Available Contacts'}
-          contacts={this.getFilteredContacts(this.state.contacts)}
-          handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}
+          <ContactList
+              value={this.state.searchText}
+              title={'Available Contacts'}
+              contacts={this.getFilteredContacts(this.state.contacts)}
+              handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}
           />
 
-      </div>
+        </div>
     );
   }
 
