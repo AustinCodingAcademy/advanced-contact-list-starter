@@ -25,14 +25,28 @@ class App extends Component {
       backupContacts: [],
       actionHistory: [],
     };
+
+    // Done in constructor instead of in onEvent(s) for performance,
+    // as if passed in the bind will be redone every render?
+    this.handleSearchBarChange = this.handleSearchBarChange.bind(this);
+    this.handleAddContactSubmit = this.handleAddContactSubmit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.handleResetClick = this.handleResetClick.bind(this);
+    this.handleRemoveActionFromHistoryClick = this.handleRemoveActionFromHistoryClick.bind(this);
+    this.handleRemoveSelectedClick = this.handleRemoveSelectedClick.bind(this);
+    this.handleAddToSelectedClick = this.handleAddToSelectedClick.bind(this);
+    this.removeStaleActionHistory = this.removeStaleActionHistory.bind(this);
+
   }
 
   componentDidMount() {
 
     this.getContacts();
     this.getSelectedContacts();
-    setInterval(this.removeStaleActionHistory.bind(this), 5000);
+    setInterval(this.removeStaleActionHistory, 5000);
   }
+
+
 
   buildBackup() {
     // build a backup of contacts to enable resetting
@@ -118,7 +132,8 @@ class App extends Component {
    */
 
   getSelectedContacts() {
-    axios.get('http://localhost:4000/selectedContacts/')
+
+    return axios.get('http://localhost:4000/selectedContacts/')
         .then((resp) => {
           this.setState({
             selectedContacts: resp.data
@@ -137,7 +152,7 @@ class App extends Component {
 
   addSelectedContact(contact) {
 
-    axios.post('http://localhost:4000/selectedContacts/', contact)
+    return axios.post('http://localhost:4000/selectedContacts/', contact)
         .then((resp) => {
           this.setState({
             selectedContacts: this.state.selectedContacts.concat(resp.data)
@@ -160,7 +175,7 @@ class App extends Component {
 
   removeSelectedContact(id) {
 
-    axios.delete(`http://localhost:4000/selectedContacts/${id}`)
+    return axios.delete(`http://localhost:4000/selectedContacts/${id}`)
         .then(() => {
           this.setState({
             selectedContacts: this.state.selectedContacts.filter((contact) => {
@@ -176,7 +191,7 @@ class App extends Component {
 
   getContacts() {
 
-    axios.get('http://localhost:4000/contacts')
+    return axios.get('http://localhost:4000/contacts')
         .then((response) => {
 
           this.setState({
@@ -192,7 +207,7 @@ class App extends Component {
 
   addAvailableContact(contact, isFormSubmit) {
 
-    axios.post('http://localhost:4000/contacts/', contact)
+    return axios.post('http://localhost:4000/contacts/', contact)
         .then((resp) => {
           this.setState({
             contacts: this.state.contacts.concat(resp.data),
@@ -204,7 +219,7 @@ class App extends Component {
 
   removeAvailableContact(id) {
 
-    axios.delete(`http://localhost:4000/contacts/${id}`)
+    return axios.delete(`http://localhost:4000/contacts/${id}`)
         .then(() => {
           this.setState({
             contacts: this.state.contacts.filter((contact) => {
@@ -225,19 +240,30 @@ class App extends Component {
     this.addActionToHistory('Reset application');
   }
 
+  batchableRemoveSelectedContact(id) {
+    return axios.delete(`http://localhost:4000/selectedContacts/${id}`);
+  }
+
+  batchableAddAvailableContact(contact) {
+    return axios.post('http://localhost:4000/contacts/', contact);
+  }
+
+  /* eslint-disable max-len */
   resetApplicationState() {
 
-    this.setState({
-      contacts: Object.assign([], this.state.backupContacts),
-      selectedContacts: [],
-      searchText: '',
-      actionHistory: []
-    });
+    axios.all(this.state.selectedContacts.map(selectedContact => this.batchableAddAvailableContact(selectedContact)),
+       this.state.selectedContacts.map(selectedContact => this.batchableRemoveSelectedContact(selectedContact._id)))
+       .then((resp) => {
+         console.log(resp);
+         this.getContacts();
+         this.getSelectedContacts();
+       })
+        .catch(err => console.log(err));
   }
 
   /*
-  Action History
-  */
+   Action History
+   */
 
   removeStaleActionHistory() {
 
@@ -287,39 +313,40 @@ class App extends Component {
     return action;
   }
 
+
   render() {
 
     return (
       <div className="App">
         <SearchBar value={this.state.searchText}
-          onChange={this.handleSearchBarChange.bind(this)} />
+          onChange={this.handleSearchBarChange} />
         <AddContactForm
-          handleAddContactSubmit={this.handleAddContactSubmit.bind(this)}
+          handleAddContactSubmit={this.handleAddContactSubmit}
           contact={this.state.contact}
           validationErrors={this.state.validationErrors}
-          onNameChange={this.onInputChange.bind(this)}
+          onNameChange={this.onInputChange}
           />
         <button
           className="reset-button"
-          onClick={this.handleResetClick.bind(this)}
+          onClick={this.handleResetClick}
           >Reset
           </button>
         <ActionHistory
           actions={this.state.actionHistory}
-          removeAction={this.handleRemoveActionFromHistoryClick.bind(this)}
+          removeAction={this.handleRemoveActionFromHistoryClick}
           />
         <ContactList
           value={this.state.searchText}
           title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
                   'No selected contacts'}
           contacts={this.getFilteredContacts(this.state.selectedContacts)}
-          handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
+          handleSelectContactClick={this.handleRemoveSelectedClick}
           />
         <ContactList
           value={this.state.searchText}
           title={'Available Contacts'}
           contacts={this.getFilteredContacts(this.state.contacts)}
-          handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}
+          handleSelectContactClick={this.handleAddToSelectedClick}
           />
 
       </div>

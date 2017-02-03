@@ -7,8 +7,6 @@ import React, {Component} from 'react';
 class AddContactForm extends Component {
 
   render() {
-
-
     return (
       <section>
         <h3>Add a new Contact</h3>
