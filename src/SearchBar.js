@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class SearchBar extends Component {
+class SearchBar extends React.Component {
   constructor() {
     super();
 
@@ -29,5 +29,10 @@ class SearchBar extends Component {
     );
   }
 }
+
+SearchBar.propTypes = {
+  value: React.PropTypes.string.isRequired,
+  onChange: React.PropTypes.func.isRequired
+};
 
 export default SearchBar;
