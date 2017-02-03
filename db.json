@@ -2,12 +2,6 @@
   "history": [],
   "selectedContacts": [
     {
-      "_id": "14d3bcc2-b4d5-4566-8ef8-8937ce3d8069",
-      "name": "Tiny Rick",
-      "occupation": "Being trapped in bodies",
-      "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp"
-    },
-    {
       "_id": "97da3033-94d7-464f-96ab-317b2c5a2ece",
       "name": "Morty",
       "occupation": "Wacky Adventures",
@@ -18,12 +12,6 @@
       "name": "Dale Cooper",
       "occupation": "FBI Agent",
       "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
-    },
-    {
-      "_id": "a8e98ae0-ccf3-40ae-9cca-378b76f346de",
-      "name": "Spike Spiegel",
-      "occupation": "Bounty Hunter",
-      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
     }
   ],
   "contacts": [
@@ -34,16 +22,16 @@
       "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
     },
     {
-      "_id": "a5f08bcf-71ea-49ca-8691-f829f800f269",
-      "name": "Michael Myers",
-      "occupation": "Loving little brother",
-      "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
-    },
-    {
       "_id": "66079646-c958-4c58-86c0-bba9a65c3980",
       "name": "Dana Scully",
       "occupation": "FBI Agent",
       "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
+    },
+    {
+      "_id": "3b658002-8c39-40a8-86c1-c557d84556c9",
+      "name": "Test addition",
+      "occupation": "Tester",
+      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
     },
     {
       "_id": "7578b392-1688-462a-b299-83dc16c67d8b",
@@ -52,10 +40,34 @@
       "avatar": "https://upload.wikimedia.org/wikipedia/en/3/3e/FettbobaJB.png"
     },
     {
-      "_id": "3b658002-8c39-40a8-86c1-c557d84556c9",
-      "name": "Test addition",
-      "occupation": "Tester",
-      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
+      "_id": "a5f08bcf-71ea-49ca-8691-f829f800f269",
+      "name": "Michael Myers",
+      "occupation": "Loving little brother",
+      "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
+    },
+    {
+      "_id": "a8e98ae0-ccf3-40ae-9cca-378b76f346de",
+      "name": "Spike Spiegel",
+      "occupation": "Bounty Hunter",
+      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
+    },
+    {
+      "_id": "14e1aa84-44a7-45da-80ea-c9a314315b7a",
+      "name": "test addition",
+      "occupation": "teser",
+      "avatar": "ok"
+    },
+    {
+      "_id": "0e38b8f0-5e43-405a-84cc-19bab2906db6",
+      "name": "another test",
+      "occupation": "a better test",
+      "avatar": "ok"
+    },
+    {
+      "_id": "14d3bcc2-b4d5-4566-8ef8-8937ce3d8069",
+      "name": "Tiny Rick",
+      "occupation": "Being trapped in bodies",
+      "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp"
     }
   ]
 }

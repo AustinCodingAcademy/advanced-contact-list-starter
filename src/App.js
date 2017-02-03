@@ -30,38 +30,8 @@ class App extends Component {
   componentDidMount() {
 
     this.getContacts();
+    this.getSelectedContacts();
     setInterval(this.removeStaleActionHistory.bind(this), 5000);
-  }
-
-  getContacts() {
-
-    axios.get('http://localhost:4000/contacts')
-        .then((response) => {
-
-          this.setState({
-            contacts: response.data
-          });
-
-          this.buildBackup();
-
-        }).catch((err) => {
-      console.log(err);
-    });
-  }
-
-
-  removeStaleActionHistory() {
-
-    if (this.state.actionHistory.length > 0) {
-      const now = moment();
-
-      this.setState({
-        actionHistory: this.state.actionHistory.filter((action) => {
-          return action.expirationMoment.isAfter(now);
-        })
-      });
-    }
-
   }
 
   buildBackup() {
@@ -72,8 +42,13 @@ class App extends Component {
 
   }
 
+  /*
+   Add Contact Input Form
+   */
+
   handleAddContactSubmit(evt) {
 
+    const isFormSubmit = true;
     const validationErrors = this.validate(this.state.contact);
 
     this.setState({validationErrors});
@@ -84,19 +59,9 @@ class App extends Component {
       return;
     }
 
-    this.postContact(this.state.contact);
+    this.addAvailableContact(this.state.contact, isFormSubmit);
   }
 
-  postContact(contact) {
-    axios.post('http://localhost:4000/contacts', contact)
-        .then(resp => {
-          this.setState({
-            contacts: [...this.state.contacts, resp.data],
-            contact: this.getEmptyContact()
-          });
-        })
-        .catch(err => console.log(err));
-  }
 
   validate(contact) {
     const errors = {};
@@ -127,6 +92,10 @@ class App extends Component {
     this.setState({contact});
   }
 
+  /*
+   Search Bar
+   */
+
   handleSearchBarChange(event) {
 
     this.setState({
@@ -142,6 +111,20 @@ class App extends Component {
       return contact.name.toLowerCase().indexOf(searchTerm) >= 0;
     });
 
+  }
+
+  /*
+   Selected Contacts
+   */
+
+  getSelectedContacts() {
+    axios.get('http://localhost:4000/selectedContacts/')
+        .then((resp) => {
+          this.setState({
+            selectedContacts: resp.data
+          });
+        })
+        .catch(err => console.log(err));
   }
 
   handleAddToSelectedClick(contact) {
@@ -161,7 +144,6 @@ class App extends Component {
           });
         })
         .catch(err => console.log(err));
-
 
   }
 
@@ -186,15 +168,35 @@ class App extends Component {
             })
           });
         }).catch(err => console.log(err));
-
   }
 
-  addAvailableContact(contact) {
+  /*
+   Available Contacts
+   */
+
+  getContacts() {
+
+    axios.get('http://localhost:4000/contacts')
+        .then((response) => {
+
+          this.setState({
+            contacts: response.data
+          });
+
+          this.buildBackup();
+
+        }).catch((err) => {
+          console.log(err);
+        });
+  }
+
+  addAvailableContact(contact, isFormSubmit) {
 
     axios.post('http://localhost:4000/contacts/', contact)
         .then((resp) => {
           this.setState({
-            contacts: this.state.contacts.concat(resp.data)
+            contacts: this.state.contacts.concat(resp.data),
+            contact: isFormSubmit ? this.getEmptyContact() : Object.assign({}, this.state.contact)
           });
         }).catch(err => console.log(err));
 
@@ -212,12 +214,10 @@ class App extends Component {
         }).catch(err => console.log(err));
   }
 
-  findContactById(id, array) {
 
-    return array.find((contact) => {
-      return contact._id === id;
-    });
-  }
+  /*
+   Reset Button
+   */
 
   handleResetClick() {
 
@@ -233,6 +233,24 @@ class App extends Component {
       searchText: '',
       actionHistory: []
     });
+  }
+
+  /*
+  Action History
+  */
+
+  removeStaleActionHistory() {
+
+    if (this.state.actionHistory.length > 0) {
+      const now = moment();
+
+      this.setState({
+        actionHistory: this.state.actionHistory.filter((action) => {
+          return action.expirationMoment.isAfter(now);
+        })
+      });
+    }
+
   }
 
   addActionToHistory(description) {
@@ -272,39 +290,39 @@ class App extends Component {
   render() {
 
     return (
-        <div className="App">
-          <SearchBar value={this.state.searchText}
-                     onChange={this.handleSearchBarChange.bind(this)}/>
-          <AddContactForm
-              handleAddContactSubmit={this.handleAddContactSubmit.bind(this)}
-              contact={this.state.contact}
-              validationErrors={this.state.validationErrors}
-              onNameChange={this.onInputChange.bind(this)}
+      <div className="App">
+        <SearchBar value={this.state.searchText}
+          onChange={this.handleSearchBarChange.bind(this)} />
+        <AddContactForm
+          handleAddContactSubmit={this.handleAddContactSubmit.bind(this)}
+          contact={this.state.contact}
+          validationErrors={this.state.validationErrors}
+          onNameChange={this.onInputChange.bind(this)}
           />
-          <button
-              className="reset-button"
-              onClick={this.handleResetClick.bind(this)}
+        <button
+          className="reset-button"
+          onClick={this.handleResetClick.bind(this)}
           >Reset
           </button>
-          <ActionHistory
-              actions={this.state.actionHistory}
-              removeAction={this.handleRemoveActionFromHistoryClick.bind(this)}
+        <ActionHistory
+          actions={this.state.actionHistory}
+          removeAction={this.handleRemoveActionFromHistoryClick.bind(this)}
           />
-          <ContactList
-              value={this.state.searchText}
-              title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
+        <ContactList
+          value={this.state.searchText}
+          title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
                   'No selected contacts'}
-              contacts={this.getFilteredContacts(this.state.selectedContacts)}
-              handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
+          contacts={this.getFilteredContacts(this.state.selectedContacts)}
+          handleSelectContactClick={this.handleRemoveSelectedClick.bind(this)}
           />
-          <ContactList
-              value={this.state.searchText}
-              title={'Available Contacts'}
-              contacts={this.getFilteredContacts(this.state.contacts)}
-              handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}
+        <ContactList
+          value={this.state.searchText}
+          title={'Available Contacts'}
+          contacts={this.getFilteredContacts(this.state.contacts)}
+          handleSelectContactClick={this.handleAddToSelectedClick.bind(this)}
           />
 
-        </div>
+      </div>
     );
   }
 
