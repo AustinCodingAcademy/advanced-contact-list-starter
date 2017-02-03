@@ -8,6 +8,7 @@ import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import ActionHistory from './ActionHistory';
 import ToggleableContactForm from './ToggleableContactForm';
+import LoadingSpinner from './LoadingSpinner';
 
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
       selectedContacts: [],
       backupContacts: [],
       actionHistory: [],
+      isLoading: false,
     };
 
     // Done in constructor instead of in onEvent(s) for performance,
@@ -124,8 +126,14 @@ class App extends Component {
 
   getSelectedContacts() {
 
+
+    this.loadingStarted();
+
     axios.get('http://localhost:4000/selectedContacts')
         .then((response) => {
+
+          this.loadingEnded();
+
           this.setState({
             selectedContacts: response.data
           });
@@ -143,8 +151,13 @@ class App extends Component {
 
   addSelectedContact(contact) {
 
+    this.loadingStarted();
+
     axios.post('http://localhost:4000/selectedContacts/', contact)
         .then((resp) => {
+
+          this.loadingEnded();
+
           this.setState({
             selectedContacts: this.state.selectedContacts.concat(resp.data)
           });
@@ -166,8 +179,13 @@ class App extends Component {
 
   removeSelectedContact(id) {
 
+    this.loadingStarted();
+
     axios.delete(`http://localhost:4000/selectedContacts/${id}`)
         .then(() => {
+
+          this.loadingEnded();
+
           this.setState({
             selectedContacts: this.state.selectedContacts.filter((contact) => {
               return contact._id !== id;
@@ -182,8 +200,12 @@ class App extends Component {
 
   getContacts() {
 
+    this.loadingStarted();
+
     return axios.get('http://localhost:4000/contacts')
         .then((response) => {
+
+          this.loadingEnded();
 
           this.setState({
             contacts: response.data
@@ -196,8 +218,12 @@ class App extends Component {
 
   addAvailableContact(contact, isFormSubmit) {
 
+    this.loadingStarted();
+
     axios.post('http://localhost:4000/contacts/', contact)
         .then((resp) => {
+
+          this.loadingEnded();
           this.setState({
             contacts: this.state.contacts.concat(resp.data),
             contact: isFormSubmit ? this.buildNewContact() : Object.assign({}, this.state.contact)
@@ -208,8 +234,12 @@ class App extends Component {
 
   removeAvailableContact(id) {
 
+    this.loadingStarted();
+
     axios.delete(`http://localhost:4000/contacts/${id}`)
         .then(() => {
+          this.loadingEnded();
+
           this.setState({
             contacts: this.state.contacts.filter((contact) => {
               return contact._id !== id;
@@ -244,11 +274,16 @@ class App extends Component {
     // on a normal server this could be done in a single promise by sending back an object containing the contacts
     // and Id's.
     // Not a race condition because the batchableRemoves/batchableAdds don't modify state
+
+    this.loadingStarted();
+
     axios.all(this.state.selectedContacts.map(selectedContact => this.constructor.batchableAddAvailableContact(selectedContact)),
         this.state.selectedContacts.map(selectedContact => this.constructor.batchableRemoveSelectedContact(selectedContact._id)))
         .then(() => {
           this.getContacts();
           this.getSelectedContacts();
+        }).then(() => {
+          this.loadingEnded();
         })
         .catch(err => console.log(err));
   }
@@ -305,11 +340,30 @@ class App extends Component {
     return action;
   }
 
+  /*
+   Loading Spinner
+   */
+
+  loadingStarted() {
+    this.setState({
+      isLoading: true,
+    });
+  }
+
+  loadingEnded() {
+    this.setState({
+      isLoading: false,
+    });
+
+  }
+
 
   render() {
 
     return (
       <div className="App">
+
+        <LoadingSpinner isLoading={this.state.isLoading} />
         <SearchBar value={this.state.searchText}
           onChange={this.handleSearchBarChange} />
         <ToggleableContactForm

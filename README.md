@@ -21,3 +21,5 @@
 - Add bootstrap and style for basic appeal
 - Check for URL in avatar link
 
+### In Progress
+- Can you figure out how to show some sort of indicator to the user that a network request is happening
