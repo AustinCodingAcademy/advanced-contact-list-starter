@@ -18,12 +18,7 @@ class App extends Component {
 
     this.state = {
       searchText: '',
-      contact: {
-        _id: uuid.v4(),
-        name: '',
-        occupation: '',
-        avatar: ''
-      },
+      contact: this.getEmptyContact(),
       contacts: [],
       selectedContacts: [],
       backupContacts: [],
@@ -39,6 +34,7 @@ class App extends Component {
 
   getContacts() {
 
+    console.log('get contacts ran');
     axios.get('http://localhost:4000/contacts')
         .then((response) => {
 
@@ -81,30 +77,28 @@ class App extends Component {
     evt.preventDefault();
     const contacts = [ ...this.state.contacts, this.state.contact];
 
-    console.log("Before adding to state");
-    console.log(contacts);
-
     this.setState({
-      contacts: contacts,
-      contact: {
-        _id: uuid.v4(),
-        name: '',
-        occupation: '',
-        avatar: ''
-      }
+      contacts,
+      contact: this.getEmptyContact()
     });
 
-    console.log(this.state.contacts);
+  }
 
-
+  getEmptyContact() {
+    return {
+      _id: uuid.v4(),
+      name: '',
+      occupation: '',
+      avatar: ''
+    };
   }
 
   onInputChange(evt) {
     const contact = this.state.contact;
     contact[evt.target.name] = evt.target.value;
-    this.setState({contact: contact});
+    this.setState({contact});
 
-    console.log("After being set on input change");
+    console.log('After being set on input change');
     console.log(this.state.contact);
   }
 
@@ -163,11 +157,9 @@ class App extends Component {
 
   removeSelectedContact(id) {
 
-    const parsedId = parseInt(id, 10);
-
     this.setState({
       selectedContacts: this.state.selectedContacts.filter((contact) => {
-        return contact._id !== parsedId;
+        return contact._id !== id;
       })
     });
   }
@@ -185,11 +177,9 @@ class App extends Component {
 
   removeAvailableContact(id) {
 
-    const parsedId = parseInt(id, 10);
-
     this.setState({
       contacts: this.state.contacts.filter((contact) => {
-        return contact._id !== parsedId;
+        return contact._id !== id;
       })
     });
 
@@ -197,10 +187,8 @@ class App extends Component {
 
   findContactById(id, array) {
 
-    const parsedId = parseInt(id, 10);
-
     return array.find((contact) => {
-      return contact._id === parsedId;
+      return contact._id === id;
     });
   }
 
