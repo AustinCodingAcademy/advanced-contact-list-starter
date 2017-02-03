@@ -1,12 +1,6 @@
 {
   "contacts": [
     {
-      "_id": 1,
-      "name": "Dale Cooper",
-      "occupation": "FBI Agent",
-      "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
-    },
-    {
       "_id": 2,
       "name": "Spike Spiegel",
       "occupation": "Bounty Hunter",
@@ -23,12 +17,6 @@
       "name": "Michael Myers",
       "occupation": "Loving little brother",
       "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
-    },
-    {
-      "_id": 5,
-      "name": "Dana Scully",
-      "occupation": "FBI Agent",
-      "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
     }
   ]
 }

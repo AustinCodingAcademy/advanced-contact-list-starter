@@ -1,16 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import Contact from './Contact';
 
 class SelectedContacts extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
+      selected: [],
       message: 'No contacts selected'
     };
-  }
-
-  handleClick() {
-    alert(this.state.message);
   }
 
   render() {
@@ -23,6 +21,5 @@ class SelectedContacts extends Component {
     );
   }
 }
-
 
 export default SelectedContacts;

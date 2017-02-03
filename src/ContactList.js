@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Contact from './Contact';
 
 class ContactList extends Component {
@@ -13,6 +13,8 @@ class ContactList extends Component {
                 name={contact.name}
                 avatar={contact.avatar}
                 occupation={contact.occupation}
+                onSelectClick={() => this.props.onSelectContact(contact)}
+                onDeleteClick={() => this.props.onDeleteContact(contact._id)}
               />
             );
           })}
@@ -21,5 +23,10 @@ class ContactList extends Component {
     );
   }
 }
+
+ContactList.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  onSelectContact: PropTypes.func.isRequired
+};
 
 export default ContactList;
