@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       searchText: '',
       contact: this.getEmptyContact(),
+      validationErrors: {},
       contacts: [],
       selectedContacts: [],
       backupContacts: [],
@@ -74,14 +75,29 @@ class App extends Component {
 
   handleAddContactSubmit(evt) {
 
-    evt.preventDefault();
+
     const contacts = [ ...this.state.contacts, this.state.contact];
+    const validationErrors = this.validate(this.state.contact);
+
+    this.setState({validationErrors});
+
+    evt.preventDefault();
+
+    if (Object.keys(validationErrors).length) {return;}
 
     this.setState({
       contacts,
       contact: this.getEmptyContact()
     });
 
+  }
+
+  validate(contact) {
+    const errors = {};
+    if (!contact.name) {errors.name = 'Name required';}
+    if (!contact.occupation) {errors.occupation = 'Occupation required';}
+    if (!contact.avatar) {errors.avatar = 'Avatar link required';}
+    return errors;
   }
 
   getEmptyContact() {
@@ -251,6 +267,7 @@ class App extends Component {
         <AddContactForm
           handleAddContactSubmit={this.handleAddContactSubmit.bind(this)}
           contact={this.state.contact}
+          validationErrors={this.state.validationErrors}
           onNameChange={this.onInputChange.bind(this)}
           />
         <button

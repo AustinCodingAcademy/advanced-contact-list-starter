@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 class AddContactForm extends Component {
 
   render() {
-    console.log(this.refs);
+
 
     return (
       <section>
@@ -19,18 +19,21 @@ class AddContactForm extends Component {
             value={this.props.contact.name}
             onChange={(evt) => this.props.onNameChange(evt)}
             />
+          <span style={{color: 'red'}}>{this.props.validationErrors.name}</span>
           <input
             placeholder="Occupation"
             name="occupation"
             value={this.props.contact.occupation}
             onChange={(evt) => this.props.onNameChange(evt)}
           />
+          <span style={{color: 'red'}}>{this.props.validationErrors.occupation}</span>
           <input
             placeholder="Avatar Link"
             name="avatar"
             value={this.props.contact.avatar}
             onChange={(evt) => this.props.onNameChange(evt)}
           />
+          <span style={{color: 'red'}}>{this.props.validationErrors.avatar}</span>
           <input type="submit" />
         </form>
       </section>
@@ -41,7 +44,8 @@ class AddContactForm extends Component {
 AddContactForm.propTypes = {
   contact: React.PropTypes.object.isRequired,
   handleAddContactSubmit: React.PropTypes.func.isRequired,
-  onNameChange: React.PropTypes.func.isRequired
+  onNameChange: React.PropTypes.func.isRequired,
+  validationErrors: React.PropTypes.object.isRequired
 };
 
 export default AddContactForm;
