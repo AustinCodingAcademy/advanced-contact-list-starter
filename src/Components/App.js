@@ -9,6 +9,7 @@ import SearchBar from './SearchBar';
 import ActionHistory from './ActionHistory';
 import ToggleableContactForm from './ToggleableContactForm';
 import LoadingSpinner from './LoadingSpinner';
+import ErrorHistory from './ErrorHistory';
 
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
       selectedContacts: [],
       backupContacts: [],
       actionHistory: [],
+      errorHistory: [],
       isLoading: false,
       activeContactId: ''
     };
@@ -43,11 +45,18 @@ class App extends Component {
 
   }
 
+
   componentDidMount() {
 
     this.getContacts();
     this.getSelectedContacts();
-    setInterval(this.removeStaleActionHistory, 5000);
+
+    this.registerInterceptors();
+
+    setInterval(() => {
+      this.removeStaleActionHistory();
+      this.removeStaleErrorHistory();
+    }, 5000);
   }
 
   /*
@@ -306,10 +315,11 @@ class App extends Component {
     // These parallel promises are sometimes buggy it seems with the Json server
     // on a normal server this could be done in a single promise by sending back an object containing the contacts
     // and Id's.
-    // Not a race condition because the batchableRemoves/batchableAdds don't modify state
 
-    const deletes = this.state.selectedContacts.map(selectedContact => this.constructor.batchableRemoveSelectedContact(selectedContact._id));
-    const adds = this.state.selectedContacts.map(selectedContact => this.constructor.batchableAddAvailableContact(selectedContact));
+    const deletes = this.state.selectedContacts.map(selectedContact =>
+        this.constructor.batchableRemoveSelectedContact(selectedContact._id));
+    const adds = this.state.selectedContacts.map(selectedContact =>
+        this.constructor.batchableAddAvailableContact(selectedContact));
 
     this.loadingStarted();
 
@@ -369,14 +379,73 @@ class App extends Component {
 
   static buildNewAction(description) {
 
-    const action = {
+    return {
       description: description || 'A default action',
       _id: uuid.v4(),
-      expirationMoment: moment().add(60, 's')
+      expirationMoment: moment().add(25, 's')
+    };
+  }
+
+  /*
+   Http Interceptors
+   */
+
+  registerInterceptors() {
+
+    axios.interceptors.response.use((response) => {
+      return response;
+    }, (error) => {
+
+      this.addErrorToHistory(error);
+
+      return Promise.reject(error);
+    });
+  }
+
+  /*
+   Error History
+   */
+
+
+  removeStaleErrorHistory() {
+
+    if (this.state.errorHistory.length > 0) {
+      const now = moment();
+
+      this.setState({
+        errorHistory: this.state.errorHistory.filter((error) => {
+          return error.expirationMoment.isAfter(now);
+        })
+      });
+    }
+
+  }
+
+  addErrorToHistory(error) {
+
+    const newError = this.constructor.buildNewError(error);
+
+    const newState = update(this.state.errorHistory, {$unshift: [newError]});
+
+    this.setState({
+      errorHistory: newState.slice(0, 14)
+    });
+
+    console.log(this.state.errorHistory);
+
+  }
+
+  static buildNewError(error) {
+
+    return {
+      message: error.message,
+      data: error.data,
+      _id: uuid.v4(),
+      expirationMoment: moment().add(15, 's')
     };
 
-    return action;
   }
+
 
   /*
    Loading Spinner
@@ -418,6 +487,7 @@ class App extends Component {
           actions={this.state.actionHistory}
           removeAction={this.handleRemoveActionFromHistoryClick}
           />
+        <ErrorHistory errors={this.state.errorHistory} />
         <ContactList
           value={this.state.searchText}
           title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :

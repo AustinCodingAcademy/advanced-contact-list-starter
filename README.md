@@ -19,7 +19,9 @@
 - Add bootstrap and style for basic appeal
 - Check for URL in avatar link
 - Use http interceptor for spinner https://github.com/werk85/fetch-intercept
+- Improve spinner styling
 
 ### In Progress
+- http error tracker
 - Move the input elements of the contact form with the labels into its own component.
 
