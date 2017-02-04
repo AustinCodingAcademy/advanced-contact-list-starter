@@ -17,6 +17,29 @@ body {
   padding-top: 15px;
 }
 
+.freeze-window {
+  background-color: rgba(90, 90, 90, 0.8);
+  display: flex;
+  float: left;
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  z-index: 5;
+}
+
+.alert {
+  background-color: #fff;
+  height: 500px;
+  width: 500px;
+  margin: auto;
+}
+
+.alert p {
+  font-size: 1.8em;
+}
+
 .search-bar {
   height: 35px;
   width: 100%;
@@ -59,12 +82,15 @@ body {
   opacity: 1;
 }
 
-.reset {
+.reset, .remove {
   background-color: #ffc61a;
+}
+
+.reset {
   margin: 10px auto;
 }
 
-.remove, .clear-actions {
+.delete, .clear-actions {
   background-color: #ff1a1a;
 }
 
@@ -299,8 +325,14 @@ body {
   }
 
   .action {
+    border: 2px solid #cce7ff;
+    border-bottom: none;
     position: relative;
     padding: 7px 0;
+  }
+
+  .action:last-child {
+    border-bottom: 2px solid #cce7ff;
   }
 
   .opaque-container {

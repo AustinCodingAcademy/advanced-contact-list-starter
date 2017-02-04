@@ -23,6 +23,11 @@ const Contact = props => {
         onClick={e => props.onRemove(e, props._id)}>
         Remove
       </div>
+      <div className="button delete"
+        title="Delete contact (This action cannot be reset)"
+        onClick={e => props.onDelete(e, props._id)}>
+        Delete
+      </div>
     </li>
   );
 };
@@ -32,6 +37,7 @@ Contact.propTypes = {
   name: PropTypes.string.isRequired,
   occupation: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   searchValue: PropTypes.string,
   _id: PropTypes.number.isRequired
 };

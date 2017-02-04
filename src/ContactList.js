@@ -25,6 +25,7 @@ const ContactList = (props) => {
             key={contact._id}
             searchValue={props.searchValue}
             onRemove={(e, id) => props.onRemove(e, id)}
+            onDelete={props.onDelete}
             onSelect={props.onSelect}
           />
         );
@@ -38,6 +39,7 @@ ContactList.propTypes = {
   searchValue: PropTypes.string,
   selectable: PropTypes.bool,
   contacts: PropTypes.array.isRequired,
+  onDelete: PropTypes.func,
   onSelect: PropTypes.func
 };
 

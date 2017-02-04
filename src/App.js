@@ -1,3 +1,7 @@
+/*
+  TODO: Remove setTimeout from contactsGetRequest and handleAddContact
+*/
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import ContactList from './ContactList';
@@ -5,6 +9,8 @@ import SearchBar from './SearchBar.js';
 import SelectedContactList from './SelectedContactList';
 import ResetButton from './ResetButton';
 import ActionHistory from './ActionHistory';
+import ContactForm from './ContactForm';
+import AlertWindow from './AlertWindow';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -15,6 +21,8 @@ class App extends Component {
     this.state = {
       searchText: '',
       contacts: [],
+      alert: true,
+      alertMessage: '',
       selectedContacts: [],
       currentActionId: 2000,
       actionHistory: [],
@@ -23,18 +31,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/contacts')
-      .then(response => {
-        this.setState({
-          contacts: response.data,
-          originalState: {
-            searchText: '',
-            contacts: response.data,
-            selectedContacts: []
-          }
-        });
-      })
-      .catch(err => console.log(`Error! ${err}`));
+    this.contactsGetRequest();
   }
 
   handleSearchBarChange(event) {
@@ -66,6 +63,50 @@ class App extends Component {
     this.addAction('remove', id);
   }
 
+  handleAddContact(attributes) {
+    this.setState({
+      alert: true,
+      alertMessage: 'add'
+    });
+    axios.post('http://localhost:4000/contacts', attributes)
+      .then(response => {
+        setTimeout( () => {
+          this.setState({
+            alert: false,
+            contacts: [...this.state.contacts, response.data],
+            originalState: {
+              searchText: '',
+              contacts: [...this.state.contacts, response.data],
+              selectedContacts: []
+            }
+          });
+        }, 2000);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  handleDeleteContact(e, id) {
+    e.stopPropagation();
+    this.setState({
+      alert: true,
+      alertMessage: 'delete'
+    });
+    axios.delete(`http://localhost:4000/contacts/${id}`)
+      .then(() => {
+        setTimeout(() => {
+          this.removeContact(id);
+          this.setState({
+            alert: false
+          });
+        }, 2000);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   handleClear() {
     this.setState({
       actionHistory: []
@@ -81,6 +122,29 @@ class App extends Component {
 
     this.setState(newState);
 
+  }
+
+  contactsGetRequest() {
+    // axios.get('https://alexjgaw.github.io/contact-list/db.json')
+    this.setState({
+      alert: true,
+      alertMessage: 'get'
+    });
+    axios.get('http://localhost:4000/contacts')
+      .then(response => {
+        setTimeout( () => {
+          this.setState({
+            alert: false,
+            contacts: response.data,
+            originalState: {
+              searchText: '',
+              contacts: response.data,
+              selectedContacts: []
+            }
+          });
+        }, 2000);
+      })
+      .catch(err => console.log(`Error! ${err}`));
   }
 
   addAction(actionType, id) {
@@ -149,6 +213,7 @@ class App extends Component {
     newState[key] = list.filter( contact => contact._id !== id);
 
     this.setState(newState);
+    return newState;
   }
 
   getFilteredContacts() {
@@ -162,6 +227,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        {this.state.alert ?
+          <AlertWindow message={this.state.alertMessage} /> :
+          null}
+        <ContactForm
+          onSubmit={this.handleAddContact.bind(this)}
+        />
         <SearchBar
           value={this.state.searchText}
           onChange={this.handleSearchBarChange.bind(this)}
@@ -173,6 +244,7 @@ class App extends Component {
           contacts={this.getFilteredContacts()}
           searchValue={this.state.searchText}
           onRemove={this.handleRemoveContact.bind(this)}
+          onDelete={this.handleDeleteContact.bind(this)}
           onSelect={this.handleSelect.bind(this)}
         />
         <SelectedContactList
