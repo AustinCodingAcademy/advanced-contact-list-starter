@@ -13,7 +13,7 @@ class Contact extends Component {
           {this.props.occupation}
         </div>
         <div>
-          <button onClick={this.props.onButtonClick}>Add Contact</button>
+          <button onClick={this.props.onButtonClick}>{this.props.buttonType}</button>
         </div>
       </li>
     );
@@ -27,5 +27,6 @@ Contact.propTypes = {
   avatar: PropTypes.string,
   occupation: PropTypes.string,
   active: PropTypes.string,
-  onButtonClick: PropTypes.func
+  onButtonClick: PropTypes.func,
+  buttonType: PropTypes.string
 };

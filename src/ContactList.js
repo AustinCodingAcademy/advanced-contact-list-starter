@@ -14,6 +14,7 @@ class ContactList extends Component {
                 avatar={contact.avatar}
                 occupation={contact.occupation}
                 active={contact.active}
+                buttonType={contact.buttonType}
                 onButtonClick={() => this.props.onContactClick(contact._id)}
               />
             );

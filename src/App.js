@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
+import ContactForm from './ContactForm';
 import axios from 'axios';
 
 class App extends Component {
@@ -25,41 +26,58 @@ class App extends Component {
         this.setState({
           contacts: resp.data
         });
+        console.log(resp.data);
       })
       .catch(err => console.log(`Error! ${err}`));
+  }
+
+  handleChange(event) {
+    this.setState({
+      searchText: event.target.value
+    });
+  }
+
+  componentWillMount() {
+    console.log('componentWillMount');
   }
 
   getFilteredContacts() {
 
     const term = this.state.searchText.trim().toLowerCase();
+    const contacts = this.state.contacts;
 
-    return this.state.contacts.filter(contact => {
+    if (!term) {
+      return contacts;
+    }
+
+    return contacts.filter(contact => {
       return contact.name.toLowerCase().indexOf(term) >= 0;
     });
   }
 
-  // popContact(names) {
-  //   const curState = [...this.state.contacts]; // always clone the state, never mutate directly
-  //   for (let i = 0; i < curState.length; i++) {
-  //     if (names.includes(curState[i].name)) {
-  //       curState[i].active = 'none';
-  //     } else {
-  //       curState[i].active = '';
-  //     }
-  //   }
-  //   this.setState({
-  //     contacts: curState
-  //   });
-  // }
+  handleAddContact(attributes) {
+    axios.post('http://localhost:4000/contacts', attributes)
+      .then(resp => {
+        this.setState({
+          contacts: [...this.state.contacts, resp.data]
+        });
+      })
+      .catch(err => console.log(err));
+  }
 
   addContact(contact) {
-
     const curContacts = [...this.state.contacts];
     const curContact = curContacts[contact - 1];
     const added = [...this.state.addedContacts];
-
-    added.push(curContact.name);
-
+    const newContact = {
+      _id: curContact._id + 10,
+      name: curContact.name,
+      occupation: curContact.occupation,
+      avatar: curContact.avatar,
+      active: '',
+      buttonType: 'Remove'
+    };
+    added.push(newContact);
     this.setState({
       addedContacts: added,
     });
@@ -90,27 +108,47 @@ class App extends Component {
     });
   }
 
+  removeContact(contact) {
+    const added = [...this.state.addedContacts];
+    let name = '';
+
+    for ( let i = 0; i < added.length; i++) {
+      if (added[i]._id === contact) {
+        name = added[i].name;
+        added.splice(i,1);
+      }
+    }
+    const curContacts = [...this.state.contacts];
+
+    for ( let i = 0; i < curContacts.length; i++) {
+      if (curContacts[i].name === name) {
+        curContacts[i].active = '';
+      }
+    }
+    this.setState({
+      contacts: curContacts,
+      addedContacts: added
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
+        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+        <SearchBar
+          value={this.state.searchText}
+          onChange={this.handleSearchBarChange.bind(this)}
+        />
+        <button onClick={() => this.reset()}>Reset</button>
         <ContactList
           onContactClick={this.addContact.bind(this)}
           contacts={this.getFilteredContacts()}
         />
-        <div>
-          <button onClick={() => this.reset()}>Reset</button>
-          <h2>Added Contacts</h2>
-          <div>
-            {this.state.addedContacts.map(name => {
-              return (
-                <div className="added-item" key={name}>
-                  <p>{name}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <h2>Added Contacts</h2>
+        <ContactList
+          onContactClick={this.removeContact.bind(this)}
+          contacts={this.state.addedContacts}
+        />
       </div>
 
     );
