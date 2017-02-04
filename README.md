@@ -21,6 +21,8 @@
 - Implement deselect button style for selected items
 - Add bootstrap and style for basic appeal
 - Check for URL in avatar link
+- Use http interceptor for spinner https://github.com/werk85/fetch-intercept
 
 ### In Progress
 - When a contact is deleted, make it semi-transparent at first while the network request is being processed and only remove it when the contact is successfully deleted in the backend. If the network request fails, display an error message. You might want to check out the module classnames to implement the different UI states.
+ -Create delete button for contacts

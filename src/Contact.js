@@ -8,7 +8,7 @@ const Contact = props => {
 
   return (
     <li
-      className="contact"
+      className={props.isActive ? 'active-contact' : 'contact'}
       >
       <div className="image-cropper">
         <img src={props.avatar} alt="avatar" />
@@ -22,6 +22,10 @@ const Contact = props => {
 
       <button
         className="select-button"
+        onClick={props.handleDeleteContactClick}>Delete
+      </button>
+      <button
+        className="select-button"
         onClick={props.handleSelectContactClick}>Select
         </button>
     </li>
@@ -29,12 +33,14 @@ const Contact = props => {
 };
 
 Contact.propTypes = {
+  isActive: React.PropTypes.bool.isRequired,
   avatar: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   occupation: React.PropTypes.string.isRequired,
   id: React.PropTypes.any.isRequired,
-  handleSelectContactClick: React.PropTypes.func.isRequired
+  handleSelectContactClick: React.PropTypes.func.isRequired,
+  handleDeleteContactClick: React.PropTypes.func.isRequired
 };
 
 export default Contact;
