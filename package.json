@@ -21,7 +21,7 @@
     "react-app": "react-scripts start",
     "api": "json-server --id _id --watch --port 4000 db.json",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "npm run lint && react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }
