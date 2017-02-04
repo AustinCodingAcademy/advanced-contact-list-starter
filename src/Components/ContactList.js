@@ -33,6 +33,7 @@ const ContactList = props => {
 ContactList.propTypes = {
   title: React.PropTypes.string.isRequired,
   contacts: React.PropTypes.array.isRequired,
+  activeContactId: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
   handleSelectContactClick: React.PropTypes.func.isRequired,
   handleDeleteContactClick: React.PropTypes.func.isRequired

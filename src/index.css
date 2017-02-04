@@ -21,7 +21,13 @@ body {
   top: 50px;
   right: 50px;
   width: 200px;
-  right: 50px;
+}
+
+.error-history {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    width: 200px;
 }
 
 .search-bar {

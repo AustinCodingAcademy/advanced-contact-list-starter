@@ -14,11 +14,11 @@ class Highlighter extends Component {
     const results = {};
 
         // Build a regex based upon the search terms
-    const regex = new RegExp(this.props.searchWords);
-    const originalString = this.props.textToHighlight;
+    const regex = new RegExp(this.props.searchWords.toLowerCase());
+    const originalString = this.props.textToHighlight.toLowerCase();
 
         // get the starting index
-    const result = originalString.search(regex);
+    const result = originalString.toLowerCase().search(regex);
 
         // find the ending index
     const endingIndex = result + this.props.searchWords.length;
