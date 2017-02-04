@@ -8,6 +8,7 @@ import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import ActionHistory from './ActionHistory';
 import ToggleableContactForm from './ToggleableContactForm';
+import LoadingSpinner from './LoadingSpinner';
 
 
 class App extends Component {
@@ -18,12 +19,14 @@ class App extends Component {
 
     this.state = {
       searchText: '',
-      contact: this.buildNewContact(),
+      contact: this.constructor.buildNewContact(),
       validationErrors: {},
       contacts: [],
       selectedContacts: [],
       backupContacts: [],
       actionHistory: [],
+      isLoading: false,
+      activeContactId: ''
     };
 
     // Done in constructor instead of in onEvent(s) for performance,
@@ -36,6 +39,7 @@ class App extends Component {
     this.handleRemoveSelectedClick = this.handleRemoveSelectedClick.bind(this);
     this.handleAddToSelectedClick = this.handleAddToSelectedClick.bind(this);
     this.removeStaleActionHistory = this.removeStaleActionHistory.bind(this);
+    this.handleDeleteContactClick = this.handleDeleteContactClick.bind(this);
 
   }
 
@@ -46,6 +50,33 @@ class App extends Component {
     setInterval(this.removeStaleActionHistory, 5000);
   }
 
+  /*
+   Delete Button
+   */
+
+  handleDeleteContactClick(id, listTitle) {
+    this.deleteContact(id, listTitle);
+  }
+
+  deleteContact(id, listTitle) {
+
+    this.setActiveContactId(id);
+
+    if (listTitle === 'Available Contacts') {
+      this.removeAvailableContact(id);
+    } else {
+      this.removeSelectedContact(id);
+    }
+
+    this.addActionToHistory('Deleted a contact');
+
+  }
+
+  setActiveContactId(id) {
+    this.setState({
+      activeContactId: id
+    });
+  }
 
   /*
    Add Contact Input Form
@@ -54,7 +85,7 @@ class App extends Component {
   handleAddContactSubmit(evt) {
 
     const isFormSubmit = true;
-    const validationErrors = this.validateInputForm(this.state.contact);
+    const validationErrors = this.constructor.validateInputForm(this.state.contact);
 
     this.setState({validationErrors});
 
@@ -68,7 +99,7 @@ class App extends Component {
   }
 
 
-  validateInputForm(contact) {
+  static validateInputForm(contact) {
     const errors = {};
     if (!contact.name) {
       errors.name = 'Name required';
@@ -82,7 +113,7 @@ class App extends Component {
     return errors;
   }
 
-  buildNewContact() {
+  static buildNewContact() {
     return {
       _id: uuid.v4(),
       name: '',
@@ -124,8 +155,14 @@ class App extends Component {
 
   getSelectedContacts() {
 
+
+    this.loadingStarted();
+
     axios.get('http://localhost:4000/selectedContacts')
         .then((response) => {
+
+          this.loadingEnded();
+
           this.setState({
             selectedContacts: response.data
           });
@@ -143,8 +180,13 @@ class App extends Component {
 
   addSelectedContact(contact) {
 
+    this.loadingStarted();
+
     axios.post('http://localhost:4000/selectedContacts/', contact)
         .then((resp) => {
+
+          this.loadingEnded();
+
           this.setState({
             selectedContacts: this.state.selectedContacts.concat(resp.data)
           });
@@ -166,8 +208,13 @@ class App extends Component {
 
   removeSelectedContact(id) {
 
+    this.loadingStarted();
+
     axios.delete(`http://localhost:4000/selectedContacts/${id}`)
         .then(() => {
+
+          this.loadingEnded();
+
           this.setState({
             selectedContacts: this.state.selectedContacts.filter((contact) => {
               return contact._id !== id;
@@ -182,8 +229,15 @@ class App extends Component {
 
   getContacts() {
 
+    this.loadingStarted();
+
     return axios.get('http://localhost:4000/contacts')
         .then((response) => {
+
+          this.loadingEnded();
+
+          console.log('getting available contacts');
+          console.log(response.data);
 
           this.setState({
             contacts: response.data
@@ -196,11 +250,16 @@ class App extends Component {
 
   addAvailableContact(contact, isFormSubmit) {
 
+    this.loadingStarted();
+
     axios.post('http://localhost:4000/contacts/', contact)
         .then((resp) => {
+
+          this.loadingEnded();
           this.setState({
             contacts: this.state.contacts.concat(resp.data),
-            contact: isFormSubmit ? this.buildNewContact() : Object.assign({}, this.state.contact)
+            contact: isFormSubmit ? this.constructor.buildNewContact() :
+                Object.assign({}, this.state.contact)
           });
         }).catch(err => console.log(err));
 
@@ -208,8 +267,12 @@ class App extends Component {
 
   removeAvailableContact(id) {
 
+    this.loadingStarted();
+
     axios.delete(`http://localhost:4000/contacts/${id}`)
         .then(() => {
+          this.loadingEnded();
+
           this.setState({
             contacts: this.state.contacts.filter((contact) => {
               return contact._id !== id;
@@ -234,21 +297,31 @@ class App extends Component {
   }
 
   static batchableAddAvailableContact(contact) {
-    return axios.post('http://localhost:4000/contacts/', contact);
+    return axios.post('http://localhost:4000/contacts', contact);
   }
 
   /* eslint-disable max-len */
   resetApplicationState() {
 
-    // These parrallel promises are sometimes buggy it seems with the Json server
+    // These parallel promises are sometimes buggy it seems with the Json server
     // on a normal server this could be done in a single promise by sending back an object containing the contacts
     // and Id's.
     // Not a race condition because the batchableRemoves/batchableAdds don't modify state
-    axios.all(this.state.selectedContacts.map(selectedContact => this.constructor.batchableAddAvailableContact(selectedContact)),
-        this.state.selectedContacts.map(selectedContact => this.constructor.batchableRemoveSelectedContact(selectedContact._id)))
+
+    const deletes = this.state.selectedContacts.map(selectedContact => this.constructor.batchableRemoveSelectedContact(selectedContact._id));
+    const adds = this.state.selectedContacts.map(selectedContact => this.constructor.batchableAddAvailableContact(selectedContact));
+
+    this.loadingStarted();
+
+    axios.all(deletes)
         .then(() => {
-          this.getContacts();
+          axios.all(adds);
+        }).then(() => {
           this.getSelectedContacts();
+          this.getContacts();
+        })
+        .then(() => {
+          this.loadingEnded();
         })
         .catch(err => console.log(err));
   }
@@ -305,11 +378,30 @@ class App extends Component {
     return action;
   }
 
+  /*
+   Loading Spinner
+   */
+
+  loadingStarted() {
+    this.setState({
+      isLoading: true,
+    });
+  }
+
+  loadingEnded() {
+    this.setState({
+      isLoading: false,
+    });
+
+  }
+
 
   render() {
 
     return (
       <div className="App">
+
+        <LoadingSpinner isLoading={this.state.isLoading} />
         <SearchBar value={this.state.searchText}
           onChange={this.handleSearchBarChange} />
         <ToggleableContactForm
@@ -317,7 +409,6 @@ class App extends Component {
           contact={this.state.contact}
           validationErrors={this.state.validationErrors}
           onInputChange={this.onInputChange} />
-
         <button
           className="reset-button"
           onClick={this.handleResetClick}
@@ -333,12 +424,16 @@ class App extends Component {
                   'No selected contacts'}
           contacts={this.getFilteredContacts(this.state.selectedContacts)}
           handleSelectContactClick={this.handleRemoveSelectedClick}
+          handleDeleteContactClick={this.handleDeleteContactClick}
+          activeContactId={this.state.activeContactId}
           />
         <ContactList
           value={this.state.searchText}
           title={'Available Contacts'}
           contacts={this.getFilteredContacts(this.state.contacts)}
           handleSelectContactClick={this.handleAddToSelectedClick}
+          handleDeleteContactClick={this.handleDeleteContactClick}
+          activeContactId={this.state.activeContactId}
           />
 
       </div>

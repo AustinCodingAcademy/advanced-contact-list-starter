@@ -1,7 +1,5 @@
-{
-  "history": [],
-  "selectedContacts": [],
-  "contacts": [
+{ "history":[],
+  "selectedContacts":[
     {
       "_id": "66079646-c958-4c58-86c0-bba9a65c3980",
       "name": "Dana Scully",
@@ -9,34 +7,10 @@
       "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
     },
     {
-      "_id": "30ddb497-e264-4863-938c-29414beb6860",
-      "name": "Wirt",
-      "occupation": "adventurer",
-      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
-    },
-    {
-      "_id": "91d973f0-d8fe-48a3-b9ab-a166a92da0d9",
-      "name": "Brian",
-      "occupation": "Mic",
-      "avatar": "Test"
-    },
-    {
       "_id": "7578b392-1688-462a-b299-83dc16c67d8b",
       "name": "Boba Fett",
       "occupation": "A Better Bounty Hunter",
       "avatar": "https://upload.wikimedia.org/wikipedia/en/3/3e/FettbobaJB.png"
-    },
-    {
-      "_id": "a8e98ae0-ccf3-40ae-9cca-378b76f346de",
-      "name": "Spike Spiegel",
-      "occupation": "Bounty Hunter",
-      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
-    },
-    {
-      "_id": "a5f08bcf-71ea-49ca-8691-f829f800f269",
-      "name": "Michael Myers",
-      "occupation": "Loving little brother",
-      "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
     },
     {
       "_id": "14d3bcc2-b4d5-4566-8ef8-8937ce3d8069",
@@ -49,12 +23,33 @@
       "name": "Morty",
       "occupation": "Wacky Adventures",
       "avatar": "https://i.ytimg.com/vi/Zw1Du7OmoU8/maxresdefault.jpg"
-    },
+    }
+  ],
+  "contacts": [
     {
       "_id": "a5a854d1-8331-4f39-a583-e6fb5171923f",
       "name": "Dale Cooper",
       "occupation": "FBI Agent",
       "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
+    },
+    {
+      "_id": "a8e98ae0-ccf3-40ae-9cca-378b76f346de",
+      "name": "Spike Spiegel",
+      "occupation": "Bounty Hunter",
+      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
+    },
+    {
+      "_id": "30ddb497-e264-4863-938c-29414beb6860",
+      "name": "Wirt",
+      "occupation": "adventurer",
+      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
+    },
+    {
+      "_id": "a5f08bcf-71ea-49ca-8691-f829f800f269",
+      "name": "Michael Myers",
+      "occupation": "Loving little brother",
+      "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
     }
   ]
 }
+

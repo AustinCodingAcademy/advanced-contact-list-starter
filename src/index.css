@@ -38,13 +38,19 @@ body {
   padding: 0;
 }
 
+.contact:active {
+    opacity: 0.5;
+}
 .contact {
   list-style-type: none;
   display: flex;
   display: flex;
   padding: 15px 0;
   border-bottom: 1px solid #ddd;
+
 }
+
+
 
 .contact:first-child {
   border-top: 1px solid #ddd;
