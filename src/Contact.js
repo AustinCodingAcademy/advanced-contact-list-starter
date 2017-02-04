@@ -8,7 +8,7 @@ const Contact = props => {
 
   return (
     <li
-      className={props.isActive ? 'active-contact' : 'contact'}
+      className={props.isActive ? 'contact active' : 'contact'}
       >
       <div className="image-cropper">
         <img src={props.avatar} alt="avatar" />
