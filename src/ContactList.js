@@ -14,8 +14,10 @@ const ContactList = props => {
                 name={contact.name}
                 avatar={contact.avatar}
                 occupation={contact.occupation}
-                onClick={props.onClick}
-                onClick2={props.onClick2}
+                buttonText={props.buttonText}
+                handleFav={props.handleFav}
+                handleDelete={props.handleDelete}
+                listName={props.listName}
                 />
             )
           })}

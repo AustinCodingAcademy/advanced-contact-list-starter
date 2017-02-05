@@ -10,7 +10,9 @@ class App extends Component {
 
         this.state = {
             searchText: '',
-            contacts: []
+            favorites: [],
+            contacts: [],
+            contactFormVisible: false
         };
     }
 
@@ -25,6 +27,15 @@ class App extends Component {
         .catch(err => {
           console.log(`Error! ${err}`)
         })
+      axios.get('http://localhost:4000/favorites')
+        .then(resp => {
+          this.setState({
+            favorites: resp.data
+          })
+        })
+        .catch(err => {
+          console.log(`Error! ${err}`)
+        })
     }
 
     handleChange(event) {
@@ -33,45 +44,34 @@ class App extends Component {
         });
     }
 
-    addToFavorites() {
-        /*if(!this.state.favorite) {
-          this.setState({
-            favorite: true
-          });
-        } else {
-          this.setState({
-            favorite: false
-          });
-        }
-        this.setState({
-            favorite: true
-        });*/
+    addToFavorites(_id) {
+        let addCon = this.state.contacts.filter(contact => contact._id === _id);
+
+        console.log(addCon);
+
+        this.handleAddFavorite(...addCon);
+        this.handleDeleteContact(_id, 'contacts');
     }
 
-    getFavorites() {
-        let favs = this.getFilteredContacts();
-        return favs.filter(contact => {
-            return contact.favorite === true;
-        });
+    removeFromFavorite(_id) {
+      let remCon = this.state.favorites.filter(contact => contact._id === _id);
+
+      console.log("removed from favs: " + remCon)
+
+      this.handleAddContact(...remCon);
+      this.handleDeleteFavorite(_id);
     }
 
-    getContacts() {
-        let cons = this.getFilteredContacts();
-        return cons.filter(contact => {
-            return contact.favorite === false;
-        });
-    }
+    getFilteredContacts(list) {
+        const TERM = this.state.searchText.trim().toLowerCase();
+        const CONTACTS = list;
 
-    getFilteredContacts() {
-        const term = this.state.searchText.trim().toLowerCase();
-        const contacts = this.state.contacts;
-
-        if (!term) {
-            return contacts;
+        if (!TERM) {
+            return CONTACTS;
         }
 
-        return this.state.contacts.filter(contact => {
-            return contact.name.toLowerCase().indexOf(term) >= 0;
+        return CONTACTS.filter(contact => {
+            return contact.name.toLowerCase().indexOf(TERM) >= 0;
         });
     }
 
@@ -85,8 +85,18 @@ class App extends Component {
       .catch(err => console.log(err));
     }
 
-    handleDeleteContact(_id) {
-      axios.delete(`http://localhost:4000/contacts/${_id}`)
+    handleAddFavorite(attributes) {
+      axios.post('http://localhost:4000/favorites', attributes)
+      .then((resp) => {
+        this.setState({
+          favorites: [...this.state.favorites, resp.data]
+        });
+      })
+      .catch(err => console.log(err));
+    }
+
+    handleDeleteContact(_id, list) {
+      axios.delete(`http://localhost:4000/${list}/${_id}`)
         .then(() => {
           const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
 
@@ -97,26 +107,59 @@ class App extends Component {
         .catch(err => console.log(`ERROR! ${err}`));
     }
 
+    handleDeleteFavorite(_id) {
+      axios.delete(`http://localhost:4000/favorites/${_id}`)
+        .then(() => {
+          const newFavorites = this.state.favorites.filter(contact => contact._id !== _id);
+
+          this.setState({
+            favorites: newFavorites
+          });
+        })
+        .catch(err => console.log(`ERROR! ${err}`));
+    }
+
+    showContactForm() {
+      this.setState({
+        contactFormVisible: true
+      });
+    }
+
+    hideContactForm() {
+      this.setState({
+        contactFormVisible: false
+      });
+    }
+
     render() {
         return (
           <div className="App">
-            <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+            <div>
+              <h1>React Contact List</h1>
+            </div>
             <SearchBar
               value={this.state.searchText}
               onChange={this.handleChange.bind(this)}
+              showForm={this.showContactForm.bind(this)}
             />
-            <ContactList
-              contacts={this.getFilteredContacts()}
-              listName='Contacts'
-              buttonText='Fav'
-              onClick={this.addToFavorites()}
-              onClick2={this.handleDeleteContact.bind(this)}
-            />
-            <ContactList contacts={this.getFavorites()}
-              listName='Favorites'
-              buttonText='Unfav'
-              onClick={this.addToFavorites()}
-            />
+            <div id="show-form" onClick={this.showContactForm.bind(this)}>Add Contact</div>
+            { this.state.contactFormVisible ? <ContactForm hideForm={this.hideContactForm.bind(this)} onSubmit={this.handleAddContact.bind(this)} /> : null }
+            <div>
+              <ContactList
+                contacts={this.getFilteredContacts(this.state.contacts)}
+                listName='Contacts'
+                buttonText="fa fa-heart-o"
+                handleFav={this.addToFavorites.bind(this)}
+                handleDelete={this.handleDeleteContact.bind(this)}
+              />
+              <ContactList
+                contacts={this.getFilteredContacts(this.state.favorites)}
+                listName='Favorites'
+                buttonText="fa fa-heart"
+                handleFav={this.removeFromFavorite.bind(this)}
+                handleDelete={this.handleDeleteFavorite.bind(this)}
+              />
+            </div>
           </div>
         );
     }

@@ -6,32 +6,44 @@ html, body, #root, .router {
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Arial;
 }
 
 .App {
-  text-align: center;
+  /*text-align: center;
   width: 1000px;
-  margin: 0 auto;
-  padding-top: 50px;
+  margin: 0 auto;*/
+  padding: 50px 50px;
 }
 
 .search-bar {
   height: 35px;
-  width: 50%;
+  width: 40%;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 18px;
   padding: 0 10px;
   box-sizing: border-box;
+  display: inline-block;
+}
+
+#show-form {
+  display: inline-block;
+  height: 35px;
+  width: 200px;
+  text-align: center;
+  margin: 21.44px 30px;
+  background-color: lightblue;
 }
 
 .contact-container {
+  text-align: center;
   margin: 5 auto;
   float: left;
 }
 
 .contact-list {
+  margin: 0 20px;
   padding: 0;
 }
 
@@ -80,9 +92,12 @@ body {
 }
 
 .add-start {
-  height: 18px;
+  height: 20px;
   width: 50px;
-  border: 1px solid black;
+}
+
+.add-start:hover, #form-container span:hover, .new-contact-form input[type="submit"]:hover, #show-form:hover {
+  cursor: pointer;
 }
 
 .profile {
@@ -109,25 +124,42 @@ body {
   width: auto;
 }
 
+#form-container {
+  width: 50%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+#form-container span {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ddd;
+}
+
 .new-contact-form {
-  margin-bottom: 10px;
+  margin: 10px 10px;
 }
 
 .new-contact-form label {
-  width: 100%;
-  display: inline-block;
+  width: 15%;
+  /*display: inline-block;*/
   text-align: left;
+  visibility: hidden;
 }
 
 .new-contact-form input {
   margin: 5px 0;
   height: 35px;
-  width: 100%;
+  width: 80%;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 18px;
   padding: 0 10px;
   box-sizing: border-box;
+  display: block;
 }
 
 .new-contact-form input[type="submit"] {

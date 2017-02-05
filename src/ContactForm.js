@@ -39,32 +39,41 @@ class ContactForm extends React.Component {
     event.preventDefault();
 
     const { name, avatar, occupation } = this.state;
-    this.props.onSubmit({ name, avatar, occupation });
+    this.props.onSubmit({ name, avatar, occupation }, 'contacts');
+
+    this.setState({
+        name: '',
+        avatar: '',
+        occupation: ''
+    });
   }
 
   render() {
     return (
+      <div id="form-container">
+      <span className="fa fa-remove" onClick={() => this.props.hideForm()}></span>
       <form className="new-contact-form" onSubmit={this.handleSubmit.bind(this)}>
-        <label htmlFor="name">Name:</label>
+
         <input
           type="text"
           name="name"
+          placeholder="Name"
           value={this.state.name}
           onChange={this.handleNameChange.bind(this)}
         />
 
-        <label htmlFor="occupation">Occupation:</label>
         <input
           type="text"
           name="occupation"
+          placeholder="Occupation"
           value={this.state.occupation}
           onChange={this.handleOccupationChange.bind(this)}
         />
 
-        <label htmlFor="avatar">Avatar:</label>
         <input
           type="text"
           name="avatar"
+          placeholder="Avatar (link)"
           value={this.state.avatar}
           onChange={this.handleAvatarChange.bind(this)}
         />
@@ -75,6 +84,7 @@ class ContactForm extends React.Component {
           disabled={!this.state.name.trim() || !this.state.occupation.trim() || !this.state.avatar.trim()}
         />
       </form>
+      </div>
     );
   }
 }

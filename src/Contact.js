@@ -10,11 +10,11 @@ const Contact = props => {
           <h2>{props.name}</h2>
           {props.occupation}
         </div>
-        <div className="add-start" onClick={props.onClick}>
-          <span>Fav</span>
+        <div className="add-start" onClick={() => props.handleFav(props.id)}>
+          <span className={props.buttonText}></span>
         </div>
-        <div className="add-start" onClick={() => props.onClick2(props.id)}>
-          <span> - </span>
+        <div className="add-start" onClick={() => props.handleDelete(props.id, props.listName.toString().toLowerCase())}>
+          <span className="fa fa-minus-square"></span>
         </div>
       </li>
     );
