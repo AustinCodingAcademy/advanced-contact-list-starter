@@ -1,5 +1,7 @@
 /*
-  TODO: Remove setTimeout from contactsGetRequest and handleAddContact
+  TODO: Remove setTimeout from axios requests
+  TODO: At the very least, change from 100 seconds in reset
+
 */
 
 import React, { Component } from 'react';
@@ -11,6 +13,7 @@ import ResetButton from './ResetButton';
 import ActionHistory from './ActionHistory';
 import ContactForm from './ContactForm';
 import AlertWindow from './AlertWindow';
+import AddContactButton from './AddContactButton';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -21,8 +24,9 @@ class App extends Component {
     this.state = {
       searchText: '',
       contacts: [],
-      alert: true,
+      alert: false,
       alertMessage: '',
+      add: false,
       selectedContacts: [],
       currentActionId: 2000,
       actionHistory: [],
@@ -53,7 +57,7 @@ class App extends Component {
   }
 
   handleReset() {
-    this.setState(this.state.originalState);
+    this.contactsGetRequest();
     this.addAction('reset');
   }
 
@@ -61,6 +65,12 @@ class App extends Component {
     e.stopPropagation();
     this.removeContact(id, this.state.contacts);
     this.addAction('remove', id);
+  }
+
+  handleOpenContact() {
+    this.setState({
+      add: true
+    });
   }
 
   handleAddContact(attributes) {
@@ -73,6 +83,7 @@ class App extends Component {
         setTimeout( () => {
           this.setState({
             alert: false,
+            add: false,
             contacts: [...this.state.contacts, response.data],
             originalState: {
               searchText: '',
@@ -80,7 +91,8 @@ class App extends Component {
               selectedContacts: []
             }
           });
-        }, 2000);
+          this.addAction('add', response.data._id);
+        }, 1000);
       })
       .catch(error => {
         console.log(error);
@@ -96,11 +108,12 @@ class App extends Component {
     axios.delete(`http://localhost:4000/contacts/${id}`)
       .then(() => {
         setTimeout(() => {
+          this.addAction('delete',id);
           this.removeContact(id);
           this.setState({
             alert: false
           });
-        }, 2000);
+        }, 1000);
       })
       .catch(error => {
         console.log(error);
@@ -142,7 +155,7 @@ class App extends Component {
               selectedContacts: []
             }
           });
-        }, 2000);
+        }, 1000);
       })
       .catch(err => console.log(`Error! ${err}`));
   }
@@ -166,8 +179,14 @@ class App extends Component {
       case 'remove':
         actionMessage = `Removed ${name}`;
         break;
+      case 'delete':
+        actionMessage = `Deleted ${name} from database`;
+        break;
       case 'reset':
         actionMessage = 'Reset application to initial state';
+        break;
+      case 'add':
+        actionMessage = `Added ${name} to contact list`;
         break;
       default:
         actionMessage = 'Some idiot programmer forgot to supply an actionType';
@@ -216,6 +235,12 @@ class App extends Component {
     return newState;
   }
 
+  removeContactForm() {
+    this.setState({
+      add: false
+    });
+  }
+
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
 
@@ -227,15 +252,31 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.alert ?
-          <AlertWindow message={this.state.alertMessage} /> :
-          null}
-        <ContactForm
-          onSubmit={this.handleAddContact.bind(this)}
-        />
         <SearchBar
           value={this.state.searchText}
           onChange={this.handleSearchBarChange.bind(this)}
+        />
+        {/*
+          This section mounts the ContactForm component
+          depending on whether this.state.add is true.
+        */}
+        {this.state.add ?
+          <ContactForm
+            onSubmit={this.handleAddContact.bind(this)}
+            onEscape={this.removeContactForm.bind(this)} /> :
+          null
+        }
+        {/*
+          Mounts AlertWindow depending on whether
+          this.state.alert is true
+        */}
+        {this.state.alert ?
+          <AlertWindow message={this.state.alertMessage} /> :
+          null
+        }
+
+        <AddContactButton
+          onOpenContact={this.handleOpenContact.bind(this)}
         />
         <ResetButton
           onReset={this.handleReset.bind(this)}

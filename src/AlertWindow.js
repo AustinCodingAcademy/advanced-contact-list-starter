@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import LoadingWidget from './LoadingWidget';
 
 const AlertWindow = (props) => {
   let message = '';
@@ -12,6 +13,9 @@ const AlertWindow = (props) => {
       break;
     case 'delete':
       message = 'Deleting contact';
+      break;
+    default:
+      break;
   }
   return (
     <div className="freeze-window">
@@ -19,6 +23,7 @@ const AlertWindow = (props) => {
         <p>
           {message}
         </p>
+        <LoadingWidget />
       </div>
     </div>
   );

@@ -23,17 +23,22 @@ body {
   float: left;
   height: 100vh;
   position: absolute;
+  overflow: hidden;
   width: 100vw;
   left: 0;
   top: 0;
-  z-index: 5;
+  z-index: 2;
 }
 
 .alert {
   background-color: #fff;
-  height: 500px;
+  border-radius: 10px;
+  height: auto;
   width: 500px;
   margin: auto;
+  padding: 25px;
+  position: relative;
+  z-index: 3;
 }
 
 .alert p {
@@ -82,11 +87,15 @@ body {
   opacity: 1;
 }
 
+.add-contact {
+  background-color: gray;
+}
+
 .reset, .remove {
   background-color: #ffc61a;
 }
 
-.reset {
+.reset, .add-contact {
   margin: 10px auto;
 }
 
@@ -188,8 +197,16 @@ body {
   width: auto;
 }
 
+
+
 .new-contact-form {
-  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+  height: auto;
+  padding: 25px;
+  margin: auto;
+  top: 0;
 }
 
 .new-contact-form label {
@@ -219,7 +236,7 @@ body {
   color: white;
 }
 
-/* Action Animation */
+/* Animations */
 
 .action-message {
   margin: 0;
@@ -242,6 +259,21 @@ body {
   animation-name: expire;
 }
 
+.new-contact-form {
+  animation-name: slide-in;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+@keyframes slide-in {
+  from {
+    top: -500px;
+  }
+  to {
+    top: 0px;
+  }
+}
+
 @keyframes expire {
   0% {
     transform: translate3d(-100%, 0px, 0px);
@@ -249,6 +281,45 @@ body {
 
   100% {
     transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+/*|*******************|*/
+/*|   Loading Widget  |*/
+/*|*******************|*/
+
+.ring {
+  border-radius: 50%;
+  animation-name: ring-spin;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  margin: auto;
+}
+
+.ring1 {
+  border: 10px dashed blue;
+  height: 100px;
+  width: 100px;
+}
+
+.ring2 {
+  border: 10px dashed red;
+  height: 80px;
+  width: 80px;
+}
+
+.ring3 {
+  border: 10px dashed green;
+  height: 60px;
+  width: 60px;
+}
+
+@keyframes ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
