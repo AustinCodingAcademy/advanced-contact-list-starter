@@ -10,6 +10,7 @@ class ContactList extends Component {
             return (
               <Contact
                 key={contact._id}
+                search={this.props.search}
                 name={contact.name}
                 avatar={contact.avatar}
                 occupation={contact.occupation}
@@ -21,31 +22,8 @@ class ContactList extends Component {
           })}
         </ul>
       </div>
-
     );
   }
-
-  // reset() {
-  //   this.setState({
-  //     AddedContacts: [ 'no contacts' ]
-  //   });
-  //   for (let i = 0; i < this.props.contacts.length; i++) {
-  //     console.log(this.props.contacts[i].active);
-  //   }
-  // }
-  //
-  // AddContact(name) {
-  //   const Added = this.state.AddedContacts;
-  //   if (Added.includes('no contacts')) {
-  //     Added[0] = name;
-  //   } else if (!Added.includes(name)) {
-  //     Added.push(name);
-  //   }
-  //   this.setState({
-  //     AddedContacts: Added
-  //   });
-  // }
-
 }
 
 export default ContactList;
@@ -53,5 +31,7 @@ export default ContactList;
 ContactList.proptypes = {
   contacts: PropTypes.object,
   onChange: PropTypes.func,
-  onContactClick: PropTypes.func
+  onContactClick: PropTypes.func,
+  search: PropTypes.string,
+  map: PropTypes.func
 };

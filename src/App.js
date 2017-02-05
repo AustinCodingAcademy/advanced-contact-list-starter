@@ -26,9 +26,10 @@ class App extends Component {
         this.setState({
           contacts: resp.data
         });
-        console.log(resp.data);
       })
-      .catch(err => console.log(`Error! ${err}`));
+      .catch(err => {
+        console.log(`Error! ${err}`)
+      });
   }
 
   handleChange(event) {
@@ -143,6 +144,7 @@ class App extends Component {
         <ContactList
           onContactClick={this.addContact.bind(this)}
           contacts={this.getFilteredContacts()}
+          search={this.state.searchText}
         />
         <h2>Added Contacts</h2>
         <ContactList

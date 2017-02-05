@@ -39,7 +39,7 @@ export default class ContactForm extends Component {
   render() {
     return (
       <form className="new-contact-form" onSubmit={this.handleSubmit.bind(this)}>
-        <label htmlForm="name">Name:</label>
+        <label htmlFor="name">Name:</label>
         <input
           type="text"
           name="name"
@@ -54,7 +54,7 @@ export default class ContactForm extends Component {
           value={this.state.occupation}
           onChange={this.handleOccupationChange.bind(this)}
         />
-        
+
         <label htmlFor="avatar">Avatar:</label>
         <input
           type="text"

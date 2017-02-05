@@ -42,9 +42,11 @@
     },
     {
       "name": "Kayne Khoury",
-      "avatar": "none",
+      "avatar": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAQKAAAAJDY4NDQyMWMzLWFhZDctNGNjMy05ZmRjLWFjZWYwOTRjYzAwZg.jpg",
       "occupation": "Web Developer",
-      "_id": 6
+      "_id": 6,
+      "buttonType": "Add",
+      "active": ""
     }
   ]
 }

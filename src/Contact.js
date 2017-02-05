@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import Highlight from './Highlight';
 
 class Contact extends Component {
   render() {
@@ -9,7 +10,10 @@ class Contact extends Component {
           <img src={this.props.avatar} alt="avatar" />
         </div>
         <div className="contact-info" name={this.props.name}>
-          <h2>{this.props.name}</h2>
+          <Highlight
+            name={this.props.name}
+            search={this.props.search}
+          />
           {this.props.occupation}
         </div>
         <div>
@@ -28,5 +32,6 @@ Contact.propTypes = {
   occupation: PropTypes.string,
   active: PropTypes.string,
   onButtonClick: PropTypes.func,
-  buttonType: PropTypes.string
+  buttonType: PropTypes.string,
+  search: PropTypes.string
 };
