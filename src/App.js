@@ -94,7 +94,7 @@ class App extends Component {
 
     this.setState({
       contacts: curContacts,
-      addedContacts: []
+      addedContacts: [],
     });
 
   }
@@ -131,10 +131,13 @@ class App extends Component {
     });
   }
 
+
   render() {
     return (
       <div className="App">
-        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+        <ContactForm
+          onSubmit={this.handleAddContact.bind(this)}
+        />
         <SearchBar
           value={this.state.searchText}
           onChange={this.handleSearchBarChange.bind(this)}

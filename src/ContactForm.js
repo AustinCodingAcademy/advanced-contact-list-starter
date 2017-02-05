@@ -8,6 +8,7 @@ export default class ContactForm extends Component {
       name: '',
       avatar: '',
       occupation: '',
+      showContactForm: false
     };
   }
 
@@ -34,42 +35,65 @@ export default class ContactForm extends Component {
 
     const { name, avatar, occupation } = this.state;
     this.props.onSubmit({ name, avatar, occupation });
+    const bool = this.state.showContactForm !== true;
+    this.setState({
+      showContactForm: bool
+    });
   }
 
+  showHideContactForm() {
+
+    const bool = this.state.showContactForm !== true;
+
+    this.setState({
+      showContactForm: bool
+    });
+
+  }
   render() {
     return (
-      <form className="new-contact-form" onSubmit={this.handleSubmit.bind(this)}>
-        <label htmlForm="name">Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={this.state.name}
-          onChange={this.handleNameChange.bind(this)}
-        />
+      <div>
+        <button
+          onClick={() => this.showHideContactForm()}
+          style={{display: this.state.showContactForm ? 'none' : ''}}
+          >Add Contact</button>
+        <form
+          className="new-contact-form"
+          onSubmit={this.handleSubmit.bind(this)}
+          style={{display: this.state.showContactForm ? 'block' : 'none'}}
+          >
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={this.state.name}
+            onChange={this.handleNameChange.bind(this)}
+          />
 
-        <label htmlFor="occupation">Occupation:</label>
-        <input
-          type="text"
-          name="occupation"
-          value={this.state.occupation}
-          onChange={this.handleOccupationChange.bind(this)}
-        />
-        
-        <label htmlFor="avatar">Avatar:</label>
-        <input
-          type="text"
-          name="avatar"
-          value={this.state.avatar}
-          onChange={this.handleAvatarChange.bind(this)}
-        />
-        <input
-          type="submit"
-          value="+ Add New"
-          disabled={!this.state.name.trim() ||
-            !this.state.occupation.trim() ||
-            !this.state.avatar.trim()}
-        />
-      </form>
+          <label htmlFor="occupation">Occupation:</label>
+          <input
+            type="text"
+            name="occupation"
+            value={this.state.occupation}
+            onChange={this.handleOccupationChange.bind(this)}
+          />
+
+          <label htmlFor="avatar">Avatar:</label>
+          <input
+            type="text"
+            name="avatar"
+            value={this.state.avatar}
+            onChange={this.handleAvatarChange.bind(this)}
+          />
+          <input
+            type="submit"
+            value="+ Add New"
+            disabled={!this.state.name.trim() ||
+              !this.state.occupation.trim() ||
+              !this.state.avatar.trim()}
+          />
+        </form>
+      </div>
     );
   }
 
