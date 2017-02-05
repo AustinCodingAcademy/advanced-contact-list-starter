@@ -79,8 +79,7 @@ class App extends Component {
     const jobTerm = this.state.searchTextJob.trim().toLowerCase();
 
     return this.state.contacts.filter(contact => {
-      return contact.name.toLowerCase().indexOf(term) >= 0;
-      return contact.occuptaion.toLowerCase().indexOf(jobTerm) >= 0;
+      return (contact.name.toLowerCase().indexOf(term) >= 0 /*|| contact.occuptaion.toLowerCase().indexOf(jobTerm) >= 0*/);
     });
   }
 
