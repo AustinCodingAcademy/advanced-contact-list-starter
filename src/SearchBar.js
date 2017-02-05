@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
-import ContactList from './ContactList.js';
+import React from 'react';
 
 const SearchBar = props => {
     return (
-      <input
-        className='search-bar'
-        type="text"
-        value={props.value}
-        onChange={ (event) => props.onChange(event) }
-      />
+      <div>
+        <input
+          className='search-bar'
+          type="text"
+          value={props.searchText}
+          onChange={ (event) => props.onChange(event) }
+        />
+        
+      </div>
     );
 }
 

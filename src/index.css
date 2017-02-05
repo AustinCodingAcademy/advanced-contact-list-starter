@@ -4,12 +4,14 @@ html, body, #root, .router {
 }
 
 body {
+  background-color: black;
+  color: white;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
 
-.App {
+.app {
   text-align: center;
   width: 500px;
   margin: 0 auto;
@@ -35,11 +37,16 @@ body {
   display: flex;
   display: flex;
   padding: 15px 0;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid green;
+}
+.contact:hover {
+  border: 3px solid green;
+  cursor: pointer;
+  color: green;
 }
 
 .contact:first-child {
-  border-top: 1px solid #ddd;
+  /*border-top: 1px solid #ddd;*/
 }
 
 .contact-link {
@@ -128,4 +135,10 @@ body {
 .new-contact-form input[type="submit"]:disabled {
   background: gray;
   color: white;
+}
+
+
+.highlight {
+  background-color: green;
+  /*color: #333;*/
 }

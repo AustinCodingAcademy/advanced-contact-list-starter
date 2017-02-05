@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import ContactName from './ContactName';
 
 const Contact = props => {
     return (
-      <li className="contact">
+      <li onClick={ () => props.onClick(props.id)} className="contact">
         <div className="image-cropper">
           <img src={props.avatar} alt="avatar"/>
         </div>
         <div className="contact-info">
-          <h2>{props.name}</h2>
+          <ContactName
+            name={props.name}
+            searchText={props.searchText}
+          />
           {props.occupation}
         </div>
       </li>
