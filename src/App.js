@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import ContactList from './ContactList.js';
-import SearchBar from './SearchBar.js';
-import SelectedContactsList from './SelectedContactsList.js';
-import ResetButton from './ResetButton.js';
+import ContactList from './ContactList';
+import SearchBar from './SearchBar';
+import SelectedContactsList from './SelectedContactsList';
+import ResetButton from './ResetButton';
 import axios from 'axios';
+import ContactForm from './ContactForm';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -11,17 +12,47 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this._initialState = {
+    this.state = {
       searchText: '',
       contacts: [],
-      selectedContacts: []
+      selectedContacts: [],
+      userActionsHistory: []
     };
+  }
 
-    this.state = this._initialState;
+  handleAddContact(attributes) {
+    axios.post('http://localhost:4000/contacts', attributes)
+      .then(resp => {
+        this.setState({
+          contacts: [...this.state.contacts, resp.data]
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  handleUserAction() {
+
+  }
+
+  getContactsFromDB() {
+    axios.get('http://localhost:4000/contacts')
+      .then(resp => {
+        this.setState({
+          contacts: resp.data
+        });
+      })
+      .catch(err => {
+        console.log(`Error! ${err}`);
+        alert('Oh shoot! We ran into an error, sorry!');
+      });
   }
 
   handleReset() {
-    this.setState(this._initialState);
+    this.setState({
+      searchText: '',
+      selectedContacts: []
+    });
+    this.forceUpdate(this.getContactsFromDB());
   }
 
   handleSelectContact(index) {
@@ -56,13 +87,22 @@ class App extends Component {
     });
   }
 
-  handleRemoveContact(index) {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact._id !== index)
-    });
+  handleRemoveContact(event, index) {
+    axios.delete(`http://localhost:4000/contacts/${index}`)
+      .then(() => {
+        const newContacts = this.state.contacts.filter(
+          contact => contact._id !== index
+        );
+
+        this.setState({
+          contacts: newContacts
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   handleSearchBarChange(event) {
+    console.log(event);
     this.setState({
       searchText: event.target.value
     });
@@ -82,16 +122,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/contacts')
-      .then(resp => {
-        this.setState({
-          contacts: resp.data
-        });
-      })
-      .catch(err => {
-        console.log(`Error! ${err}`);
-        alert('Oh shoot! We ran into an error, sorry!');
-      });
+    this.getContactsFromDB();
   }
 
   render() {
@@ -100,27 +131,38 @@ class App extends Component {
         <ResetButton
           onClickReset={this.handleReset.bind(this)}
         />
-        <h1>
-          Searchable Contacts List
-        </h1>
-        <SearchBar
-          value={this.state.searchText}
-          onChange={this.handleSearchBarChange.bind(this)}
-        />
-        <ContactList
-          contacts={this.getFilteredContacts()}
-          onClickRemove={this.handleRemoveContact.bind(this)}
-          onClickSelect={this.handleSelectContact.bind(this)}
-          searchText={this.state.searchText}
-        />
-        <h1>
-          Selected Contacts
-        </h1>
-        <SelectedContactsList
-          selectedContacts={this.state.selectedContacts}
-          onClickDeselect={this.handleDeselectContact.bind(this)}
-          checkForSelectedContact={this.checkForSelectedContact()}
-        />
+        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+        <div className="contact-list-components">
+          <h1>
+            Searchable Contacts List
+          </h1>
+          <SearchBar
+            value={this.state.searchText}
+            onChange={this.handleSearchBarChange.bind(this)}
+            />
+          <ContactList
+            contacts={this.getFilteredContacts()}
+            onClickRemove={this.handleRemoveContact.bind(this)}
+            onClickSelect={this.handleSelectContact.bind(this)}
+            searchText={this.state.searchText}
+          />
+        </div>
+        <div className="selected-contacts-components">
+          <h1>
+            Selected Contacts
+          </h1>
+          <SelectedContactsList
+            selectedContacts={this.state.selectedContacts}
+            onClickDeselect={this.handleDeselectContact.bind(this)}
+            checkForSelectedContact={this.checkForSelectedContact()}
+          />
+        </div>
+        <div className="user-actions-components">
+          <h1>
+            User Action History
+          </h1>
+
+        </div>
       </div>
     );
   }

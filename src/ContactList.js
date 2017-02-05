@@ -9,7 +9,7 @@ const ContactList = props => {
           <Contact
             {...contact}
             key={contact._id}
-            onClickRemove={index => props.onClickRemove(index)}
+            onClickRemove={(event, index) => props.onClickRemove(event, index)}
             onClickSelect={index => props.onClickSelect(index)}
             searchText={props.searchText}
             // name={contact.name}

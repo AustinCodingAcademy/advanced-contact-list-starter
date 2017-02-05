@@ -17,7 +17,7 @@ const Contact = props => {
         />
         {props.occupation}
       </div>
-      <RemoveContactButton onClickRemove={() => props.onClickRemove(props._id)} />
+      <RemoveContactButton onClickRemove={event => props.onClickRemove(event, props._id)} />
     </li>
   );
 };
