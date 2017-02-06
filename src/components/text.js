@@ -1,12 +1,16 @@
 import React from 'react';
 
-export default class Text extends React.Component {
+const Text = (props) => {
+  return (
+    <span style={props.divStyle}>
+      {props.text}
+    </span>
+  );
+};
 
-  render() {
-    return (
-      <span style={this.props.divStyle}>
-        {this.props.text}
-      </span>
-    );
-  }
-}
+export default Text;
+
+Text.propTypes = {
+  divStyle: React.PropTypes.object,
+  text: React.PropTypes.string,
+};

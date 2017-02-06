@@ -1,17 +1,18 @@
 import React from 'react';
 
-export default class Button extends React.Component {
-  render() {
+const Button = (props) => {
 
-    return (
-      <button onClick={this.props.resetSelection}>
-        Reset
+  return (
+    <button onClick={props.onClick}>
+      {props.buttonText}
     </button>
 
-    );
-  }
-}
+  );
+};
+
+export default Button;
 
 Button.propTypes = {
-  resetSelection: React.PropTypes.isfunc,
+  onClick: React.PropTypes.func,
+  buttonText: React.PropTypes.string
 };

@@ -1,12 +1,13 @@
 import React from 'react';
 import Text from './text.js';
+import Button from './button.js';
 
 const divStyle = {
   color: 'red',
 };
 
 const divStyle2 = {
-  
+
 };
 
 
@@ -28,6 +29,10 @@ export default class Contact extends React.Component {
     return this.props.name.slice(this.pos2);
   };
 
+  handleClick(event) {
+    event.preventDefault();
+    this.props.onDeleteContact(this.props._id);
+  }
 
   handleSelect() {
     this.props.handleSelect(this.props._id);
@@ -41,31 +46,39 @@ export default class Contact extends React.Component {
     this.pos2 = this.pos + this.props.searchValue.trim().length;
 
     return (
-      <li className="contact" onClick={this.handleSelect.bind(this)} >
-        <div className="image-cropper">
-          <img src={this.props.avatar} alt="avatar" />
-        </div>
-        <div className="contact-info">
+      <div>
+        <li className="contact">
+          <div onClick={this.handleSelect.bind(this)} >
+            <div className="image-cropper">
+              <img src={this.props.avatar} alt="avatar" />
+            </div>
+            <div className="contact-info">
 
-          <h2><span>
-            <Text divStyle={divStyle2} text={this.text1()} />
-            <Text divStyle={divStyle} text={this.text2()} />
-            <Text divStyle={divStyle2} text={this.text3()} />
-          </span>
-                </h2>
-          {this.props.occupation}
-        </div>
-      </li>
+              <h2><span>
+                <Text divStyle={divStyle2} text={this.text1()} />
+                <Text divStyle={divStyle} text={this.text2()} />
+                <Text divStyle={divStyle2} text={this.text3()} />
+              </span>
+              </h2>
+              {this.props.occupation}
+            </div>
+          </div>
+        </li>
+        <Button onClick={this.handleClick.bind(this)} buttonText={'Delete'} />
+      </div>
     );
   }
+
 }
 
 
 
 Contact.propTypes = {
-  handleSelect: React.PropTypes.isfunc,
+  handleSelect: React.PropTypes.func,
+  searchValue: React.PropTypes.string,
   avatar: React.PropTypes.string,
   name: React.PropTypes.string,
   occupation: React.PropTypes.string,
-  _id: React.PropTypes.string
+  _id: React.PropTypes.number,
+  onDeleteContact: React.PropTypes.func
 };
