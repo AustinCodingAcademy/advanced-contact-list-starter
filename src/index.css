@@ -9,7 +9,13 @@ body {
   font-family: sans-serif;
 }
 span{
-  background-color: rgba(255, 57, 82, 0.53);
+  background-color: rgba(57, 213, 255, 0.53);
+  height:20px;
+  width:80px;
+  border-radius: 10px;
+}
+.deleteSpan{
+  background-color: rgba(237, 42, 66, 0.69);
   height:20px;
   width:80px;
   border-radius: 10px;

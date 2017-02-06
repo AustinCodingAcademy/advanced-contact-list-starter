@@ -15,6 +15,7 @@ class App extends Component {
       contacts: [],
       selectedContacts: []
     };
+    this.handleSearchBarChange.bind(this)
   }
   handleSelectContact(contact) {
     const newSelectedContact = [
@@ -68,16 +69,16 @@ class App extends Component {
 
   handleAddContact(attributes) {
     axios.post('http://localhost:4000/contacts', attributes)
-    .then(resp => {
-      this.setState({
-        contacts: this.state.contacts.cacat([resp.data])
-      });
-    })
-    .catch(err => console.log(err));
+      .then(resp => {
+        this.setState({
+          contacts: [...this.state.contacts, resp.data]
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   handleDeleteContact(_id) {
-    axios.delete(`http://localhost:4000/contacts/${_id}`)
+  axios.delete(`http://localhost:4000/contacts/${_id}`)
     .then(resp => {
       const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
 
@@ -85,26 +86,35 @@ class App extends Component {
         contacts: newContacts
       });
     })
-    .catch(err => console.log('Error ${err}'));
-  }
+    .catch(err => console.log(`ERROR! ${err}`));
+}
 
   render() {
     return (
       <div className="App">
+
         <h1> Contacts Lists </h1>
-        <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
-        
-        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+
+        <SearchBar
+          value={this.state.searchText}
+          onChange={this.handleSearchBarChange.bind(this)}
+        />
+
+        <ContactForm
+          onSubmit={this.handleAddContact.bind(this)}
+        />
 
         <ContactList
           onDeleteContact={this.handleDeleteContact.bind(this)}
           contacts={this.getFilteredContacts()}
           onSelectContact={this.handleSelectContact.bind(this)}
          />
+
         <SelectedContactList
           selectedContacts={this.state.selectedContacts}
           onUnselectContact={this.handleUnselectContact.bind(this)}
          />
+
       </div>
     );
   }

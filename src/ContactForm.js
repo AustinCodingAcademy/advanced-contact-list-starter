@@ -7,8 +7,8 @@ class ContactForm extends Component {
     this.state = {
       name: '',
       avatar: '',
-      occupation: ''
-    };
+      occupation: '',
+    }
   }
 
   handleNameChange(event) {
@@ -30,9 +30,10 @@ class ContactForm extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefaut();
+    event.preventDefault();
+
     const { name, avatar, occupation } = this.state;
-    this.props.onSubmit({name, avatar, occupation});
+    this.props.onSubmit({ name, avatar, occupation });
   }
 
   render() {
@@ -45,6 +46,7 @@ class ContactForm extends Component {
           value={this.state.name}
           onChange={this.handleNameChange.bind(this)}
         />
+
         <label htmlFor="occupation">Occupation:</label>
         <input
           type="text"
@@ -52,6 +54,7 @@ class ContactForm extends Component {
           value={this.state.occupation}
           onChange={this.handleOccupationChange.bind(this)}
         />
+
         <label htmlFor="avatar">Avatar:</label>
         <input
           type="text"
@@ -59,6 +62,7 @@ class ContactForm extends Component {
           value={this.state.avatar}
           onChange={this.handleAvatarChange.bind(this)}
         />
+
         <input
           type="submit"
           value="+ Add New"
@@ -67,7 +71,7 @@ class ContactForm extends Component {
       </form>
     );
   }
-  }
+}
 
 ContactForm.propTypes = {
   onSubmit: React.PropTypes.func.isRequired

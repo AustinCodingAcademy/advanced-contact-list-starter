@@ -10,7 +10,7 @@ const SelectContact = props => {
         <h2>{props.name}</h2>
         {props.occupation}
       </div>
-      <span onClick={props.onUnselectClick}> remove</span>
+      <span onClick={props.onUnselectClick}> select</span>
     </li>
 
   );

@@ -14,7 +14,8 @@ class ContactList extends Component {
                 avatar={contact.avatar}
                 occupation={contact.occupation}
                 onSelectClick={() => this.props.onSelectContact(contact)}
-                onDeleteClick={() => this.props.onDeleteContact(contact._id)}
+                onDeleteClick={this.props.onDeleteContact}
+
               />
             );
           })}
@@ -26,7 +27,8 @@ class ContactList extends Component {
 
 ContactList.propTypes = {
   contacts: PropTypes.array.isRequired,
-  onSelectContact: PropTypes.func.isRequired
+  onSelectContact: PropTypes.func.isRequired,
+  onDeleteContact: PropTypes.func.isRequired
 };
 
 export default ContactList;

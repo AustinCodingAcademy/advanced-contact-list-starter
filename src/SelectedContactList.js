@@ -25,7 +25,7 @@ const SelectContactList = props => {
 
 SelectContactList.propTypes = {
   selectedContacts: PropTypes.array.isRequired,
-  onUnselectClick: PropTypes.func.isRequired
+  onUnselectContact: PropTypes.func.isRequired
 };
 
 export default SelectContactList;
