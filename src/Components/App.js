@@ -4,12 +4,26 @@ import update from 'immutability-helper';
 import moment from 'moment';
 import axios from 'axios';
 
+// Material UI
+import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import RaisedButton from 'material-ui/RaisedButton';
+
+injectTapEventPlugin();
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
+
 import ContactList from './ContactList';
+import AddContactDialog from './AddContactDialog';
 import SearchBar from './SearchBar';
 import ActionHistory from './ActionHistory';
 import ToggleableContactForm from './ToggleableContactForm';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorHistory from './ErrorHistory';
+
 
 
 class App extends Component {
@@ -87,55 +101,7 @@ class App extends Component {
     });
   }
 
-  /*
-   Add Contact Input Form
-   */
 
-  handleAddContactSubmit(evt) {
-
-    const isFormSubmit = true;
-    const validationErrors = this.constructor.validateInputForm(this.state.contact);
-
-    this.setState({validationErrors});
-
-    evt.preventDefault();
-
-    if (Object.keys(validationErrors).length) {
-      return;
-    }
-
-    this.addAvailableContact(this.state.contact, isFormSubmit);
-  }
-
-
-  static validateInputForm(contact) {
-    const errors = {};
-    if (!contact.name) {
-      errors.name = 'Name required';
-    }
-    if (!contact.occupation) {
-      errors.occupation = 'Occupation required';
-    }
-    if (!contact.avatar) {
-      errors.avatar = 'Avatar link required';
-    }
-    return errors;
-  }
-
-  static buildNewContact() {
-    return {
-      _id: uuid.v4(),
-      name: '',
-      occupation: '',
-      avatar: ''
-    };
-  }
-
-  onInputChange(evt) {
-    const contact = this.state.contact;
-    contact[evt.target.name] = evt.target.value;
-    this.setState({contact});
-  }
 
   /*
    Search Bar
@@ -313,8 +279,8 @@ class App extends Component {
   resetApplicationState() {
 
     // These parallel promises are sometimes buggy it seems with the Json server
-    // on a normal server this could be done in a single promise by sending back an object containing the contacts
-    // and Id's.
+    // on a normal server this could be done in a single request by sending back an object containing the contacts
+    // to be deleted and doing it server side.
 
     const deletes = this.state.selectedContacts.map(selectedContact =>
         this.constructor.batchableRemoveSelectedContact(selectedContact._id));
@@ -468,45 +434,39 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
-
-        <LoadingSpinner isLoading={this.state.isLoading} />
-        <SearchBar value={this.state.searchText}
-          onChange={this.handleSearchBarChange} />
-        <ToggleableContactForm
-          handleAddContactSubmit={this.handleAddContactSubmit}
-          contact={this.state.contact}
-          validationErrors={this.state.validationErrors}
-          onInputChange={this.onInputChange} />
-        <button
-          className="reset-button"
-          onClick={this.handleResetClick}
-          >Reset
-          </button>
-        <ActionHistory
-          actions={this.state.actionHistory}
-          removeAction={this.handleRemoveActionFromHistoryClick}
-          />
-        <ErrorHistory errors={this.state.errorHistory} />
-        <ContactList
-          value={this.state.searchText}
-          title={this.state.selectedContacts.length > 0 ? 'Selected Contacts' :
-                  'No selected contacts'}
-          contacts={this.getFilteredContacts(this.state.selectedContacts)}
-          handleSelectContactClick={this.handleRemoveSelectedClick}
-          handleDeleteContactClick={this.handleDeleteContactClick}
-          activeContactId={this.state.activeContactId}
-          />
-        <ContactList
-          value={this.state.searchText}
-          title={'Available Contacts'}
-          contacts={this.getFilteredContacts(this.state.contacts)}
-          handleSelectContactClick={this.handleAddToSelectedClick}
-          handleDeleteContactClick={this.handleDeleteContactClick}
-          activeContactId={this.state.activeContactId}
-          />
-
-      </div>
+      <MuiThemeProvider>
+        <div className="app">
+          <section className="column">
+            {/* <LoadingSpinner isLoading={this.state.isLoading} />*/}
+            {/* <ToggleableContactForm*/}
+            {/* handleAddContactSubmit={this.handleAddContactSubmit}*/}
+            {/* contact={this.state.contact}*/}
+            {/* validationErrors={this.state.validationErrors}*/}
+            {/* onInputChange={this.onInputChange} />*/}
+            {/* <button*/}
+            {/* className="reset-button"*/}
+            {/* onClick={this.handleResetClick}*/}
+            {/* >Reset*/}
+            {/* </button>*/}
+            {/* <ActionHistory*/}
+            {/* actions={this.state.actionHistory}*/}
+            {/* removeAction={this.handleRemoveActionFromHistoryClick}*/}
+            {/* />*/}
+            {/* <ErrorHistory errors={this.state.errorHistory} />*/}
+            <ContactList
+              value={this.state.searchText}
+              title={'Available'}
+              contacts={this.getFilteredContacts(this.state.contacts)}
+              handleSelectContactClick={this.handleAddToSelectedClick}
+              handleDeleteContactClick={this.handleDeleteContactClick}
+              activeContactId={this.state.activeContactId}
+              />
+          </section>
+          <section className="column">
+          </section>
+          <AddContactDialog/>
+        </div>
+      </MuiThemeProvider>
     );
   }
 
