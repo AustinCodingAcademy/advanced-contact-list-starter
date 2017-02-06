@@ -13,7 +13,7 @@ class ContactList extends Component {
               avatar={contact.avatar}
               name={contact.name}
               occupation={contact.occupation}
-              onDeleteContact={contact.handleDeleteContact}
+              onClick={this._id}
             />
           );
         })}
@@ -21,5 +21,9 @@ class ContactList extends Component {
     );
   }
 }
+
+ContactList.propTypes = {
+  contacts: React.PropTypes.array.isRequired,
+};
 
 export default ContactList;

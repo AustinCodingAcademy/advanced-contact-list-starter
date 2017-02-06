@@ -13,16 +13,18 @@ const Contact = props => {
         {props.occupation}
       </div>
       <button className="delete-button" onClick={
-        event => props.onDeleteContact(event)}>X</button>
+        event => this.onClick(event)}>X</button>
     </li>
   );
 };
+
+
 
 Contact.propTypes = {
   avatar: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   occupation: React.PropTypes.string.isRequired,
-  onDeleteContact: React.PropTypes.func.isRequired
+  onClick: React.PropTypes.number.isRequired
 };
 
 

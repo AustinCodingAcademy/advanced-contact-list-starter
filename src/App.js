@@ -75,7 +75,7 @@ class App extends Component {
         <ContactForm onSubmit={this.handleAddContact.bind(this)}
           onDeleteContact={this.handleDeleteContact.bind(this)} />
         <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
-        <ContactList onDeleteContact={this.handleDeleteContact.bind(this)}
+        <ContactList onClick={this.handleDeleteContact.bind(this)}
           contacts={this.getFilteredContacts()} />
       </div>
 
