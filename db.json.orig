@@ -35,12 +35,6 @@
       "avatar": "http://www.celebitchy.com/wp-content/uploads/2016/05/ariel-little-mermaid.jpg",
       "occupation": "Princess of Atlantica",
       "_id": 6
-    },
-    {
-      "name": "Dr. Evil",
-      "avatar": "https://i0.wp.com/media2.slashfilm.com/slashfilm/wp/wp-content/images/Mike-Myers-Dr-Evil.jpg",
-      "occupation": "Evil Doctor",
-      "_id": 7
     }
   ]
 }

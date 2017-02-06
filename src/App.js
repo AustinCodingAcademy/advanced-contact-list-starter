@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import ContactList from "./ContactList";
 import SearchBar from "./SearchBar";
+import SelectedContacts from "./SelectedContacts";
+import ContactForm from "./ContactForm";
+
+
 
 class App extends Component {
   constructor() {
@@ -39,14 +43,27 @@ class App extends Component {
       return filteredContacts;
     }
 
+    handleAddContact(attributes) {
+      axios.post('http://localhost:4000/contacts', attributes)
+        .then(resp => {
+          this.setState({
+            contacts: this.state.contacts.concat([resp.data])
+          });
+        })
+        .catch(err => console.log(err));
+    }
+
   render() {
       return (
       <div className="App">
+        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
         <SearchBar onChange={this.handleSearchBarChange.bind(this)} value={this.state.searchText}/>
         <ContactList contacts={this.getFilteredContacts()} />
+        <SelectedContacts />
       </div>
     );
   }
 }
+
 
 export default App;

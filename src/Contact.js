@@ -12,6 +12,6 @@ const Contact = props => {
       </div>
     </li>
   );
-}
+};
 
 export default Contact;
