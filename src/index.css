@@ -16,6 +16,31 @@ body {
   padding: 50px 50px;
 }
 
+.App h1 {
+  box-sizing: border-box;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.activity-log {
+  width: 45%;
+  margin-bottom: 20px;
+}
+
+.activity-items {
+  height: 60px;
+  width: 90%;
+  border: 1px solid #ddd;
+  padding: 10px 5px;
+  border-radius: 5px;
+  overflow-y: scroll;
+}
+
+.activity-items li {
+  padding: 3px 0;
+  border-bottom: 1px solid #ddd;
+}
+
 .search-bar {
   height: 35px;
   width: 40%;
@@ -28,12 +53,16 @@ body {
 }
 
 #show-form {
-  display: inline-block;
   height: 35px;
-  width: 200px;
+  width: 35px;
   text-align: center;
-  margin: 21.44px 30px;
-  background-color: lightblue;
+  border-radius: 5px;
+  background-color: #39ac39;
+  display: inline-block;
+}
+
+#show-form span {
+  line-height: 35px;
 }
 
 .contact-container {
@@ -82,13 +111,22 @@ body {
   width: auto;
 }
 
-.contact .contact-info {
+.contact .contact-info, .contact .contact-alert {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding-left: 35px;
+  padding: 0 35px;
+}
+
+.contact .contact-alert {
+  background-color: #39ac39;
+  border-radius: 5px;
+}
+
+.contact .fa {
+  color: #39ac39;
 }
 
 .add-start {
@@ -96,7 +134,7 @@ body {
   width: 50px;
 }
 
-.add-start:hover, #form-container span:hover, .new-contact-form input[type="submit"]:hover, #show-form:hover {
+.add-start:hover, #form-container span:hover, .new-contact-form input[type="submit"]:hover, #show-form:hover, .contact-alert span {
   cursor: pointer;
 }
 
@@ -136,18 +174,11 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-  color: #ddd;
+  color: #39ac39;
 }
 
 .new-contact-form {
   margin: 10px 10px;
-}
-
-.new-contact-form label {
-  width: 15%;
-  /*display: inline-block;*/
-  text-align: left;
-  visibility: hidden;
 }
 
 .new-contact-form input {
@@ -163,7 +194,7 @@ body {
 }
 
 .new-contact-form input[type="submit"] {
-  background: black;
+  background: #39ac39;
   color: white;
 }
 

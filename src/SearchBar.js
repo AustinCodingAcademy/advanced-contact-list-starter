@@ -17,7 +17,6 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
         <input
           className='search-bar'
           type="text"
@@ -25,7 +24,6 @@ class SearchBar extends React.Component {
           value={this.props.value}
           onChange={event => this.props.onChange(event)}
           />
-      </div>
     );
   }
 }

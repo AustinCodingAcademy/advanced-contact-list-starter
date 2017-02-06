@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import ContactForm from './ContactForm';
+import Activity from './Activity';
 import axios from 'axios';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
             searchText: '',
             favorites: [],
             contacts: [],
+            activity: [],
             contactFormVisible: false
         };
     }
@@ -46,17 +48,17 @@ class App extends Component {
 
     addToFavorites(_id) {
         let addCon = this.state.contacts.filter(contact => contact._id === _id);
-
+        //let newActivity = this.state.activity.push(addCon.name + " added to favorites");
         console.log(addCon);
 
         this.handleAddFavorite(...addCon);
-        this.handleDeleteContact(_id, 'contacts');
+        this.handleDeleteContact(_id);
     }
 
     removeFromFavorite(_id) {
       let remCon = this.state.favorites.filter(contact => contact._id === _id);
 
-      console.log("removed from favs: " + remCon)
+      console.log(remCon);
 
       this.handleAddContact(...remCon);
       this.handleDeleteFavorite(_id);
@@ -78,8 +80,12 @@ class App extends Component {
     handleAddContact(attributes) {
       axios.post('http://localhost:4000/contacts', attributes)
       .then((resp) => {
+
+        console.log(resp.data.name);
+
         this.setState({
-          contacts: [...this.state.contacts, resp.data]
+          contacts: [...this.state.contacts, resp.data],
+          activity: [...this.state.activity, resp.data.name + " added to contacts"]
         });
       })
       .catch(err => console.log(err));
@@ -88,16 +94,20 @@ class App extends Component {
     handleAddFavorite(attributes) {
       axios.post('http://localhost:4000/favorites', attributes)
       .then((resp) => {
+
+        console.log(resp.data.name);
+
         this.setState({
-          favorites: [...this.state.favorites, resp.data]
+          favorites: [...this.state.favorites, resp.data],
+          activity: [...this.state.activity, resp.data.name + " added to favorites"]
         });
       })
       .catch(err => console.log(err));
     }
 
-    handleDeleteContact(_id, list) {
-      axios.delete(`http://localhost:4000/${list}/${_id}`)
-        .then(() => {
+    handleDeleteContact(_id) {
+      axios.delete(`http://localhost:4000/contacts/${_id}`)
+        .then((resp) => {
           const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
 
           this.setState({
@@ -137,12 +147,16 @@ class App extends Component {
             <div>
               <h1>React Contact List</h1>
             </div>
+            <Activity
+              activity={this.state.activity}
+            />
             <SearchBar
               value={this.state.searchText}
               onChange={this.handleChange.bind(this)}
               showForm={this.showContactForm.bind(this)}
             />
-            <div id="show-form" onClick={this.showContactForm.bind(this)}>Add Contact</div>
+            <div id="show-form" onClick={this.showContactForm.bind(this)}><span className="fa fa-plus"></span></div>
+
             { this.state.contactFormVisible ? <ContactForm hideForm={this.hideContactForm.bind(this)} onSubmit={this.handleAddContact.bind(this)} /> : null }
             <div>
               <ContactList

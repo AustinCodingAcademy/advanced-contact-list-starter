@@ -1,23 +1,37 @@
 import React from 'react';
 
-const Contact = props => {
+class Contact extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      confirmDelete: false
+    };
+  }
+
+  render() {
     return (
       <li className="contact">
         <div className="image-cropper">
-          <img src={props.avatar} alt="avatar"/>
+          <img src={this.props.avatar} alt="avatar"/>
         </div>
-        <div className="contact-info">
-          <h2>{props.name}</h2>
-          {props.occupation}
+        {this.state.confirmDelete ? <div className="contact-alert">
+          <h3>Delete this contact? <span onClick={() => this.props.handleDelete(this.props.id, this.props.listName.toString().toLowerCase())}>Yes</span> / <span onClick={() => this.setState({confirmDelete: false})}>No</span></h3>
+          </div> : <div className="contact-info">
+            <h2>{this.props.name}</h2>
+            {this.props.occupation}
+          </div>
+        }
+
+        <div className="add-start" onClick={() => this.props.handleFav(this.props.id)}>
+          <span className={this.props.buttonText}></span>
         </div>
-        <div className="add-start" onClick={() => props.handleFav(props.id)}>
-          <span className={props.buttonText}></span>
-        </div>
-        <div className="add-start" onClick={() => props.handleDelete(props.id, props.listName.toString().toLowerCase())}>
+        <div className="add-start" onClick={() => this.setState({confirmDelete: true})}>
           <span className="fa fa-minus-square"></span>
         </div>
       </li>
     );
+  }
 }
 
 export default Contact;
