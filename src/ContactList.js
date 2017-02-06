@@ -13,6 +13,7 @@ class ContactList extends Component {
               avatar={contact.avatar}
               name={contact.name}
               occupation={contact.occupation}
+              onDeleteContact={contact.handleDeleteContact}
             />
           );
         })}
@@ -22,4 +23,3 @@ class ContactList extends Component {
 }
 
 export default ContactList;
-// let deleteContact = () => {button.onClick={this.handleDeleteContact}};

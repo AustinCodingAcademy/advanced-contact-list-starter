@@ -73,7 +73,7 @@ class App extends Component {
     return (
       <div className="App">
         <ContactForm onSubmit={this.handleAddContact.bind(this)}
-          onClick={this.handleDeleteContact.bind(this)} />
+          onDeleteContact={this.handleDeleteContact.bind(this)} />
         <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
         <ContactList onDeleteContact={this.handleDeleteContact.bind(this)}
           contacts={this.getFilteredContacts()} />
