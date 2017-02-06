@@ -6,13 +6,13 @@ class SearchBar extends Component {
 
     return (
       <div>
-        <label className="search-bar">Search:</label>
+        <label className="search-bar">Search</label>
         <input
           className="search-bar"
           type="text"
           value={this.props.value}
           onChange={event => this.props.onChange(event)}
-      />
+          />
       </div>
     );
   }

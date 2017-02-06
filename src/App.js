@@ -21,8 +21,8 @@ class App extends Component {
           contacts: resp.data
         });
       })
-      .catch(() => {
-        console.error('Error! $(err)');
+      .catch(err => {
+        console.error('Error! $(err)')
       });
   }
 
@@ -52,20 +52,20 @@ class App extends Component {
           contacts: [...this.state.contacts, resp.data]
         });
       })
-      .catch(err => console.error(err));
+      .catch(err => console.log(err));
   }
 
   handleDeleteContact(_id) {
-
     axios.delete(`http://localhost:4000/contacts/${_id}`)
-    .then(resp => {
+    .then(() => {
       const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
 
       this.setState({
         contacts: newContacts
       });
     })
-    .catch(err => console.error(`ERROR! ${err}`));
+
+    .catch(err => console.log(`ERROR! ${err}`));
   }
 
 
@@ -76,6 +76,7 @@ class App extends Component {
         <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
         <ContactList contacts={this.getFilteredContacts()} />
       </div>
+
     );
   }
 }

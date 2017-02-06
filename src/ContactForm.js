@@ -66,7 +66,8 @@ class ContactForm extends Component {
         <input
           type="submit"
           value="+ Add New"
-          disabled={!this.state.name.trim() ||
+          disabled={
+            !this.state.name.trim() ||
             !this.state.occupation.trim() ||
             !this.state.avatar.trim()}
         />

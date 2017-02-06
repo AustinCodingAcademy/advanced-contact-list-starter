@@ -16,10 +16,10 @@ class ContactList extends Component {
             />
           );
         })}
-
       </ul>
     );
   }
 }
 
 export default ContactList;
+// let deleteContact = () => {button.onClick={this.handleDeleteContact}};

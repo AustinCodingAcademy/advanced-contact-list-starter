@@ -26,6 +26,17 @@ body {
   box-sizing: border-box;
 }
 
+.delete-button {
+  height: 20px;
+  background-color: whitesmoke;
+  font-size: 8pt;
+}
+
+ .delete-button:hover {
+  background-color: darkgrey;
+ }
+
+
 .contact-list {
   padding: 0;
 }
