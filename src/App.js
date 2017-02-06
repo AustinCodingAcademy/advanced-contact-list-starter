@@ -153,6 +153,7 @@ class App extends Component {
         <ContactList
           onContactClick={this.removeContact.bind(this)}
           contacts={this.state.addedContacts}
+          search={this.state.searchText}
         />
       </div>
 
