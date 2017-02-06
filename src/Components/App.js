@@ -101,7 +101,57 @@ class App extends Component {
     });
   }
 
+  /*
+   Add Contact Input Form
+   */
 
+  handleAddContactSubmit(evt) {
+
+    const isFormSubmit = true;
+    const validationErrors = this.constructor.validateInputForm(this.state.contact);
+
+    this.setState({validationErrors});
+
+    evt.preventDefault();
+
+    if (Object.keys(validationErrors).length) {
+      return;
+    }
+
+    //
+    this.addAvailableContact(this.state.contact, isFormSubmit);
+  }
+
+
+  static validateInputForm(contact) {
+    const errors = {};
+    if (!contact.name) {
+      errors.name = 'Name required';
+    }
+    if (!contact.occupation) {
+      errors.occupation = 'Occupation required';
+    }
+    if (!contact.avatar) {
+      errors.avatar = 'Avatar link required';
+    }
+    return errors;
+  }
+
+  static buildNewContact() {
+    return {
+      _id: uuid.v4(),
+      name: '',
+      occupation: '',
+      avatar: '',
+      selected: false
+    };
+  }
+
+  onInputChange(evt) {
+    const contact = this.state.contact;
+    contact[evt.target.name] = evt.target.value;
+    this.setState({contact});
+  }
 
   /*
    Search Bar
@@ -129,7 +179,6 @@ class App extends Component {
    */
 
   getSelectedContacts() {
-
 
     this.loadingStarted();
 
@@ -459,12 +508,17 @@ class App extends Component {
               contacts={this.getFilteredContacts(this.state.contacts)}
               handleSelectContactClick={this.handleAddToSelectedClick}
               handleDeleteContactClick={this.handleDeleteContactClick}
+              handleSearchBarChange={this.handleSearchBarChange}
               activeContactId={this.state.activeContactId}
               />
           </section>
-          <section className="column">
-          </section>
-          <AddContactDialog/>
+          <section className="column" />
+          <AddContactDialog
+            contact={this.state.contact}
+            handleAddContactSubmit={this.handleAddContactSubmit}
+            onInputChange={this.onInputChange}
+            validationErrors={this.state.validationErrors}
+          />
         </div>
       </MuiThemeProvider>
     );

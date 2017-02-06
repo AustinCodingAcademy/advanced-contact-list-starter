@@ -3,40 +3,35 @@
  */
 
 import React from 'react';
+import TextField from 'material-ui/TextField';
 
 const ContactForm = props => {
 
   return (
     <section>
-      <h3>Add a new Contact</h3>
-      <button
-        className="fa fa-times"
-        onClick={props.handleFormClose}
-       />
-      <form className="new-contact-form"
+      <form className="contact-form"
         onSubmit={(evt) => props.handleAddContactSubmit(evt)}>
-        <input
+        <TextField className="text-field"
           placeholder="Name"
           name="name"
           value={props.contact.name}
           onChange={(evt) => props.onInputChange(evt)}
+          errorText={props.validationErrors.name}
               />
-        <span style={{color: 'red'}}>{props.validationErrors.name}</span>
-        <input
+        <TextField className="text-field"
           placeholder="Occupation"
           name="occupation"
           value={props.contact.occupation}
           onChange={(evt) => props.onInputChange(evt)}
+          errorText={props.validationErrors.occupation}
               />
-        <span style={{color: 'red'}}>{props.validationErrors.occupation}</span>
-        <input
+        <TextField className="text-field"
           placeholder="Avatar Link"
           name="avatar"
           value={props.contact.avatar}
           onChange={(evt) => props.onInputChange(evt)}
+          errorText={props.validationErrors.avatar}
               />
-        <span style={{color: 'red'}}>{props.validationErrors.avatar}</span>
-        <input type="submit" />
       </form>
     </section>
   );
@@ -45,10 +40,8 @@ const ContactForm = props => {
 
 ContactForm.propTypes = {
   contact: React.PropTypes.object.isRequired,
-  handleAddContactSubmit: React.PropTypes.func.isRequired,
   onInputChange: React.PropTypes.func.isRequired,
   validationErrors: React.PropTypes.object.isRequired,
-  handleFormClose: React.PropTypes.func.isRequired
 };
 
 export default ContactForm;

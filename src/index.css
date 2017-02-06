@@ -157,6 +157,12 @@ body {
 
 }
 
+.paper {
+    text-align: center;
+    margin: 20px;
+    min-width: 300px;
+}
+
 .app {
     display: flex;
     flex-direction: row;
@@ -165,12 +171,17 @@ body {
 }
 
 .column {
-    display: flex;
     flex-direction: column;
 }
 
 .fab-button {
     margin-top: 44px;
+}
+
+
+.text-field {
+    padding-left: 10px;
+    margin: 5px 5px 5px 5px;
 }
 
 /*html, body, #root, .router {*/

@@ -12,6 +12,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
+import Highlighter from './Highlighter';
 
 import TextField from 'material-ui/TextField';
 
@@ -34,17 +35,14 @@ const rightIconMenu = (
   </IconMenu>
 );
 
-const paperStyle = {
-  textAlign: 'center',
-  margin: 20
-};
 
 const ContactList = props => {
 
   return (
-    <Paper style={paperStyle}>
+    <Paper className="paper">
       <TextField
-          hintText="Search Contacts"
+        placeholder="Search Contacts"
+        onChange={(evt) => props.handleSearchBarChange(evt)}
       />
       <Divider />
 
@@ -56,7 +54,7 @@ const ContactList = props => {
               value={props.value}
               key={contact._id}
               id={contact._id}
-              primaryText={contact.name}
+              primaryText={<Highlighter searchWords={props.value} textToHighlight={contact.name} />}
               leftAvatar={<Avatar src={contact.avatar} />}
               secondaryText={contact.occupation}
               rightIconButton={rightIconMenu} />
@@ -66,13 +64,13 @@ const ContactList = props => {
       <Divider />
       <h4>Available</h4>
       <List>
-        {props.contacts.filter(contact => contact.selected).map(contact => {
+        {props.contacts.filter(contact => !contact.selected).map(contact => {
           return (
             <ListItem
               value={props.value}
               key={contact._id}
               id={contact._id}
-              primaryText={contact.name}
+              primaryText={<Highlighter searchWords={props.value} textToHighlight={contact.name} />}
               leftAvatar={<Avatar src={contact.avatar} />}
               secondaryText={contact.occupation}
               rightIconButton={rightIconMenu} />
