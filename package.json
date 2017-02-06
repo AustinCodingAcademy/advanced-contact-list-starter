@@ -6,6 +6,7 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "foreman": "^2.0.0",
     "json-server": "^0.9.4",
     "react": "^15.3.2",
@@ -13,7 +14,7 @@
   },
   "scripts": {
     "start": "nf start",
-    "react-app":"react-scripts start",
+    "react-app": "react-scripts start",
     "api": "json-server --id _id --watch --port 4000 db.json",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

@@ -2,33 +2,33 @@
   "contacts": [
     {
       "_id": 1,
-      "name": "Dale Cooper",
-      "occupation": "FBI Agent",
-      "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
+      "name": "Nugget Soape",
+      "occupation": "Ankle Biter",
+      "avatar": "https://scontent-dft4-1.xx.fbcdn.net/v/t1.0-9/13879202_10107942913699150_5756944923215245156_n.jpg?oh=db34837500d67ba28c5160ca6b35a2b9&oe=59113BBF"
     },
     {
       "_id": 2,
-      "name": "Spike Spiegel",
-      "occupation": "Bounty Hunter",
-      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
+      "name": "Gizmo",
+      "occupation": "Mogwai",
+      "avatar": "https://pbs.twimg.com/profile_images/555100203691163648/lOSh3wbL_400x400.png"
     },
     {
       "_id": 3,
-      "name": "Wirt",
-      "occupation": "adventurer",
-      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
+      "name": "Fizzgig",
+      "occupation": "Gelfling Companion",
+      "avatar": "http://vignette1.wikia.nocookie.net/darkcrystal/images/8/81/Fizzgig.jpg/revision/latest?cb=20080506205401"
     },
     {
       "_id": 4,
-      "name": "Michael Myers",
-      "occupation": "Loving little brother",
-      "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
+      "name": "Bilbo Baggins",
+      "occupation": "Gardener / Ring-bearer",
+      "avatar": "http://www.majorspoilers.com/wp-content/uploads/2011/02/BilboInTheHobbit.jpg"
     },
     {
       "_id": 5,
-      "name": "Dana Scully",
-      "occupation": "FBI Agent",
-      "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
+      "name": "A Pimp Named Slickback",
+      "occupation": "Chronic B**** Dependency Intervention Counselor",
+      "avatar": "https://i.ytimg.com/vi/TV_K9VT0VrY/hqdefault.jpg"
     }
   ]
 }
