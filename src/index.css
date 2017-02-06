@@ -28,7 +28,7 @@ body {
 
 .contact-list {
   padding: 0;
-  margin-left: 250px;
+  /*margin-left: 250px;*/
 }
 
 .selected-contact-list, .contact-list{

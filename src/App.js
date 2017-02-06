@@ -6,6 +6,7 @@ import ContactList from './ContactList';
 import SelectedContactList from './SelectedContactList';
 import ResetButton from './ResetButton';
 import ContactForm from './ContactForm';
+import ActionHistoryList from './ActionHistoryList';
 
 
 /* eslint-disable max-len */
@@ -16,7 +17,10 @@ class App extends Component {
     this.state = {
       searchText: '',
       contacts: [],
-      selectedContacts: []
+      selectedContacts: [],
+      actionHistory: [],
+      actionId: 100,
+      originalState: {}
     };
   }
 
@@ -24,7 +28,12 @@ class App extends Component {
     axios.get('http://localhost:4000/contacts')
       .then(resp => {
         this.setState({
-          contacts: resp.data
+          contacts: resp.data,
+          originalState: {
+            searchText: '',
+            contacts: resp.data,
+            selectedContacts: []
+          }
         });
       })
       .catch(err => {
@@ -50,6 +59,8 @@ class App extends Component {
       selectedContacts: newSelectedContact,
       contacts: newContactsArray
     });
+
+    this.addAction('select');
   }
 
   handleUnselectContact(selectedContact) {
@@ -64,21 +75,13 @@ class App extends Component {
       contacts: newSelectedContact,
       selectedContacts: newSelectedContactsArray
     });
+
+    this.addAction('unselect');
   }
 
   resetContacts() {
-    this.setState({
-      contacts: axios.get('http://localhost:4000/contacts')
-            .then(resp => {
-              this.setState({
-                contacts: resp.data
-              });
-            })
-            .catch(err => {
-              console.log(`Error ${err}`);
-            }),
-      selectedContacts: []
-    });
+    this.setState(this.state.originalState);
+    this.addAction('reset');
   }
 
   handleSubmitContact(attributes) {
@@ -89,6 +92,8 @@ class App extends Component {
         });
       })
       .catch(err => console.log(err));
+
+    this.addAction('submit');
   }
 
   getFilteredContacts() {
@@ -109,6 +114,43 @@ class App extends Component {
         });
       })
       .catch(err => console.log(err));
+  }
+
+  handleRemoveAction(_id) {
+    this.setState({
+      actionHistory: this.state.actionHistory.filter(action => action._id !== _id)
+    });
+  }
+
+  addAction(actionType) {
+    const name = this.state.originalState.contacts.name;
+    const newId = this.state.actionId + 1;
+
+    let actionMessage = '';
+
+    switch (actionType) {
+      case 'select':
+        actionMessage = `You have selected ${name}`;
+        break;
+      case 'unselect':
+        actionMessage = `You have unselected ${name}`;
+        break;
+      case 'remove':
+        actionMessage = `You have removed ${name}`;
+        break;
+      case 'reset':
+        actionMessage = 'You have reseted the app';
+        break;
+      default:
+        actionMessage = 'I must have forgot somthing';
+    }
+
+    const newHistory = [...this.state.actionHistory, actionMessage];
+
+    this.setState({
+      actionHistory: newHistory,
+      _id: newId
+    });
   }
 
   render() {
@@ -132,6 +174,10 @@ class App extends Component {
         <SelectedContactList
           selectedContacts={this.state.selectedContacts}
           onUnselectContact={this.handleUnselectContact.bind(this)}
+        />
+        <ActionHistoryList
+          onRemoveAction={this.handleRemoveAction.bind(this)}
+          actions={this.state.actionHistory}
         />
       </div>
     );
