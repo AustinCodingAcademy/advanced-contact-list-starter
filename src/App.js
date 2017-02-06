@@ -5,7 +5,7 @@ import axios from 'axios';
 import SelectedContactList from './SelectedContactList';
 import ContactForm from './ContactForm';
 
- /* eslint-disable max-len */
+ /* eslint-disablen max-len */
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class App extends Component {
       contacts: [],
       selectedContacts: []
     };
-    this.handleSearchBarChange.bind(this)
   }
   handleSelectContact(contact) {
     const newSelectedContact = [
@@ -78,16 +77,16 @@ class App extends Component {
   }
 
   handleDeleteContact(_id) {
-  axios.delete(`http://localhost:4000/contacts/${_id}`)
-    .then(resp => {
-      const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
+    axios.delete(`http://localhost:4000/contacts/${_id}`)
+      .then(resp => {
+        const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
 
-      this.setState({
-        contacts: newContacts
-      });
-    })
-    .catch(err => console.log(`ERROR! ${err}`));
-}
+        this.setState({
+          contacts: newContacts
+        });
+      })
+      .catch(err => console.log(`ERROR! ${err}`));
+  }
 
   render() {
     return (

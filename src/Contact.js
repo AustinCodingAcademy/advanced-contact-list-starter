@@ -18,7 +18,7 @@ const Contact = props => {
         </span>
         <span
           className="deleteSpan"
-          onClick={() => props.onDeleteClick(props._id)}> delete
+          onClick={props.onDeleteClick}> delete
          </span>
       </li>
     </div>

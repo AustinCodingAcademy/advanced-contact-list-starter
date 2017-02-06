@@ -14,7 +14,7 @@ class ContactList extends Component {
                 avatar={contact.avatar}
                 occupation={contact.occupation}
                 onSelectClick={() => this.props.onSelectContact(contact)}
-                onDeleteClick={this.props.onDeleteContact}
+                onDeleteClick={() => this.props.onDeleteContact(contact._id)}
 
               />
             );
