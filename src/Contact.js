@@ -1,6 +1,9 @@
 
 import React from 'react';
 
+//even simpler than contact list is contact itself; it takes 3 props
+//it requires a name, an occupation, and an avatar url which is linked to the src atttribute
+
 const Contact = props => {
   return (
     <li className="contact">

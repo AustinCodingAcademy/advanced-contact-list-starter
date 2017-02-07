@@ -5,6 +5,8 @@ class ContactList extends Component {
   render() {
     return (
       <ul className="contact-list">
+      //here's where we sort our contact data into readable contacts
+      //we take a prop (now from our db) and then create a contact component
         {this.props.contacts.map(contact => {
           return (
             <Contact

@@ -29,6 +29,12 @@
       "name": "Dana Scully",
       "occupation": "FBI Agent",
       "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
+    },
+    {
+      "name": "Testy McDefault",
+      "avatar": "http://cartoonbros.com/wp-content/uploads/2016/03/Shrek-16.jpg",
+      "occupation": "Crash Dummy",
+      "_id": 6
     }
   ]
 }
