@@ -8,7 +8,8 @@ const ActionHistoryList = props => {
       {props.actions.length > 0 ? null : 'Nothing has happened yet!'}
       <div className="actions-list">
         <ul>
-          {props.actions.slice(0, 10).map(action => {
+          {props.actions.map(action => {
+            console.log(action);
             return (
               <Action
                 key={action._id}
@@ -23,9 +24,10 @@ const ActionHistoryList = props => {
   );
 };
 
+
 export default ActionHistoryList;
 
 ActionHistoryList.propTypes = {
   actions: PropTypes.array.isRequired,
-  onRemoveAction: PropTypes.func.inRequired
+  onRemoveAction: PropTypes.func.isRequired
 };

@@ -4,7 +4,7 @@ const Action = props => {
   return (
     <li>
       {props.action.actionMessage}
-      <div onClick={props.onRemoveClick}>X</div>
+      <button onClick={props.onRemoveClick}>X</button>
     </li>
   );
 };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+const uuid = require('node-uuid');
 
 import SearchBar from './SearchBar';
 import ContactList from './ContactList';
@@ -19,7 +20,6 @@ class App extends Component {
       contacts: [],
       selectedContacts: [],
       actionHistory: [],
-      actionId: 100,
       originalState: {}
     };
   }
@@ -60,23 +60,23 @@ class App extends Component {
       contacts: newContactsArray
     });
 
-    this.addAction('select');
+    this.addAction('select', contact);
   }
 
-  handleUnselectContact(selectedContact) {
+  handleUnselectContact(contact) {
     const newSelectedContact = [
       ...this.state.contacts,
-      selectedContact
+      contact
     ];
 
-    const newSelectedContactsArray = this.state.selectedContacts.filter(contactSelected => contactSelected !== selectedContact);
+    const newSelectedContactsArray = this.state.selectedContacts.filter(contactSelected => contactSelected !== contact);
 
     this.setState({
       contacts: newSelectedContact,
       selectedContacts: newSelectedContactsArray
     });
 
-    this.addAction('unselect');
+    this.addAction('unselect', contact);
   }
 
   resetContacts() {
@@ -93,7 +93,7 @@ class App extends Component {
       })
       .catch(err => console.log(err));
 
-    this.addAction('submit');
+    // this.addAction('submit');
   }
 
   getFilteredContacts() {
@@ -122,21 +122,19 @@ class App extends Component {
     });
   }
 
-  addAction(actionType) {
-    const name = this.state.originalState.contacts.name;
-    const newId = this.state.actionId + 1;
+  addAction(actionType, contact) {
 
     let actionMessage = '';
 
     switch (actionType) {
       case 'select':
-        actionMessage = `You have selected ${name}`;
+        actionMessage = `You have selected ${contact.name}`;
         break;
       case 'unselect':
-        actionMessage = `You have unselected ${name}`;
+        actionMessage = `You have unselected ${contact.name}`;
         break;
       case 'remove':
-        actionMessage = `You have removed ${name}`;
+        actionMessage = `You have removed ${contact.name}`;
         break;
       case 'reset':
         actionMessage = 'You have reseted the app';
@@ -145,12 +143,22 @@ class App extends Component {
         actionMessage = 'I must have forgot somthing';
     }
 
-    const newHistory = [...this.state.actionHistory, actionMessage];
+    console.log(actionMessage);
+
+    const newAction = this.buildNewAction(actionMessage);
+
+    const newHistory = [...this.state.actionHistory, newAction];
 
     this.setState({
-      actionHistory: newHistory,
-      _id: newId
+      actionHistory: newHistory
     });
+  }
+
+  buildNewAction(description) {
+    return {
+      actionMessage: description,
+      _id: uuid.v4()
+    };
   }
 
   render() {
