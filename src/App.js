@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ContactForm from './ContactForm';
 import ContactList from './ContactList.js';
 import SearchBar from './SearchBar';
 import ResetButton from './ResetButton';
@@ -39,7 +40,7 @@ class App extends Component {
     });
   }
 
-  handleContactAdd(id, name, job, pic) {
+  handleContactClick(id, name, job, pic) {
     const prof = {
       "id": id,
       "name": name,
@@ -78,12 +79,25 @@ class App extends Component {
     });
   }
 
+  handleAddContact(attributes) {
+    axios.post('http://localhost:4000/contacts', attributes)
+      .then(resp => {
+        this.setState({
+          contacts: [...this.state.contacts, resp.data]
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
 
 
     render() {
       return (
         <section className="app">
           <h1>Contact List</h1>
+
+          <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+
           <h3>&#9660; Search by Name &#9660;</h3>
 
           <SearchBar
@@ -101,7 +115,7 @@ class App extends Component {
           <ContactList
             contacts={this.getFilteredContacts()}
             searchText={this.state.searchText}
-            onClick={this.handleContactAdd.bind(this)} />
+            onClick={this.handleContactClick.bind(this)} />
 
 
 
