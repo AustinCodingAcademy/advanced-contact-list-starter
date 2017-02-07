@@ -1,104 +1,107 @@
 import React, { Component } from 'react';
-import ContactList from './ContactList';
-import SearchBar from './SearchBar';
+import ContactList from './contact-list.js';
+import SearchBar from './search-bar.js';
+import Button from './button.js';
+import axios from 'axios';
 
+const data = {
+  contacts: [
+    {
+      _id: 1,
+      name: '',
+      occupation: '',
+      avatar: ''
+    },
+  ]
+};
 
-/* eslint-disable max-len */
-
-class App extends Component {
-  constructor() {
-    console.log('constructor');
-    debugger;
-    super();
+export default class App extends Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
+      data,
       query: '',
-
-      contacts: [
-        {
-          _id: 1,
-          name: 'Dale Cooper',
-          occupation: 'FBI Agent',
-          avatar: 'https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg'
-        },
-        {
-          _id: 2,
-          name: 'Spike Spiegel',
-          occupation: 'Bounty Hunter',
-          avatar: 'http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337'
-        },
-        {
-          _id: 3,
-          name: 'Wirt',
-          occupation: 'adventurer',
-          avatar: 'http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg'
-        },
-        {
-          _id: 4,
-          name: 'Michael Myers',
-          occupation: 'Loving little brother',
-          avatar: 'http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746'
-        },
-        {
-          _id: 5,
-          name: 'Dana Scully',
-          occupation: 'FBI Agent',
-          avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg'
-        }
-      ]
-
+      selected: ['No Contacts Selected']
     };
   }
 
-  componentWillMount() {
-    console.log('componentWillMount');
-    debugger;
+  componentDidMount() {
+    axios.get('http://localhost:4000/contacts')
+      .then(resp => {
+        data.contacts = resp.data;
+        this.setState({
+          data
+        });
+      })
+      .catch(err => {
+        console.log(`Error! ${err}`);
+      });
   }
-
-  handleSearchString(value) {
-    this.setState({
-      query: value
-    });
-
-  }
-
-
-  getFilteredContacts() {
-    // Remove any white space, and convert the searchText to lowercase
-    const term = this.state.query.trim().toLowerCase();
-    const contacts = this.state.contacts;
-
-    if (!term) {
-      return contacts;
-    }
-
-    // Filter will return a NEW array of contacts, the contact will
-    // be included in the array if the function returns true,
-    // and excluded if the function returns false
-    return this.state.contacts.filter(contact => {
-      return contact.name.toLowerCase().indexOf(term) >= 0;
-    });
-  }
-
-
 
 
   render() {
-
     return (
-
       <div className="App">
-
         <h1>
-          Contact List!
+          <SearchBar value={this.state.query} handleSearch={this.handleSearch.bind(this)} />
+          <ContactList data={this.getFilteredContacts()} handleSelect={this.handleSelect.bind(this)} searchValue={this.state.query} />
         </h1>
-
-        <SearchBar handleSearchString={this.handleSearchString.bind(this)} value={this.state.query} />
-
-        <ContactList data={this.getFilteredContacts()} />
+        <h1>Selected Contacts </h1>
+        <ContactList data={this.getSelectedContacts()} handleSelect={this.handleSelect.bind(this)} searchValue={this.state.query} />
+        <Button resetSelection={this.resetSelection.bind(this)} />
       </div>
     );
   }
-}
 
-export default App;
+  resetSelection() {
+
+    this.setState(
+        this.state.data.contacts.map((obj) => {
+          obj.isSelected = false;
+        })
+        );
+  }
+
+  handleSearch(value) {
+    this.setState({
+      query: value
+    });
+  }
+
+  handleSelect(value) {
+    let result = this.state.data.contacts.filter( function (obj) {
+      return obj._id == value;
+    });
+
+    result = result[0];
+
+    if (result) {
+      result.isSelected ? result.isSelected = false : result.isSelected = true;
+      this.setState(
+      {result}
+      );
+    }
+
+  }
+
+  getFilteredContacts() {
+    // Contact.name.toLowerCase().indexOf(term) >= 0 Remove trailing white space and make query lowercase
+    const term = this.state.query.trim().toLowerCase();
+    // Filter contact list to return array of contacts that match search
+    return this.state.data.contacts.filter(contact => {
+      return contact.name.toLowerCase().indexOf(term) >= 0 && contact.isSelected != true;
+    });
+  }
+
+  getSelectedContacts() {
+
+    const term = this.state.query.trim().toLowerCase();
+    // Filter contact list to return array of contacts that are not selected
+    return this.state.data.contacts.filter(contact => {
+      return contact.name.toLowerCase().indexOf(term) >= 0 && contact.isSelected === true;
+    });
+  }
+
+
+}
