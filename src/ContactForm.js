@@ -19,24 +19,6 @@ class ContactForm extends Component {
     });
   }
 
-  // handleNameInput(event) {
-  //   this.setState({
-  //     name: event.target.value
-  //   });
-  // }
-  //
-  // handleOccupationInput(event) {
-  //   this.setState({
-  //     occupation: event.target.value
-  //   });
-  // }
-  //
-  // handleAvatarInput(event) {
-  //   this.setState({
-  //     avatar: event.target.value
-  //   });
-  // }
-
   handleSubmit(event) {
     event.preventDefault();
 
