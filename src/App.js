@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
+import axios from 'axios';
+
 /* eslint-disable max-len */
 class App extends Component {
   constructor() {
@@ -43,25 +45,39 @@ class App extends Component {
     };
   }
 
-  handleSearchBarChange(event) {
+  componentDidMount() {
+    axios.get('http://localhost:4000/contacts')
+      .then(resp => {
+      this.setState({
+      contacts: resp.data
+    })
+  }
+    .catch(err => {
+    console.log('Error! ${err}')
+  })
+
+  handleChange(event) {
     this.setState({
-      searchText: event.target.value
-    });
+      seachText: event.target.value
+    })
   }
 
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
-    const filteredContacts = this.state.contacts.filter(contact => {
+    const contacts = this.state.contacts;
+    if (!term) {
+      return contacts;
+    }
+    return contacts.filter(contact => {
       return contact.name.toLowerCase().indexOf(term) >= 0;
     });
-    return filteredContacts;
   }
 
   render() {
     return (
       <div className="App">
         <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
-        <ContactList contacts={this.state.contacts} />
+        <ContactList contacts={this.getFilteredContacts()} />
       </div>
     );
   }
