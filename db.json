@@ -2,31 +2,10 @@
   "history": [],
   "contacts": [
     {
-      "_id": "a5a854d1-8331-4f39-a583-e6fb5171923f",
-      "name": "Dale Cooper",
-      "occupation": "FBI Agent",
-      "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg",
-      "selected": false
-    },
-    {
-      "_id": "66079646-c958-4c58-86c0-bba9a65c3980",
-      "name": "Dana Scully",
-      "occupation": "FBI Agent",
-      "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg",
-      "selected": false
-    },
-    {
       "_id": "7578b392-1688-462a-b299-83dc16c67d8b",
       "name": "Boba Fett",
       "occupation": "A Better Bounty Hunter",
       "avatar": "https://upload.wikimedia.org/wikipedia/en/3/3e/FettbobaJB.png",
-      "selected": true
-    },
-    {
-      "_id": "14d3bcc2-b4d5-4566-8ef8-8937ce3d8069",
-      "name": "Tiny Rick",
-      "occupation": "Being trapped in bodies",
-      "avatar": "http://vignette2.wikia.nocookie.net/rickandmorty/images/2/23/TinyRick.png/revision/latest/scale-to-width-down/250?cb=20150914183331&format=webp",
       "selected": true
     },
     {
@@ -44,13 +23,6 @@
       "selected": false
     },
     {
-      "_id": "30ddb497-e264-4863-938c-29414beb6860",
-      "name": "Wirt",
-      "occupation": "adventurer",
-      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg",
-      "selected": true
-    },
-    {
       "_id": "a5f08bcf-71ea-49ca-8691-f829f800f269",
       "name": "Michael Myers",
       "occupation": "Loving little brother",
@@ -59,6 +31,20 @@
     },
     {
       "_id": "6cb9f515-ad5d-4265-b7e3-f5ea8ebb2a15",
+      "name": "Brian",
+      "occupation": "Michael",
+      "avatar": "Ok",
+      "selected": false
+    },
+    {
+      "_id": "b6d1ff8d-8d9d-49c8-ab72-2bccb005ede0",
+      "name": "brian",
+      "occupation": "michael",
+      "avatar": "2222",
+      "selected": false
+    },
+    {
+      "_id": "ff50bb37-5973-4b05-93f3-9948bd667109",
       "name": "Brian",
       "occupation": "Michael",
       "avatar": "Ok",

@@ -13,6 +13,7 @@ injectTapEventPlugin();
 import ContactList from './ContactList';
 import AddContactDialog from './AddContactDialog';
 import ActionAndErrorList from './ActionAndErrorList';
+import LoadingSpinner from './LoadingSpinner';
 
 class App extends Component {
 
@@ -109,11 +110,12 @@ class App extends Component {
     evt.preventDefault();
 
     if (Object.keys(validationErrors).length) {
-      return;
+      return false;
     }
 
-    //
     this.addContact(this.state.contact, isFormSubmit);
+
+    return true;
   }
 
 
@@ -128,6 +130,9 @@ class App extends Component {
     if (!contact.avatar) {
       errors.avatar = 'Avatar link required';
     }
+
+    console.log('errors in validation errors');
+    console.log(errors);
     return errors;
   }
 
@@ -359,7 +364,7 @@ class App extends Component {
       description: description || 'A default action',
       _id: uuid.v4(),
       expirationMoment: moment().add(25, 's'),
-      iconType: iconType
+      iconType
     };
   }
 
@@ -443,7 +448,11 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="app">
-          <section className="column">
+          <div className="loading-container">
+            <LoadingSpinner isLoading={this.state.isLoading} />
+          </div>
+
+          <section className="action-and-error-column">
             <ActionAndErrorList
               handleResetClick={this.handleResetClick}
               actionHistory={this.state.actionHistory}

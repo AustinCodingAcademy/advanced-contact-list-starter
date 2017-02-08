@@ -161,11 +161,18 @@ body {
     width: 70%;
 }
 
+.contact-form {
+}
+
 .contact-card-menu {
     width: 9%;
     position: relative;
     bottom: 69px;
     left: 120px;
+}
+
+.card-avatar {
+    position: relative;
 }
 
 .contact-card-header {
@@ -217,7 +224,7 @@ body {
 }
 
 .action-and-error-list {
-    margin-top: 10px;
+    margin-top: 12px;
     margin-right: 45px;
 }
 
@@ -230,8 +237,19 @@ body {
     width: 90%;
 }
 
+.action-and-error-column {
+    margin-top: 20px;
+    width: 350px;
+}
+
 .reset-button {
     text-align: center;
+}
+
+.loading-container {
+    position: fixed;
+    left: 40%;
+    top: 500px;
 }
 
 /*html, body, #root, .router {*/

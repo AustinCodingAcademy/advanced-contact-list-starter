@@ -30,8 +30,12 @@ export default class AddContactDialog extends React.Component {
   };
 
   handleSubmit = (evt) => {
-    this.props.handleAddContactSubmit(evt);
-    this.setState({open: false});
+    const isValid = this.props.handleAddContactSubmit(evt);
+
+    if (isValid) {
+      this.setState({open: false});
+    }
+
   };
 
   render() {

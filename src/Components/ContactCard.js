@@ -2,9 +2,8 @@
  * Created by brianmichael on 2/7/17.
  */
 import React from 'react';
-import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card';
-import {pinkA200, transparent} from 'material-ui/styles/colors';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
+import {Card, CardHeader} from 'material-ui/Card';
+
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -78,9 +77,11 @@ export default class ContactCard extends React.Component {
         onClick={() => this.props.handleSelectContactClick(this.props.contact)}
         >
         <CardHeader
-          title={<Highlighter
-            searchWords={this.props.searchWords}
-            textToHighlight={this.props.contact.name} />}
+          title={
+            <Highlighter
+              searchWords={this.props.searchWords}
+              textToHighlight={this.props.contact.name} />
+          }
           subtitle={this.props.contact.occupation}
           avatar={this.props.contact.avatar}
         />

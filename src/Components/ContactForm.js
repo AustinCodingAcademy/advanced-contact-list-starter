@@ -3,35 +3,37 @@
  */
 
 import React from 'react';
-import TextField from 'material-ui/TextField';
+
+import FormField from './FormField';
 
 const ContactForm = props => {
 
+  console.log(props.validationErrors);
   return (
     <section>
       <form className="contact-form"
         onSubmit={(evt) => props.handleAddContactSubmit(evt)}>
-        <TextField className="text-field"
+        <FormField
           placeholder="Name"
           name="name"
           value={props.contact.name}
-          onChange={(evt) => props.onInputChange(evt)}
-          errorText={props.validationErrors.name}
-              />
-        <TextField className="text-field"
+          onInputChange={(evt) => props.onInputChange(evt)}
+          errorText={props.validationErrors.name} />
+
+        <FormField
           placeholder="Occupation"
           name="occupation"
           value={props.contact.occupation}
-          onChange={(evt) => props.onInputChange(evt)}
+          onInputChange={(evt) => props.onInputChange(evt)}
           errorText={props.validationErrors.occupation}
-              />
-        <TextField className="text-field"
+          />
+        <FormField className="text-field"
           placeholder="Avatar Link"
           name="avatar"
           value={props.contact.avatar}
-          onChange={(evt) => props.onInputChange(evt)}
+          onInputChange={(evt) => props.onInputChange(evt)}
           errorText={props.validationErrors.avatar}
-              />
+          />
       </form>
     </section>
   );

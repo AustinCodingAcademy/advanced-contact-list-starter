@@ -13,15 +13,12 @@
 - When a contact is deleted, make it semi-transparent at first while the network request is being processed and only remove it when the contact is successfully deleted in the backend. If the network request fails, display an error message. You might want to check out the module classnames to implement the different UI states.
 - Create delete button for contacts
 - http error tracker
+- Implement field component with own validations
+- Improve spinner styling
 
 ## To do
-- Implement field component with own validations
-- Implement deselect button style for selected items
-- Add bootstrap and basic styles
-- Check for URL in avatar link
-- Improve spinner styling
+
 
 ### In Progress
 
-- Move the input elements of the contact form with the labels into its own component.
-
+- Ready for grading, moving on to final projects and movie list.
