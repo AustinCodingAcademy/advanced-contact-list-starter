@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import axios from 'axios';
+<<<<<<< HEAD
 
+=======
+>>>>>>> lesson-v4
 /* eslint-disable max-len */
 class App extends Component {
   constructor() {
@@ -10,43 +13,14 @@ class App extends Component {
 
     this.state = {
       searchText: '',
-      contacts: [
-        {
-          _id: 1,
-          name: 'Dale Cooper',
-          occupation: 'FBI Agent',
-          avatar: 'https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg'
-        },
-        {
-          _id: 2,
-          name: 'Spike Spiegel',
-          occupation: 'Bounty Hunter',
-          avatar: 'http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337'
-        },
-        {
-          _id: 3,
-          name: 'Wirt',
-          occupation: 'adventurer',
-          avatar: 'http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg'
-        },
-        {
-          _id: 4,
-          name: 'Michael Myers',
-          occupation: 'Loving little brother',
-          avatar: 'http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746'
-        },
-        {
-          _id: 5,
-          name: 'Dana Scully',
-          occupation: 'FBI Agent',
-          avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg'
-        }
-      ]
+      selectedIds: [],
+      contacts: [],
     };
   }
 
   componentDidMount() {
     axios.get('http://localhost:4000/contacts')
+<<<<<<< HEAD
       .then(resp => {
       this.setState({
       contacts: resp.data
@@ -57,13 +31,46 @@ class App extends Component {
   })
 
   handleChange(event) {
+=======
+    .then(resp => {
+      this.setState({
+        contacts: resp.data
+      });
+    })
+    .catch(err => {
+      console.error(`Error! ${err}`);
+    });
+  }
+
+  handleSearchBarChange(event) {
+>>>>>>> lesson-v4
     this.setState({
       seachText: event.target.value
     })
   }
 
+  handleSelectedContacts(_id) {
+    this.setState({
+      selectedIds: [ ...this.state.selectedIds, _id ]
+    });
+  }
+
+  handleDeselectedContacts(id) {
+    this.state.selectedIds.splice(this.state.selectedIds.indexOf(id),1);
+    this.setState({
+      selectedIds: this.state.selectedIds
+    });
+  }
+
+  resetSelectedIds() {
+    this.setState({
+      selectedIds: []
+    });
+  }
+
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
+<<<<<<< HEAD
     const contacts = this.state.contacts;
     if (!term) {
       return contacts;
@@ -71,13 +78,49 @@ class App extends Component {
     return contacts.filter(contact => {
       return contact.name.toLowerCase().indexOf(term) >= 0;
     });
+=======
+    return this.state.contacts.filter(contact => {
+      return contact.name.toLowerCase().indexOf(term) >= 0;
+    });
+  }
+
+  getSelectedContact() {
+    return this.state.contacts.filter((contact) => {
+      return this.state.selectedIds.indexOf(contact._id) >= 0;
+    });
+  }
+
+  getClickedContacts() {
+    return this.state.contacts.filter(contact => {
+      return contact.name.toLowerCase().indexOf(contact._id) >= 0;
+    });
+  }
+  getSelectedContactIds() {
+    return this.state.contacts.filter(contact => {
+      return contact.name.toLowerCase().indexOf(contact._id) >= 0;
+    });
+>>>>>>> lesson-v4
   }
 
   render() {
     return (
       <div className="App">
         <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
+<<<<<<< HEAD
         <ContactList contacts={this.getFilteredContacts()} />
+=======
+        <h1>Contacts</h1>
+        <ContactList
+          contacts={this.getFilteredContacts()}
+          onClick={this.handleSelectedContacts.bind(this)}
+          selectedIds={this.state.selectedIds}
+         />
+        <ContactList contacts={this.getClickedContacts()} />
+        <h1>Selected Contacts</h1>
+        <ContactList
+          contacts={this.getSelectedContact()}
+          onClick={this.handleDeselectedContacts.bind(this)} />
+>>>>>>> lesson-v4
       </div>
     );
   }
