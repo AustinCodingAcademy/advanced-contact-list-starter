@@ -1,4 +1,8 @@
 
+### Live site available at: http://wholesale-change.surge.sh/ 
+
+- Notes for classmates: Checkout surge for easy front end deployments. Additionally when you build the contact list starter the build process has a bug, both css and js files in the index need relative pathing, so add a . to the front of the first slash and it should work
+
 ### Extensions
 
 ## Completed
@@ -15,10 +19,3 @@
 - http error tracker
 - Implement field component with own validations
 - Improve spinner styling
-
-## To do
-
-
-### In Progress
-
-- Ready for grading, moving on to final projects and movie list.
