@@ -157,6 +157,37 @@ body {
 
 }
 
+.contact-item {
+    width: 70%;
+}
+
+.contact-card-menu {
+    width: 9%;
+    position: relative;
+    bottom: 69px;
+    left: 120px;
+}
+
+.contact-card-header {
+    text-align: center;
+    margin-left: 5px;
+}
+
+.contact-card-clickable {
+    width: 250px;
+}
+
+.contact-card {
+    flex-direction: row;
+    justify-content: center;
+    height: 75px;
+}
+
+.active {
+    opacity: 0.3;
+    background-color: #e67a73!important;
+}
+
 .paper {
     text-align: center;
     margin: 20px;
@@ -172,6 +203,7 @@ body {
 
 .column {
     flex-direction: column;
+    justify-content: center;
 }
 
 .fab-button {
@@ -182,6 +214,24 @@ body {
 .text-field {
     padding-left: 10px;
     margin: 5px 5px 5px 5px;
+}
+
+.action-and-error-list {
+    margin-top: 10px;
+    margin-right: 45px;
+}
+
+.action-history-description-text {
+    font-size: 70%!important;
+}
+
+.action-and-error-list-divider {
+    margin: 20px;
+    width: 90%;
+}
+
+.reset-button {
+    text-align: center;
 }
 
 /*html, body, #root, .router {*/

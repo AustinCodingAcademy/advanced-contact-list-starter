@@ -6,14 +6,14 @@
       "name": "Dale Cooper",
       "occupation": "FBI Agent",
       "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg",
-      "selected": true
+      "selected": false
     },
     {
       "_id": "66079646-c958-4c58-86c0-bba9a65c3980",
       "name": "Dana Scully",
       "occupation": "FBI Agent",
       "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg",
-      "selected": true
+      "selected": false
     },
     {
       "_id": "7578b392-1688-462a-b299-83dc16c67d8b",
@@ -48,56 +48,21 @@
       "name": "Wirt",
       "occupation": "adventurer",
       "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg",
-      "selected": false
+      "selected": true
     },
     {
       "_id": "a5f08bcf-71ea-49ca-8691-f829f800f269",
       "name": "Michael Myers",
       "occupation": "Loving little brother",
       "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746",
-      "selected": false
+      "selected": true
     },
     {
-      "_id": "914ba326-0cc9-4212-b239-e1ee80ed0081",
-      "name": "t",
-      "occupation": "t",
-      "avatar": "t",
-      "selected": false
-    },
-    {
-      "_id": "2b0e193d-4d4e-4df9-b4d1-68cefeb27fb4",
-      "name": "tes",
-      "occupation": "tes",
-      "avatar": "tes",
-      "selected": false
-    },
-    {
-      "_id": "9afdbb63-abc2-4e23-b260-639442077d26",
-      "name": "te",
-      "occupation": "te",
-      "avatar": "te",
-      "selected": false
-    },
-    {
-      "_id": "97075a80-931f-4878-9079-56d8b77b1723",
-      "name": "Test",
-      "occupation": "Test",
+      "_id": "6cb9f515-ad5d-4265-b7e3-f5ea8ebb2a15",
+      "name": "Brian",
+      "occupation": "Michael",
       "avatar": "Ok",
-      "selected": false
-    },
-    {
-      "_id": "51d5049d-d5e9-47d6-9836-995a7b429d8e",
-      "name": "Tes",
-      "occupation": "tEst",
-      "avatar": "Ok",
-      "selected": false
-    },
-    {
-      "_id": "ead42b66-db97-4688-8700-208a451dc37a",
-      "name": "Te",
-      "occupation": "Tes",
-      "avatar": "Test",
-      "selected": false
+      "selected": true
     }
   ]
 }

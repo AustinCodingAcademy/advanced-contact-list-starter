@@ -5,26 +5,14 @@ import moment from 'moment';
 import axios from 'axios';
 
 // Material UI
-import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import RaisedButton from 'material-ui/RaisedButton';
 
 injectTapEventPlugin();
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-
-
 import ContactList from './ContactList';
 import AddContactDialog from './AddContactDialog';
-import SearchBar from './SearchBar';
-import ActionHistory from './ActionHistory';
-import ToggleableContactForm from './ToggleableContactForm';
-import LoadingSpinner from './LoadingSpinner';
-import ErrorHistory from './ErrorHistory';
-
-
+import ActionAndErrorList from './ActionAndErrorList';
 
 class App extends Component {
 
@@ -59,12 +47,25 @@ class App extends Component {
 
   }
 
+  testGenerateTestError() {
+
+    // generate a fake error
+    const error = {
+      message: 'An error has been generated',
+      data: '404'
+    };
+
+    const newErrorHistory = this.constructor.buildNewError(error);
+
+    this.addErrorToHistory(newErrorHistory);
+    console.log(this.state.errorHistory);
+
+  }
 
   componentDidMount() {
+    this.testGenerateTestError();
 
     this.getContacts();
-    this.getSelectedContacts();
-
     this.registerInterceptors();
 
     setInterval(() => {
@@ -77,21 +78,15 @@ class App extends Component {
    Delete Button
    */
 
-  handleDeleteContactClick(id, listTitle) {
-    this.deleteContact(id, listTitle);
+  handleDeleteContactClick(id) {
+    this.deleteContact(id);
   }
 
-  deleteContact(id, listTitle) {
-
+  deleteContact(id) {
+    // Used to highlight field during delete request
     this.setActiveContactId(id);
-
-    if (listTitle === 'Available Contacts') {
-      this.removeAvailableContact(id);
-    } else {
-      this.removeSelectedContact(id);
-    }
-
-    this.addActionToHistory('Deleted a contact');
+    this.removeAvailableContact(id);
+    this.addActionToHistory('Deleted a contact', 'remove');
 
   }
 
@@ -106,7 +101,6 @@ class App extends Component {
    */
 
   handleAddContactSubmit(evt) {
-
     const isFormSubmit = true;
     const validationErrors = this.constructor.validateInputForm(this.state.contact);
 
@@ -119,7 +113,7 @@ class App extends Component {
     }
 
     //
-    this.addAvailableContact(this.state.contact, isFormSubmit);
+    this.addContact(this.state.contact, isFormSubmit);
   }
 
 
@@ -158,14 +152,13 @@ class App extends Component {
    */
 
   handleSearchBarChange(event) {
-
     this.setState({
       searchText: event.target.value
     });
+
   }
 
   getFilteredContacts(contactsArray) {
-
     const searchTerm = this.state.searchText.trim().toLowerCase();
 
     return contactsArray.filter(contact => {
@@ -178,41 +171,23 @@ class App extends Component {
    Selected Contacts
    */
 
-  getSelectedContacts() {
-
-    this.loadingStarted();
-
-    axios.get('http://localhost:4000/selectedContacts')
-        .then((response) => {
-
-          this.loadingEnded();
-
-          this.setState({
-            selectedContacts: response.data
-          });
-        })
-        .catch(err => console.log(err));
-  }
-
   handleAddToSelectedClick(contact) {
-
     this.addSelectedContact(contact);
-    this.removeAvailableContact(contact._id);
-
-    this.addActionToHistory(`Added ${contact.name} to selected contacts`);
+    this.addActionToHistory(`Added ${contact.name} to selected contacts`, 'add');
   }
 
   addSelectedContact(contact) {
-
+    const newContact = Object.assign({}, contact, {
+      selected: true
+    });
     this.loadingStarted();
 
-    axios.post('http://localhost:4000/selectedContacts/', contact)
+    axios.put(`http://localhost:4000/contacts/${contact._id}`, newContact)
         .then((resp) => {
-
           this.loadingEnded();
-
           this.setState({
-            selectedContacts: this.state.selectedContacts.concat(resp.data)
+            contacts: this.state.contacts.filter((c) => {return c._id !== resp.data._id;})
+                .concat(resp.data)
           });
         })
         .catch(err => console.log(err));
@@ -220,31 +195,26 @@ class App extends Component {
   }
 
   handleRemoveSelectedClick(contact) {
-
-    const id = contact._id;
-
-    this.addAvailableContact(contact);
-    this.removeSelectedContact(id);
-
-    this.addActionToHistory(`Removed ${contact.name} from selected contacts`);
-
+    this.removeSelectedContact(contact);
+    this.addActionToHistory(`Removed ${contact.name} from selected contacts`, 'remove');
   }
 
-  removeSelectedContact(id) {
-
+  removeSelectedContact(contact) {
     this.loadingStarted();
 
-    axios.delete(`http://localhost:4000/selectedContacts/${id}`)
-        .then(() => {
+    const newContact = Object.assign({}, contact, {
+      selected: false
+    });
 
+    axios.put(`http://localhost:4000/contacts/${contact._id}`, newContact)
+        .then((resp) => {
           this.loadingEnded();
-
           this.setState({
-            selectedContacts: this.state.selectedContacts.filter((contact) => {
-              return contact._id !== id;
-            })
+            contacts: this.state.contacts.filter((c) => {return c._id !== resp.data._id;})
+                .concat(resp.data)
           });
-        }).catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
   }
 
   /*
@@ -260,9 +230,6 @@ class App extends Component {
 
           this.loadingEnded();
 
-          console.log('getting available contacts');
-          console.log(response.data);
-
           this.setState({
             contacts: response.data
           });
@@ -272,7 +239,7 @@ class App extends Component {
         });
   }
 
-  addAvailableContact(contact, isFormSubmit) {
+  addContact(contact, isFormSubmit) {
 
     this.loadingStarted();
 
@@ -290,7 +257,6 @@ class App extends Component {
   }
 
   removeAvailableContact(id) {
-
     this.loadingStarted();
 
     axios.delete(`http://localhost:4000/contacts/${id}`)
@@ -311,39 +277,36 @@ class App extends Component {
    */
 
   handleResetClick() {
-
     this.resetApplicationState();
-    this.addActionToHistory('Reset application');
   }
 
-  static batchableRemoveSelectedContact(id) {
-    return axios.delete(`http://localhost:4000/selectedContacts/${id}`);
-  }
+  static batchableRemoveSelectedContact(contact) {
 
-  static batchableAddAvailableContact(contact) {
-    return axios.post('http://localhost:4000/contacts', contact);
+    const newContact = Object.assign({}, contact, {
+      selected: false
+    });
+
+    return axios.put(`http://localhost:4000/contacts/${contact._id}`, newContact);
   }
 
   /* eslint-disable max-len */
   resetApplicationState() {
-
-    // These parallel promises are sometimes buggy it seems with the Json server
-    // on a normal server this could be done in a single request by sending back an object containing the contacts
-    // to be deleted and doing it server side.
-
-    const deletes = this.state.selectedContacts.map(selectedContact =>
-        this.constructor.batchableRemoveSelectedContact(selectedContact._id));
-    const adds = this.state.selectedContacts.map(selectedContact =>
-        this.constructor.batchableAddAvailableContact(selectedContact));
+    const deletes = this.state.contacts.filter(contact => contact.selected).map((contact) => {
+      return this.constructor.batchableRemoveSelectedContact(contact);
+    });
 
     this.loadingStarted();
 
     axios.all(deletes)
         .then(() => {
-          axios.all(adds);
-        }).then(() => {
-          this.getSelectedContacts();
           this.getContacts();
+
+          this.setState({
+            errorHistory: [],
+            actionHistory: []
+          });
+
+          this.addActionToHistory('Reset application', 'reset');
         })
         .then(() => {
           this.loadingEnded();
@@ -369,9 +332,9 @@ class App extends Component {
 
   }
 
-  addActionToHistory(description) {
+  addActionToHistory(description, iconType) {
 
-    const newAction = this.constructor.buildNewAction(description);
+    const newAction = this.constructor.buildNewAction(description, iconType);
 
     // Using immutability helper to return new array.
     const newState = update(this.state.actionHistory, {$unshift: [newAction]});
@@ -383,7 +346,6 @@ class App extends Component {
   }
 
   handleRemoveActionFromHistoryClick(id) {
-
     this.setState({
       actionHistory: this.state.actionHistory.filter((action) => {
         return action._id !== id;
@@ -392,12 +354,12 @@ class App extends Component {
 
   }
 
-  static buildNewAction(description) {
-
+  static buildNewAction(description, iconType) {
     return {
       description: description || 'A default action',
       _id: uuid.v4(),
-      expirationMoment: moment().add(25, 's')
+      expirationMoment: moment().add(25, 's'),
+      iconType: iconType
     };
   }
 
@@ -423,7 +385,6 @@ class App extends Component {
 
 
   removeStaleErrorHistory() {
-
     if (this.state.errorHistory.length > 0) {
       const now = moment();
 
@@ -433,11 +394,9 @@ class App extends Component {
         })
       });
     }
-
   }
 
   addErrorToHistory(error) {
-
     const newError = this.constructor.buildNewError(error);
 
     const newState = update(this.state.errorHistory, {$unshift: [newError]});
@@ -447,7 +406,6 @@ class App extends Component {
     });
 
     console.log(this.state.errorHistory);
-
   }
 
   static buildNewError(error) {
@@ -486,27 +444,20 @@ class App extends Component {
       <MuiThemeProvider>
         <div className="app">
           <section className="column">
-            {/* <LoadingSpinner isLoading={this.state.isLoading} />*/}
-            {/* <ToggleableContactForm*/}
-            {/* handleAddContactSubmit={this.handleAddContactSubmit}*/}
-            {/* contact={this.state.contact}*/}
-            {/* validationErrors={this.state.validationErrors}*/}
-            {/* onInputChange={this.onInputChange} />*/}
-            {/* <button*/}
-            {/* className="reset-button"*/}
-            {/* onClick={this.handleResetClick}*/}
-            {/* >Reset*/}
-            {/* </button>*/}
-            {/* <ActionHistory*/}
-            {/* actions={this.state.actionHistory}*/}
-            {/* removeAction={this.handleRemoveActionFromHistoryClick}*/}
-            {/* />*/}
-            {/* <ErrorHistory errors={this.state.errorHistory} />*/}
+            <ActionAndErrorList
+              handleResetClick={this.handleResetClick}
+              actionHistory={this.state.actionHistory}
+              errorHistory={this.state.errorHistory}
+            />
+          </section>
+          <section className="column">
             <ContactList
               value={this.state.searchText}
               title={'Available'}
               contacts={this.getFilteredContacts(this.state.contacts)}
+              handleRemoveFromSelected
               handleSelectContactClick={this.handleAddToSelectedClick}
+              handleRemoveSelectedClick={this.handleRemoveSelectedClick}
               handleDeleteContactClick={this.handleDeleteContactClick}
               handleSearchBarChange={this.handleSearchBarChange}
               activeContactId={this.state.activeContactId}
