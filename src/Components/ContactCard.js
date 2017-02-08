@@ -12,10 +12,8 @@ import MenuItem from 'material-ui/MenuItem';
 import Highlighter from './Highlighter';
 
 
+// Does this need to be a class because it has a function?
 export default class ContactCard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   getIconButtonElement() {
     return (

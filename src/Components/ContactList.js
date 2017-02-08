@@ -1,39 +1,14 @@
 import React, {Component} from 'react';
 
-import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
-
-
 import Paper from 'material-ui/Paper';
-import Highlighter from './Highlighter';
-import {pinkA200, transparent} from 'material-ui/styles/colors';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-
 import ContactCard from './ContactCard';
-
 import TextField from 'material-ui/TextField';
 
 // TODO: Question about how to get the click handler to work for entire
 // todo: left side of card but not the buttons.
 // Todo: clean this contact list up and break out components
 class ContactList extends Component {
-  constructor() {
-    super();
-
-
-  }
-
-  getPrimaryText(props, contact) {
-
-    return (
-      <div className="contact-item"
-        onClick={() => props.handleRemoveSelectedClick(contact)}><Highlighter
-          searchWords={props.value}
-          textToHighlight={contact.name}
-        /></div>
-    );
-  }
 
   render() {
     return (

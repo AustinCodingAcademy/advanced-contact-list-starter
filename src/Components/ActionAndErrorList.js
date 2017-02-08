@@ -4,7 +4,6 @@
 
 import React from 'react';
 import {List, ListItem} from 'material-ui/List';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import AlertError from 'material-ui/svg-icons/alert/error';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
