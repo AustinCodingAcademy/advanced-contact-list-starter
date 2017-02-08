@@ -8,7 +8,8 @@ const Contact = props => {
 
   return (
     <li
-      className={props.isActive ? 'contact active' : 'contact'}
+      className={this.props.contact._id === this.props.activeContactId ?
+          'contact active' : 'contact'}
       >
       <div className="image-cropper">
         <img src={props.avatar} alt="avatar" />
@@ -33,7 +34,7 @@ const Contact = props => {
 };
 
 Contact.propTypes = {
-  isActive: React.PropTypes.bool.isRequired,
+  activeContactId: React.PropTypes.string.isRequired,
   avatar: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,

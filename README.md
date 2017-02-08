@@ -11,17 +11,14 @@
 - Can you figure out how to show some sort of indicator to the user that a network request is happening
 - when a new contact is being saved, or when a contact is being deleted
 - When a contact is deleted, make it semi-transparent at first while the network request is being processed and only remove it when the contact is successfully deleted in the backend. If the network request fails, display an error message. You might want to check out the module classnames to implement the different UI states.
- -Create delete button for contacts
-
-## To do
+- Create delete button for contacts
+- http error tracker
 - Implement field component with own validations
-- Implement deselect button style for selected items
-- Add bootstrap and style for basic appeal
-- Check for URL in avatar link
-- Use http interceptor for spinner https://github.com/werk85/fetch-intercept
 - Improve spinner styling
 
-### In Progress
-- http error tracker
-- Move the input elements of the contact form with the labels into its own component.
+## To do
 
+
+### In Progress
+
+- Ready for grading, moving on to final projects and movie list.

@@ -1,34 +1,64 @@
-import React from 'react';
-import Contact from './Contact';
+import React, {Component} from 'react';
 
-const ContactList = props => {
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
+import ContactCard from './ContactCard';
+import TextField from 'material-ui/TextField';
 
-  return (
-    <section>
-      <h2>{props.title}</h2>
-      <ul className="contact-list">
-        {props.contacts.map((contact) => {
+// TODO: Question about how to get the click handler to work for entire
+// todo: left side of card but not the buttons.
+// Todo: clean this contact list up and break out components
+class ContactList extends Component {
+
+  render() {
+    return (
+      <Paper className="paper">
+        <TextField
+          placeholder="Search Contacts"
+          name="searchQuery"
+          onChange={(evt) => this.props.handleSearchBarChange(evt)}
+      />
+
+        <Divider />
+        <h4>Selected</h4>
+
+        {this.props.contacts.filter(contact => contact.selected).map((contact) => {
           return (
-            <Contact
-              value={props.value}
-              id={contact._id}
+            <ContactCard
               key={contact._id}
-              name={contact.name}
-              avatar={contact.avatar}
-              occupation={contact.occupation}
-              isActive={props.activeContactId === contact._id}
-              handleSelectContactClick={() => props.handleSelectContactClick(contact)}
-              handleDeleteContactClick={() => props.handleDeleteContactClick(contact._id,
-                  props.title)}
-                />
+              contact={contact}
+              searchWords={this.props.value}
+              activeContactId={this.props.activeContactId}
+              handleSelectContactClick={this.props.handleSelectContactClick}
+              handleRemoveSelectedClick={this.props.handleRemoveSelectedClick}
+              handleDeleteContactClick={this.props.handleDeleteContactClick}
+            />
           );
         })}
-      </ul>
-    </section>
+        <Divider />
+        <h4>Available</h4>
 
-  );
+        {this.props.contacts.filter(contact => !contact.selected).map((contact) => {
+          return (
+            <ContactCard
+              key={contact._id}
+              contact={contact}
+              searchWords={this.props.value}
+              activeContactId={this.props.activeContactId}
+              handleSelectContactClick={this.props.handleSelectContactClick}
+              handleRemoveSelectedClick={this.props.handleRemoveSelectedClick}
+              handleDeleteContactClick={this.props.handleDeleteContactClick}
+            />
 
-};
+          );
+        })}
+      </Paper>
+    );
+  }
+
+
+
+}
 
 ContactList.propTypes = {
   title: React.PropTypes.string.isRequired,
@@ -36,7 +66,9 @@ ContactList.propTypes = {
   activeContactId: React.PropTypes.string.isRequired,
   value: React.PropTypes.string.isRequired,
   handleSelectContactClick: React.PropTypes.func.isRequired,
-  handleDeleteContactClick: React.PropTypes.func.isRequired
+  handleDeleteContactClick: React.PropTypes.func.isRequired,
+  handleRemoveSelectedClick: React.PropTypes.func.isRequired,
+  handleSearchBarChange: React.PropTypes.func.isRequired
 };
 
 export default ContactList;

@@ -4,39 +4,36 @@
 
 import React from 'react';
 
+import FormField from './FormField';
+
 const ContactForm = props => {
 
+  console.log(props.validationErrors);
   return (
     <section>
-      <h3>Add a new Contact</h3>
-      <button
-        className="fa fa-times"
-        onClick={props.handleFormClose}
-       />
-      <form className="new-contact-form"
+      <form className="contact-form"
         onSubmit={(evt) => props.handleAddContactSubmit(evt)}>
-        <input
+        <FormField
           placeholder="Name"
           name="name"
           value={props.contact.name}
-          onChange={(evt) => props.onInputChange(evt)}
-              />
-        <span style={{color: 'red'}}>{props.validationErrors.name}</span>
-        <input
+          onInputChange={(evt) => props.onInputChange(evt)}
+          errorText={props.validationErrors.name} />
+
+        <FormField
           placeholder="Occupation"
           name="occupation"
           value={props.contact.occupation}
-          onChange={(evt) => props.onInputChange(evt)}
-              />
-        <span style={{color: 'red'}}>{props.validationErrors.occupation}</span>
-        <input
+          onInputChange={(evt) => props.onInputChange(evt)}
+          errorText={props.validationErrors.occupation}
+          />
+        <FormField className="text-field"
           placeholder="Avatar Link"
           name="avatar"
           value={props.contact.avatar}
-          onChange={(evt) => props.onInputChange(evt)}
-              />
-        <span style={{color: 'red'}}>{props.validationErrors.avatar}</span>
-        <input type="submit" />
+          onInputChange={(evt) => props.onInputChange(evt)}
+          errorText={props.validationErrors.avatar}
+          />
       </form>
     </section>
   );
@@ -45,10 +42,8 @@ const ContactForm = props => {
 
 ContactForm.propTypes = {
   contact: React.PropTypes.object.isRequired,
-  handleAddContactSubmit: React.PropTypes.func.isRequired,
   onInputChange: React.PropTypes.func.isRequired,
   validationErrors: React.PropTypes.object.isRequired,
-  handleFormClose: React.PropTypes.func.isRequired
 };
 
 export default ContactForm;

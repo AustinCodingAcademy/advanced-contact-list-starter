@@ -1,41 +1,30 @@
-{/*/***/}
- {/** Created by brianmichael on 2/2/17.*/}
- {/**/*/}
+/**
+ * Created by brianmichael on 2/8/17.
+ */
 
-{/*import React, {PropTypes, Component} from 'react';*/}
+import React from 'react';
+import TextField from 'material-ui/TextField';
 
-{/*class FormField extends Component {*/}
+const FormField = props => {
 
-  {/*constructor() {*/}
-    {/*super();*/}
+  console.log(props);
+  return (
+    <TextField className="text-field"
+      placeholder={props.placeholder}
+      name={props.name}
+      value={props.value}
+      onChange={(evt) => props.onInputChange(evt)}
+      errorText={props.errorText}
+      />
+  );
+};
 
-    {/*this.state = {*/}
-      {/*value: this.props.value,*/}
-      {/*error: false*/}
-    {/*};*/}
-  {/*}*/}
+FormField.propTypes = {
+  placeholder: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
+  value: React.PropTypes.string.isRequired,
+  onInputChange: React.PropTypes.func.isRequired,
+  errorText: React.PropTypes.string
+};
 
-  {/*componentWillReceiveProps(update) {*/}
-    {/*this.setState({ value: update.value });*/}
-  {/*}*/}
-
-  {/*render() {*/}
-    {/*return (*/}
-      {/*<section>*/}
-        {/*<input*/}
-          {/*placeholder={this.props.placeholder}*/}
-          {/*value={this.state.value}*/}
-          {/*onChange={this.onChange}*/}
-           {/*/>*/}
-      {/*</section>*/}
-    {/*);*/}
-  {/*}*/}
-
-
-{/*}*/}
-
-{/*FormField.PropTypes = {*/}
-  {/*placeholder: React.PropTypes.string,*/}
-  {/*value: React.PropTypes.string,*/}
-  {/*onChange: React.PropTypes.func*/}
-{/*};*/}
+export default FormField;
