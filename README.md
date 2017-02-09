@@ -2,8 +2,6 @@
 ### Live site available at: http://wholesale-change.surge.sh/
 - Note: A local server must be running for the app to work, for ACA classmates, this means run your own project using npm start then this live version will load in your contacts.
 
-- Notes for classmates: Checkout surge for easy front end deployments. Additionally when you build the contact list starter the build process has a bug, both css and js files in the index need relative pathing, so add a . to the front of the first slash and it should work
-
 ### Extensions
 
 ## Completed
