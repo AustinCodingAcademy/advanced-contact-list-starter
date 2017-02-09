@@ -3,6 +3,7 @@ import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import axios from 'axios';
 import ContactForm from './ContactForm';
+import DefaultLayout from './components/layouts/DefaultLayout';
 
 /* eslint-disable max-len */
 class App extends Component {
@@ -71,15 +72,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>
-          Contact List!
-        </h1>
-        <ContactForm onSubmit={this.handleFormSubmit.bind(this)} />
-        <SearchBar onChange={this.handleSearchString.bind(this)} />
-        <ContactList contacts={this.state.contacts} onContactClick={this.handleContactSelect.bind(this)} />
-
-      </div>
+      <DefaultLayout>
+        <div className="App">
+          <h1>
+            Contact List!
+          </h1>
+          <ContactForm onSubmit={this.handleFormSubmit.bind(this)} />
+          <SearchBar onChange={this.handleSearchString.bind(this)} />
+          <ContactList contacts={this.state.contacts} onContactClick={this.handleContactSelect.bind(this)} />
+        </div>
+      </DefaultLayout>
     );
   }
 }
