@@ -52,7 +52,7 @@ class App extends Component {
           contacts: [...this.state.contacts, resp.data]
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   }
 
   handleDeleteContact(_id) {
@@ -65,17 +65,17 @@ class App extends Component {
       });
     })
 
-    .catch(err => console.log(`ERROR! ${err}`));
+    .catch(err => console.error(`ERROR! ${err}`));
   }
 
 
   render() {
     return (
       <div className="App">
-        <ContactForm onSubmit={this.handleAddContact.bind(this)}
-          onDeleteContact={this.handleDeleteContact.bind(this)} />
-        <SearchBar value={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
-        <ContactList onClick={this.handleDeleteContact.bind(this)}
+        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+        <SearchBar value={this.state.searchText}
+          onChange={this.handleSearchBarChange.bind(this)} />
+        <ContactList onDeleteContact={this.handleDeleteContact.bind(this)}
           contacts={this.getFilteredContacts()} />
       </div>
 
