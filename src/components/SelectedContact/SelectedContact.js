@@ -2,12 +2,12 @@ import React, {PropTypes} from 'react';
 
 const SelectedContact = props => {
   return (
-    <li className="contact selected-contact">
+    <li onClick={() => props.onClickDeselect(props._id)} className="contact selected-contact">
       <div className="image-cropper">
         <img src={props.avatar} alt="avatar" />
       </div>
       <div className="contact-info">
-        <h2 onClick={() => props.onClickDeselect(props._id)}>{props.name}</h2>
+        <h2>{props.name}</h2>
         {props.occupation}
       </div>
     </li>

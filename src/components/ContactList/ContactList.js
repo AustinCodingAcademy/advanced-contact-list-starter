@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Contact from './Contact.js';
+import Contact from '../Contact/Contact.js';
 
 const ContactList = props => {
   return (

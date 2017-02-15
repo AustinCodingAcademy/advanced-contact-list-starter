@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import SelectedContact from './SelectedContact.js';
+import SelectedContact from '../SelectedContact/SelectedContact.js';
 
 const SelectedContactsList = props => {
   return (

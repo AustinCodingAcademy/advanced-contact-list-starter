@@ -14,7 +14,7 @@ const ContactName = props => {
     const highlightedContactMiddle = contactName.slice(searchTermStartIndex, searchTermEndIndex);
 
     return (
-      <h2 onClick={() => props.onClickSelect(props._id)}>
+      <h2>
         {highlightedContactBeginning}
         <span className="highlight-search-term">
           {highlightedContactMiddle}
@@ -29,7 +29,7 @@ ContactName.propTypes = {
   _id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   searchText: PropTypes.string.isRequired,
-  onClickSelect: PropTypes.func.isRequired
+  // onClickSelect: PropTypes.func.isRequired
 };
 
 export default ContactName;

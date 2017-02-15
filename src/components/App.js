@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import ContactList from './ContactList';
-import SearchBar from './SearchBar';
-import SelectedContactsList from './SelectedContactsList';
-import ResetButton from './ResetButton';
+import ContactList from './ContactList/ContactList';
+import SearchBar from './SearchBar/SearchBar';
+import SelectedContactsList from './SelectedContactsList/SelectedContactsList';
+import ResetButton from './ResetButton/ResetButton';
 import axios from 'axios';
-import ContactForm from './ContactForm';
+import ContactForm from './ContactForm/ContactForm';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -88,6 +88,7 @@ class App extends Component {
   }
 
   handleRemoveContact(event, index) {
+    event.stopPropagation();
     axios.delete(`http://localhost:4000/contacts/${index}`)
       .then(() => {
         const newContacts = this.state.contacts.filter(
@@ -139,7 +140,7 @@ class App extends Component {
           <SearchBar
             value={this.state.searchText}
             onChange={this.handleSearchBarChange.bind(this)}
-            />
+          />
           <ContactList
             contacts={this.getFilteredContacts()}
             onClickRemove={this.handleRemoveContact.bind(this)}

@@ -25,10 +25,10 @@
       "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
     },
     {
-      "_id": 5,
       "name": "Dana Scully",
       "occupation": "FBI Agent",
-      "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
+      "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg",
+      "_id": 5
     }
   ]
 }
