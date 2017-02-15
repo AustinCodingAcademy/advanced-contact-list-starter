@@ -1,0 +1,69 @@
+{
+  "contacts": [
+    {
+      "_id": 1,
+      "name": "Chew Bacca",
+      "occupation": "Wookie",
+      "avatar": "http://vignette4.wikia.nocookie.net/starwars/images/7/73/Chewbaccaheadshot.jpg/revision/latest?cb=20080815045819"
+    },
+    {
+      "_id": 2,
+      "name": "Rey Dunno",
+      "occupation": "Jedi??",
+      "avatar": "http://vignette2.wikia.nocookie.net/starwars/images/b/b4/Rey_infobox.png/revision/latest?cb=20160122041020"
+    },
+    {
+      "_id": 3,
+      "name": "Poe Dameron",
+      "occupation": "Pilot for Rebel Alliance",
+      "avatar": "http://vignette1.wikia.nocookie.net/starwars/images/d/d7/Poe_Dameron_infobox.png/revision/latest?cb=20151205210143"
+    },
+    {
+      "_id": 4,
+      "name": "Luke Skywalker",
+      "occupation": "Jedi Master",
+      "avatar": "https://metrouk2.files.wordpress.com/2016/06/luke-skywalker.jpg?quality=80&strip=all"
+    },
+    {
+      "_id": 5,
+      "name": "Finn Unknown",
+      "occupation": "Former Stormtrooper",
+      "avatar": "http://www.quirkbooks.com/sites/default/files/u1150/Quirk%20Star%20Wars%204.jpg"
+    }
+  ]
+}
+
+{
+ "contacts": [
+    {
+      "_id": 1,
+      "name": "Dale Cooper",
+      "occupation": "FBI Agent",
+      "avatar":  "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
+    },
+    {
+      "_id": 2,
+      "name": "Spike Spiegel",
+      "occupation": "Bounty Hunter",
+      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
+    },
+    {
+      "_id": 3,
+      "name": "Wirt",
+      "occupation": "adventurer",
+      "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
+    },
+    {
+      "_id": 4,
+      "name": "Michael Myers",
+      "occupation": "Loving little brother",
+      "avatar": "http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746"
+    },
+    {
+      "_id": 5,
+      "name": "Dana Scully",
+      "occupation": "FBI Agent",
+      "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
+    }
+  ]
+}

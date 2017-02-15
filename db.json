@@ -1,0 +1,52 @@
+{
+  "contacts": [
+    {
+      "_id": 1,
+      "name": "Chew Bacca",
+      "occupation": "Wookie",
+      "avatar": "http://vignette4.wikia.nocookie.net/starwars/images/7/73/Chewbaccaheadshot.jpg/revision/latest?cb=20080815045819"
+    },
+    {
+      "_id": 2,
+      "name": "Rey Dunno",
+      "occupation": "Jedi??",
+      "avatar": "http://vignette2.wikia.nocookie.net/starwars/images/b/b4/Rey_infobox.png/revision/latest?cb=20160122041020"
+    },
+    {
+      "_id": 3,
+      "name": "Poe Dameron",
+      "occupation": "Pilot for Rebel Alliance",
+      "avatar": "http://vignette1.wikia.nocookie.net/starwars/images/d/d7/Poe_Dameron_infobox.png/revision/latest?cb=20151205210143"
+    },
+    {
+      "_id": 4,
+      "name": "Luke Skywalker",
+      "occupation": "Jedi Master",
+      "avatar": "https://metrouk2.files.wordpress.com/2016/06/luke-skywalker.jpg?quality=80&strip=all"
+    },
+    {
+      "_id": 5,
+      "name": "Finn Unknown",
+      "occupation": "Former Stormtrooper",
+      "avatar": "http://www.quirkbooks.com/sites/default/files/u1150/Quirk%20Star%20Wars%204.jpg"
+    },
+    {
+      "_id": 6,
+      "name": "Kylo Ren",
+      "occupation": "Commander for the First Order",
+      "avatar": "https://s-media-cache-ak0.pinimg.com/736x/5f/df/eb/5fdfeb45bfd2a10269420e76df3ff1f3.jpg"
+    },
+    {
+      "_id": 7,
+      "name": "Han Solo",
+      "occupation": "Pilot of Millennium Falcon",
+      "avatar": "http://vignette3.wikia.nocookie.net/starwars/images/0/01/Hansoloprofile.jpg/revision/latest/scale-to-width-down/499?cb=20100129155042"
+    },
+    {
+      "_id": 8,
+      "name": "R2D2",
+      "occupation": "Droid",
+      "avatar": "https://pbs.twimg.com/profile_images/479266377937608704/Yaw8wh-9.jpeg"
+    }
+  ]
+}
