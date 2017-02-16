@@ -170,7 +170,8 @@ class App extends Component {
         <ContactForm onSubmit={this.handleSubmitContact.bind(this)} />
         <h2>Search</h2>
         <SearchBar
-          value={this.state.searchText} onChange={this.handleChange.bind(this)} />
+          value={this.state.searchText}
+          onChange={this.handleChange.bind(this)} />
         <ResetButton
           onResetClick={this.resetContacts.bind(this)}
         />
