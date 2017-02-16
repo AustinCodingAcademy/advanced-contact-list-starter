@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-const uuid = require('node-uuid');
+import uuid from 'node-uuid';
 
 import SearchBar from './SearchBar';
 import ContactList from './ContactList';
@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/contacts')
+    axios.get('http://localhost:3001/contacts')
       .then(resp => {
         this.setState({
           contacts: resp.data,
@@ -85,7 +85,7 @@ class App extends Component {
   }
 
   handleSubmitContact(attributes) {
-    axios.post('http://localhost:4000/contacts', attributes)
+    axios.post('http://localhost:3001/contacts', attributes)
       .then(resp => {
         this.setState({
           contacts: [...this.state.contacts, resp.data]
@@ -107,7 +107,7 @@ class App extends Component {
   }
 
   handleRemoveContact(_id) {
-    axios.delete(`http://localhost:4000/contacts/${_id}`)
+    axios.delete(`http://localhost:3001/contacts/${_id}`)
       .then(() => {
         this.setState({
           contacts: this.state.contacts.filter(contact => contact._id !== _id)
@@ -169,7 +169,8 @@ class App extends Component {
         </h1>
         <ContactForm onSubmit={this.handleSubmitContact.bind(this)} />
         <h2>Search</h2>
-        <SearchBar value={this.state.searchText} onChange={this.handleChange.bind(this)} />
+        <SearchBar
+          value={this.state.searchText} onChange={this.handleChange.bind(this)} />
         <ResetButton
           onResetClick={this.resetContacts.bind(this)}
         />
