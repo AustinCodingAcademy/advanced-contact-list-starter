@@ -14,11 +14,11 @@ const Contact = props => {
           {props.occupation}
         </div>
         <span
-          onClick={props.onSelectClick}> select
+          onClick={props.onSelectClick} > select
         </span>
         <span
           className="deleteSpan"
-          onClick={props.onDeleteClick}> delete
+          onClick={props.onDeleteClick} > delete
          </span>
       </li>
     </div>

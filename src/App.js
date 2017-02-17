@@ -48,10 +48,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/contacts')
+    axios.get('http://localhost:3001/contacts')
     .then(resp => {
       this.setState({
-        contacts: resp.data
+        contacts: resp.data,
+        originalState:{
+          searchText: '',
+          contacts: resp.data,
+          selectedContacts: []
+        }
       });
     })
     .catch(() => {
@@ -76,16 +81,19 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+
   handleDeleteContact(_id) {
     axios.delete(`http://localhost:4000/contacts/${_id}`)
-      .then(resp => {
-        const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
+    .then(() =>
+    this.setState({
+      contacts: this.state.contacts.filter(contact => contact._id !== _id),
+      selectedContacts: this.state.selectedContacts.filter(contact => contact._id !== _id)
+    })
+    )
+  }
 
-        this.setState({
-          contacts: newContacts
-        });
-      })
-      .catch(err => console.log(`ERROR! ${err}`));
+  handleReset(){
+    this.setState(this.state.originalState)
   }
 
   render() {
@@ -104,6 +112,7 @@ class App extends Component {
         />
 
         <ContactList
+          onResetClick={this.handleReset.bind(this)}
           onDeleteContact={this.handleDeleteContact.bind(this)}
           contacts={this.getFilteredContacts()}
           onSelectContact={this.handleSelectContact.bind(this)}

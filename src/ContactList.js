@@ -19,6 +19,7 @@ class ContactList extends Component {
               />
             );
           })}
+          <span onClick={this.props.onResetClick}> Reset </span>
         </ul>
       </div>
     );
