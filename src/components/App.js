@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   handleAddContact(attributes) {
-    axios.post('http://localhost:4000/contacts', attributes)
+    axios.post('http://localhost:3001/contacts', attributes)
       .then(resp => {
         this.setState({
           contacts: [...this.state.contacts, resp.data]
@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   getContactsFromDB() {
-    axios.get('http://localhost:4000/contacts')
+    axios.get('http://localhost:3001/contacts')
       .then(resp => {
         this.setState({
           contacts: resp.data
@@ -89,7 +89,7 @@ class App extends Component {
 
   handleRemoveContact(event, index) {
     event.stopPropagation();
-    axios.delete(`http://localhost:4000/contacts/${index}`)
+    axios.delete(`http://localhost:3001/contacts/${index}`)
       .then(() => {
         const newContacts = this.state.contacts.filter(
           contact => contact._id !== index

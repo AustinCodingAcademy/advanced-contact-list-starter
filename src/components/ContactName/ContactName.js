@@ -26,7 +26,7 @@ const ContactName = props => {
 };
 
 ContactName.propTypes = {
-  _id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   searchText: PropTypes.string.isRequired,
   // onClickSelect: PropTypes.func.isRequired

@@ -26,7 +26,7 @@ Contact.propTypes = {
   avatar: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   occupation: PropTypes.string.isRequired,
-  _id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   onClickRemove: PropTypes.func.isRequired,
   onClickSelect: PropTypes.func.isRequired,
   searchText: PropTypes.string.isRequired
