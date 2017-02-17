@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import Highlight from './Highlight';
 
-class Contact extends Component {
+class AddedContact extends Component {
   render() {
     return (
       <li className="contact">
@@ -16,16 +16,16 @@ class Contact extends Component {
           {this.props.occupation}
         </div>
         <div>
-          <button onClick={this.props.onButtonClick}>Add</button>
+          <button onClick={this.props.onButtonClick}>Remove</button>
         </div>
       </li>
     );
   }
 }
 
-export default Contact;
+export default AddedContact;
 
-Contact.propTypes = {
+AddedContact.propTypes = {
   name: PropTypes.string,
   avatar: PropTypes.string,
   occupation: PropTypes.string,

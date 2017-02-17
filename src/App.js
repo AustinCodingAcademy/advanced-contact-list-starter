@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ContactList from './ContactList';
+import AddedContactList from './AddedContactList';
 import SearchBar from './SearchBar';
 import ContactForm from './ContactForm';
 import axios from 'axios';
@@ -66,36 +67,32 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  addContact(contact) {
-    const curContacts = [...this.state.contacts];
-    const curContact = curContacts[contact - 1];
-    const added = [...this.state.addedContacts];
-    const newContact = {
-      _id: curContact._id + 10,
-      name: curContact.name,
-      occupation: curContact.occupation,
-      avatar: curContact.avatar,
-      active: '',
-      buttonType: 'Remove'
-    };
-    added.push(newContact);
-    this.setState({
-      addedContacts: added,
-    });
+  addContact(attributes) {
+    const newContacts = this.state.contacts.filter(contact => contact._id !== attributes._id);
 
-    this.popContact(contact);
+    axios.post('http://localhost:4000/addedContacts', attributes)
+      .then(resp => {
+        this.setState({
+          contacts: newContacts,
+          addedContacts: [...this.state.addedContacts, resp.data]
+        });
+      });
   }
 
   reset() {
-    const curContacts = [...this.state.contacts];
-
-    for (let i = 0; i < curContacts.length; i++) {
-      curContacts[i].active = '';
+    const all = [...this.state.contacts, ...this.state.addedContacts];
+    const empty = [];
+    axios({
+      method: 'post',
+      url: 'http://localhost:4000/contacts',
+      contacts: {all}
+    });
+    for (const added of this.state.addedContacts) {
+      axios.delete(`http://localhost:4000/addedContacts/${added._id}`);
     }
-
     this.setState({
-      contacts: curContacts,
-      addedContacts: [],
+      contacts: all,
+      addedContacts: empty
     });
 
   }
@@ -109,27 +106,17 @@ class App extends Component {
     });
   }
 
-  removeContact(contact) {
-    const added = [...this.state.addedContacts];
-    let name = '';
-
-    for ( let i = 0; i < added.length; i++) {
-      if (added[i]._id === contact) {
-        name = added[i].name;
-        added.splice(i,1);
-      }
-    }
-    const curContacts = [...this.state.contacts];
-
-    for ( let i = 0; i < curContacts.length; i++) {
-      if (curContacts[i].name === name) {
-        curContacts[i].active = '';
-      }
-    }
-    this.setState({
-      contacts: curContacts,
-      addedContacts: added
-    });
+  removeContact(attributes) {
+    const id = attributes._id;
+    const newContacts = this.state.addedContacts.filter(contact => contact._id !== attributes._id);
+    axios.delete(`http://localhost:4000/addedContacts/${id}`)
+      .then(resp => {
+        this.setState({
+          addedContacts: newContacts,
+          contacts: [...this.state.contacts, attributes]
+        });
+      })
+      .catch(err => console.log(`ERROR! ${err}`));
   }
 
 
@@ -150,7 +137,7 @@ class App extends Component {
           search={this.state.searchText}
         />
         <h2>Added Contacts</h2>
-        <ContactList
+        <AddedContactList
           onContactClick={this.removeContact.bind(this)}
           contacts={this.state.addedContacts}
           search={this.state.searchText}

@@ -8,7 +8,11 @@
     ],
 
     "extends": ["eslint:recommended", "plugin:react/recommended"],
-
+    "globals": {
+        "describe": true,
+        "test": true,
+        "jest": true
+      },
     "env": {
         "browser": true,
         "es6": true,

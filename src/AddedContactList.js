@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import Contact from './Contact';
+import AddedContact from './AddedContact';
 
-class ContactList extends Component {
+class AddedContactList extends Component {
   render() {
     return (
       <div>
         <ul className="contact-list">
           {this.props.contacts.map(contact => {
             return (
-              <Contact
+              <AddedContact
                 key={contact._id}
                 search={this.props.search}
                 name={contact.name}
@@ -24,9 +24,9 @@ class ContactList extends Component {
   }
 }
 
-export default ContactList;
+export default AddedContactList;
 
-ContactList.propTypes = {
+AddedContactList.propTypes = {
   contacts: PropTypes.array,
   onChange: PropTypes.func,
   onContactClick: PropTypes.func,
