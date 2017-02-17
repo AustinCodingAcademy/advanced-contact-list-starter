@@ -13,6 +13,7 @@ const ContactList = (props) => {
               avatar={contact.avatar}
               occupation={contact.occupation}
               onClick={props.onClick}
+              onDelete={props.onDelete}
               searchText={props.searchText}
             />
           )

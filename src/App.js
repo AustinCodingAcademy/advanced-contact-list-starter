@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList.js';
@@ -11,6 +13,7 @@ class App extends Component {
     super();
 
     this.state = {
+      originalContacts: [],
       searchText: '',
       searchTextJob: 'Not functional yet',
       contacts: [],
@@ -19,10 +22,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-   axios.get('http://localhost:4000/contacts')
+   axios.get('/contacts')
      .then(resp => {
        this.setState({
-         contacts: resp.data
+         contacts: resp.data,
+         originalContacts: resp.data
        })
      })
      .catch(err => console.log(`Error, sucka!! ${err}`));
@@ -40,21 +44,12 @@ class App extends Component {
     });
   }
 
-  handleContactClick(id, name, job, pic) {
-    const prof = {
-      "id": id,
-      "name": name,
-      "occupation": job,
-      "avatar": pic
-    }
-    console.log("Added: " + prof);
-    if (this.state.selectedContacts.indexOf(prof.id) < 0) {
-      this.setState({
-        selectedContacts: this.state.selectedContacts.concat(prof)
-      });
-      console.log(this.state.selectedContacts.map(item => {return item.name}));
-    }
-
+  handleContactClick(id) {
+    console.log("Added Prof ID: " + id);
+    this.setState({
+      selectedContacts: this.state.selectedContacts.concat(id)
+    });
+    console.log(this.state.selectedContacts.map(item => {return item.name}));
   }
 
   handleContactRemove(id) {
@@ -70,13 +65,16 @@ class App extends Component {
 
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
-    // const jobTerm = this.state.searchTextJob.trim().toLowerCase();
     if (!term) {
       return this.state.contacts;
     }
     return this.state.contacts.filter(contact => {
       return contact.name.toLowerCase().search(term) >= 0;
     });
+  }
+
+  getSelectedContacts() {
+
   }
 
   handleAddContact(attributes) {
@@ -89,7 +87,17 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  handleDeleteContact(_id) {
+    axios.delete('http://localhost:4000/contacts/${_id}')
+      .then(resp => {
+        const newContacts = this.state.contacts.filter(contact => contact._id != _id);
 
+        this.setState({
+          contacts: newContacts
+        });
+      })
+      .catch(err => console.log(`Error, bish! ${err}`));
+  }
 
     render() {
       return (
@@ -103,30 +111,31 @@ class App extends Component {
           <SearchBar
             searchText={this.state.searchText} onChange={this.handleSearchBarChange.bind(this)} />
 
-          <h3>&#9660; Search by Job &#9660;</h3>
-
-          <SearchBar
-            searchText={this.state.searchTextJob}
-            onChange={this.handleJobSearchChange.bind(this)} />
-
           <ResetButton
             onClickReset={this.handleResetClick.bind(this)} />
 
           <ContactList
             contacts={this.getFilteredContacts()}
             searchText={this.state.searchText}
-            onClick={this.handleContactClick.bind(this)} />
+            onClick={this.handleContactClick.bind(this)}
+            onDelete={this.handleDeleteContact.bind(this)} />
 
-
+            <SelectedContacts
+              contacts={this.state.contacts}
+              selectedContacts={this.state.selectedContacts}
+              onClick={this.handleContactRemove.bind(this)} />
 
         </section>
       );
     }
   }
 
-  // <SelectedContacts
-  //   contacts={this.contacts}
-  //   selectedContacts={this.state.selectedContacts}
-  //   onClick={this.handleContactRemove.bind(this)} />
+  //
+
+  // <h3>&#9660; Search by Job &#9660;</h3>
+  //
+  // <SearchBar
+  //   searchText={this.state.searchTextJob}
+  //   onChange={this.handleJobSearchChange.bind(this)} />
 
 export default App;

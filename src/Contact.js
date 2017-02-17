@@ -3,7 +3,7 @@ import ContactName from './ContactName';
 
 const Contact = props => {
     return (
-      <li onClick={ () => props.onClick(props.id, props.name, props.occupation, props.avatar)} className="contact">
+      <li onClick={ () => props.onClick(props.name)} className="contact">
         <div className="image-cropper">
           <img src={props.avatar} alt="avatar"/>
         </div>
