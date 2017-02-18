@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/contacts')
+    axios.get('/contacts')
       .then(resp => {
         this.setState({
           contacts: resp.data
