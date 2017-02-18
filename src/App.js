@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import axios from 'axios';
 import SelectedContactList from './SelectedContactList';
 import ContactForm from './ContactForm';
+import ActionList from './ActionList';
 
  /* eslint-disablen max-len */
 
@@ -13,7 +14,9 @@ class App extends Component {
     this.state = {
       searchText: '',
       contacts: [],
-      selectedContacts: []
+      selectedContacts: [],
+      actionMessage: 'Action Hisory',
+      actionHistory: []
     };
   }
   handleSelectContact(contact) {
@@ -27,6 +30,7 @@ class App extends Component {
       selectedContacts: newSelectedContact,
       contacts: newContactsArray
     });
+    this.actionhistorylist('select', contact);
   }
 
   handleUnselectContact(selectedContact) {
@@ -39,6 +43,7 @@ class App extends Component {
       contacts: newSelectedContact,
       selectedContacts: newSelectedContactsArray
     });
+    this.actionhistorylist('unselect', selectedContact)
   }
 
   handleSearchBarChange(event) {
@@ -79,6 +84,7 @@ class App extends Component {
         });
       })
       .catch(err => console.log(err));
+    this.actionhistorylist('add', attributes);
   }
 
 
@@ -89,12 +95,46 @@ class App extends Component {
       contacts: this.state.contacts.filter(contact => contact._id !== _id),
       selectedContacts: this.state.selectedContacts.filter(contact => contact._id !== _id)
     })
-    )
+  );
+    this.actionhistorylist('delete', _id);
   }
 
-  handleReset(){
-    this.setState(this.state.originalState)
+  handleReset() {
+    this.setState(this.state.originalState);
+    this.actionhistorylist('reset');
   }
+
+  actionhistorylist(action, contact) {
+
+    let actionMessage = '';
+
+    switch (action) {
+      case 'select':
+        actionMessage = `you have selected ${contact.name}`;
+        break;
+      case 'unselect':
+        actionMessage = `You have unselected ${contact.name}`;
+        break;
+      case 'delete':
+        actionMessage = `You have deleted ${contact.name}`;
+        break;
+      case 'reset':
+        actionMessage = 'You have reset the contacts';
+        break;
+      case 'add':
+        actionMessage = `You have created a new contact - ${contact.name}`;
+        break;
+      default:
+        actionMessage = '';
+    }
+
+    const newActionHistory = [...this.state.actionHistory, actionMessage];
+
+    this.setState({
+      actionHistory: newActionHistory
+    });
+  }
+
 
   render() {
     return (
@@ -122,6 +162,9 @@ class App extends Component {
           selectedContacts={this.state.selectedContacts}
           onUnselectContact={this.handleUnselectContact.bind(this)}
          />
+        <ActionList
+          actionMessage={this.state.actionHistory}
+        />
 
       </div>
     );

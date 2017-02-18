@@ -27,6 +27,7 @@ class ContactList extends Component {
 }
 
 ContactList.propTypes = {
+  onResetClick: PropTypes.func.isRequired,
   contacts: PropTypes.array.isRequired,
   onSelectContact: PropTypes.func.isRequired,
   onDeleteContact: PropTypes.func.isRequired
