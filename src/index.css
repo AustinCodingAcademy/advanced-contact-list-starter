@@ -148,3 +148,8 @@ body {
   background: gray;
   color: white;
 }
+
+.action-history-list {
+  list-style: none;
+  padding: 0;
+}

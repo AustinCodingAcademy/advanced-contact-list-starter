@@ -18,7 +18,7 @@ SelectedContact.propTypes = {
   avatar: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   occupation: PropTypes.string.isRequired,
-  _id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   onClickDeselect: PropTypes.func.isRequired
 };
 
