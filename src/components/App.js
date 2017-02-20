@@ -9,7 +9,7 @@ import ActionHistoryList from './ActionHistoryList/ActionHistoryList';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
-let actionHistoryIterator = 0;
+// let actionHistoryIterator = 0;
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class App extends Component {
   handleAddContact(attributes) {
     const addHistoryItem = [{
       itemText: `${attributes.name} has been added to Contacts List!`,
-      _id: actionHistoryIterator++
+      // _id: actionHistoryIterator++
     }];
 
     let newActionHistory = addHistoryItem.concat(this.state.actionHistory);
@@ -35,11 +35,21 @@ class App extends Component {
       newActionHistory = newActionHistory.slice(0, 10);
     }
 
+    const requestBody = {
+      actionItemText: addHistoryItem[0].itemText
+    };
+
+    axios.post('http://localhost:3001/actionhistory', requestBody)
+      .then(() => {
+        this.getActionHistoryFromDB();
+      })
+      .catch(err => console.log(err));
+
     axios.post('http://localhost:3001/contacts', attributes)
       .then(resp => {
         this.setState({
           contacts: [...this.state.contacts, resp.data],
-          actionHistory: newActionHistory
+          // actionHistory: newActionHistory
         });
       })
       .catch(err => console.log(err));
@@ -58,23 +68,38 @@ class App extends Component {
       });
   }
 
-  // getActionHistoryFromDB() {
-  //   axios.get('http://localhost:3001/actionhistory')
-  //     .then(resp => {
-  //       this.setState({
-  //         actionHistory: resp.data
-  //       });
-  //     })
-  //     .catch(err => {
-  //       console.log(`Error! ${err}`);
-  //       alert('ACTION HISTORY ERROR!');
-  //     });
-  // }
+  getActionHistoryFromDB() {
+    axios.get('http://localhost:3001/actionhistory')
+      .then(resp => {
+        console.log(resp.data);
+        resp.data.sort((a, b) => {
+          const idA = a._id;
+          const idB = b._id;
+          if (idA > idB) {
+            return -1;
+          }
+          if (idA < idB) {
+            return 1;
+          }
+          return 0;
+        });
+        if (resp.data.length > 10) {
+          resp.data = resp.data.slice(0, 10);
+        }
+        this.setState({
+          actionHistory: resp.data
+        });
+      })
+      .catch(err => {
+        console.log(`Error! ${err}`);
+        alert('ACTION HISTORY ERROR!');
+      });
+  }
 
   handleReset() {
     const resetActionItem = [{
       itemText: 'App was reset!',
-      _id: actionHistoryIterator++
+      // _id: actionHistoryIterator++
     }];
 
     let newActionHistory = resetActionItem.concat(this.state.actionHistory);
@@ -83,10 +108,20 @@ class App extends Component {
       newActionHistory = newActionHistory.slice(0, 10);
     }
 
+    const requestBody = {
+      actionItemText: resetActionItem[0].itemText
+    };
+
+    axios.post('http://localhost:3001/actionhistory', requestBody)
+      .then(() => {
+        this.getActionHistoryFromDB();
+      })
+      .catch(err => console.log(err));
+
     this.setState({
       searchText: '',
       selectedContacts: [],
-      actionHistory: newActionHistory
+      // actionHistory: newActionHistory
     });
 
     this.forceUpdate(this.getContactsFromDB());
@@ -101,8 +136,18 @@ class App extends Component {
       itemText: `
         ${clickedContact[0].name} has been added to Selected Contacts!
       `,
-      _id: actionHistoryIterator++
+      // _id: actionHistoryIterator++
     }];
+
+    const requestBody = {
+      actionItemText: clickedContactActionItem[0].itemText
+    };
+
+    axios.post('http://localhost:3001/actionhistory', requestBody)
+      .then(() => {
+        this.getActionHistoryFromDB();
+      })
+      .catch(err => console.log(err));
 
     let newActionHistory = clickedContactActionItem.concat(
       this.state.actionHistory
@@ -115,7 +160,7 @@ class App extends Component {
     this.setState({
       contacts: this.state.contacts.filter(contact => contact._id !== index),
       selectedContacts: this.state.selectedContacts.concat(clickedContact),
-      actionHistory: newActionHistory
+      // actionHistory: newActionHistory
     });
   }
 
@@ -144,7 +189,7 @@ class App extends Component {
       itemText: `
         ${clickedContact[0].name} has been removed from Selected Contacts!
       `,
-      _id: actionHistoryIterator++
+      // _id: actionHistoryIterator++
     }];
 
     let newActionHistory = deselectActionItem.concat(this.state.actionHistory);
@@ -153,12 +198,22 @@ class App extends Component {
       newActionHistory = newActionHistory.slice(0, 10);
     }
 
+    const requestBody = {
+      actionItemText: deselectActionItem[0].itemText
+    };
+
+    axios.post('http://localhost:3001/actionhistory', requestBody)
+      .then(() => {
+        this.getActionHistoryFromDB();
+      })
+      .catch(err => console.log(err));
+
     this.setState({
       contacts: this.state.contacts.concat(clickedContact),
       selectedContacts: this.state.selectedContacts.filter(
         contact => contact._id !== index,
       ),
-      actionHistory: newActionHistory
+      // actionHistory: newActionHistory
     });
   }
 
@@ -173,7 +228,7 @@ class App extends Component {
       itemText: `
         ${removedContact[0].name} was removed from Contact List!
       `,
-      _id: actionHistoryIterator++
+      // _id: actionHistoryIterator++
     }];
 
     let newActionHistory = removedActionItem.concat(this.state.actionHistory);
@@ -181,6 +236,16 @@ class App extends Component {
     if (newActionHistory.length > 10) {
       newActionHistory = newActionHistory.slice(0, 10);
     }
+
+    const requestBody = {
+      actionItemText: removedActionItem[0].itemText
+    };
+
+    axios.post('http://localhost:3001/actionhistory', requestBody)
+      .then(() => {
+        this.getActionHistoryFromDB();
+      })
+      .catch(err => console.log(err));
 
     axios.delete(`http://localhost:3001/contacts/${index}`)
       .then(() => {
@@ -190,7 +255,7 @@ class App extends Component {
 
         this.setState({
           contacts: newContacts,
-          actionHistory: newActionHistory
+          // actionHistory: newActionHistory
         });
       })
       .catch(err => console.log(err));
@@ -231,7 +296,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getContactsFromDB();
-    // this.getActionHistoryFromDB();
+    this.getActionHistoryFromDB();
   }
 
   render() {

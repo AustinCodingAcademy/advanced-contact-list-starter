@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactTimeout from 'react-timeout';
-// import axios from 'axios';
+import axios from 'axios';
 
 class ActionHistoryItem extends Component {
   constructor(props) {
@@ -13,14 +13,6 @@ class ActionHistoryItem extends Component {
   }
 
   componentDidMount() {
-    // const actionItemText = this.props.itemText;
-    //
-    // axios.post('http://localhost:3001/actionhistory', actionItemText)
-    //   .then(resp => {
-    //     console.log(resp);
-    //   })
-    //   .catch(err => console.log(err));
-
     setTimeout(
       () => {
         this.props.removeHistoryItem(this.props._id);
@@ -39,8 +31,13 @@ class ActionHistoryItem extends Component {
 
   componentWillUnmount() {
     clearInterval(this.state.expirationInterval);
-  }
 
+    axios.delete(`http://localhost:3001/actionhistory/${this.props._id}`)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => console.log(error));
+  }
 
   render() {
     return (
@@ -57,7 +54,7 @@ class ActionHistoryItem extends Component {
 
 ActionHistoryItem.propTypes = {
   itemText: PropTypes.string.isRequired,
-  _id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   removeHistoryItem: PropTypes.func.isRequired
 };
 
