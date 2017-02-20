@@ -16,7 +16,8 @@
     "foreman": "^2.0.0",
     "json-server": "^0.9.4",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-timeout": "^1.0.0"
   },
   "scripts": {
     "start": "nf start",

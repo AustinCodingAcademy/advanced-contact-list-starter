@@ -14,6 +14,7 @@ const ActionHistoryList = props => {
             {...actionHistoryItem}
             key={actionHistoryItem._id}
             removeHistoryItem={index => props.removeHistoryItem(index)}
+            handleItemExpiration={index => props.handleItemExpiration(index)}
           />
         );
       })}
@@ -27,7 +28,8 @@ const ActionHistoryList = props => {
 ActionHistoryList.propTypes = {
   actionHistory: PropTypes.array.isRequired,
   checkForUserActions: PropTypes.object,
-  onClickClearHistory: PropTypes.func.isRequired
+  onClickClearHistory: PropTypes.func.isRequired,
+  removeHistoryItem: PropTypes.func.isRequired
 };
 
 export default ActionHistoryList;

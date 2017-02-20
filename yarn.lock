@@ -4827,6 +4827,12 @@ react-scripts@0.7.0:
   optionalDependencies:
     fsevents "1.0.14"
 
+react-timeout@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-timeout/-/react-timeout-1.0.0.tgz#100056d81bbea208cbbec6e55e4efc86a61a7df8"
+  dependencies:
+    object-assign "^4.0.1"
+
 react@^15.3.2:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.1.tgz#498e918602677a3983cd0fd206dfe700389a0dd6"
