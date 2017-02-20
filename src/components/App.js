@@ -58,6 +58,19 @@ class App extends Component {
       });
   }
 
+  // getActionHistoryFromDB() {
+  //   axios.get('http://localhost:3001/actionhistory')
+  //     .then(resp => {
+  //       this.setState({
+  //         actionHistory: resp.data
+  //       });
+  //     })
+  //     .catch(err => {
+  //       console.log(`Error! ${err}`);
+  //       alert('ACTION HISTORY ERROR!');
+  //     });
+  // }
+
   handleReset() {
     const resetActionItem = [{
       itemText: 'App was reset!',
@@ -218,6 +231,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getContactsFromDB();
+    // this.getActionHistoryFromDB();
   }
 
   render() {

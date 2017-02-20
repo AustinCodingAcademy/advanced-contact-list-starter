@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactTimeout from 'react-timeout';
+import axios from 'axios';
 
 class ActionHistoryItem extends Component {
   constructor(props) {
@@ -12,6 +13,14 @@ class ActionHistoryItem extends Component {
   }
 
   componentDidMount() {
+    // const actionItemText = this.props.itemText;
+    //
+    // axios.post('http://localhost:3001/actionhistory', actionItemText)
+    //   .then(resp => {
+    //     console.log(resp);
+    //   })
+    //   .catch(err => console.log(err));
+
     setTimeout(
       () => {
         this.props.removeHistoryItem(this.props._id);
@@ -23,7 +32,7 @@ class ActionHistoryItem extends Component {
 
       this.setState({
         expirationTimer: newExpirationTimer,
-        expirationInterval: expirationInterval
+        expirationInterval
       });
     }, 1000);
   }
