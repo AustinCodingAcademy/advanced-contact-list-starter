@@ -16,7 +16,7 @@
     "express": "^4.14.1",
     "foreman": "^2.0.0",
     "json-server": "^0.9.4",
-    "mongoose": "^4.8.2",
+    "mongoose": "^4.8.3",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
   },

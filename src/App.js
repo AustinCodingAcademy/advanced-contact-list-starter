@@ -4,14 +4,18 @@ import AddedContactList from './AddedContactList';
 import SearchBar from './SearchBar';
 import ContactForm from './ContactForm';
 import axios from 'axios';
+import ActionHist from './ActionHist';
+
 
 class App extends Component {
+
   constructor() {
     super();
     this.state = {
       searchText: '',
       contacts: [],
       addedContacts: [],
+      actionHistory: []
     };
   }
 
@@ -22,6 +26,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     axios.get('/contacts')
       .then(resp => {
         this.setState({
@@ -33,6 +38,16 @@ class App extends Component {
       });
   }
 
+
+  popActionItem() {
+    const newActionHist = [...this.state.ActionHistory];
+    newActionHist.pop();
+    this.setState({
+      actionHistory: newActionHist
+    });
+  }
+
+
   handleChange(event) {
     this.setState({
       searchText: event.target.value
@@ -41,6 +56,7 @@ class App extends Component {
 
   componentWillMount() {
     console.log('componentWillMount');
+
   }
 
   getFilteredContacts() {
@@ -58,23 +74,28 @@ class App extends Component {
   }
 
   handleAddContact(attributes) {
-    axios.post('http://localhost:4000/contacts', attributes)
+    axios.post('/contacts', attributes)
       .then(resp => {
         this.setState({
-          contacts: [...this.state.contacts, resp.data]
+          contacts: [...this.state.contacts, resp.data],
+          actionHistory: [...this.state.actionHistory, 'added new contact']
         });
       })
       .catch(err => console.log(err));
   }
 
+
   addContact(attributes) {
     const newContacts = this.state.contacts.filter(contact => contact._id !== attributes._id);
-
+    const actionItem = {
+      item: 'added contact'
+    }
     axios.post('http://localhost:4000/addedContacts', attributes)
       .then(resp => {
         this.setState({
           contacts: newContacts,
-          addedContacts: [...this.state.addedContacts, resp.data]
+          addedContacts: [...this.state.addedContacts, resp.data],
+          actionHistory: [...this.state.actionHistory, actionItem]
         });
       });
   }
@@ -84,7 +105,7 @@ class App extends Component {
     const empty = [];
     axios({
       method: 'post',
-      url: 'http://localhost:4000/contacts',
+      url: '/contacts',
       contacts: {all}
     });
     for (const added of this.state.addedContacts) {
@@ -113,7 +134,8 @@ class App extends Component {
       .then(resp => {
         this.setState({
           addedContacts: newContacts,
-          contacts: [...this.state.contacts, attributes]
+          contacts: [...this.state.contacts, attributes],
+          actionHistory: [...this.state.actionHistory, 'removed Contact']
         });
       })
       .catch(err => console.log(`ERROR! ${err}`));
@@ -122,6 +144,7 @@ class App extends Component {
 
   render() {
     return (
+
       <div className="App">
         <ContactForm
           onSubmit={this.handleAddContact.bind(this)}
@@ -141,6 +164,10 @@ class App extends Component {
           onContactClick={this.removeContact.bind(this)}
           contacts={this.state.addedContacts}
           search={this.state.searchText}
+        />
+        <h2>Action History</h2>
+        <ActionHist
+          actionHistory={this.state.actionHistory}
         />
       </div>
 

@@ -35,10 +35,20 @@
       "name": "Kayne Khoury",
       "avatar": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAQKAAAAJDY4NDQyMWMzLWFhZDctNGNjMy05ZmRjLWFjZWYwOTRjYzAwZg.jpg",
       "occupation": "Web Developer"
-    },
-    {
-      "_id": 7
     }
   ],
-  "addedContacts": []
+  "addedContacts": [
+    {
+      "_id": "58a4fdc44f58dedc0700a642",
+      "name": "Dale Cooper",
+      "occupation": "FBI Agent",
+      "avatar": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
+    },
+    {
+      "_id": "58aa5fed02099f86ea50d75c",
+      "name": "Spike Spiegel",
+      "occupation": "Bounty Hunter",
+      "avatar": "http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337"
+    }
+  ]
 }
