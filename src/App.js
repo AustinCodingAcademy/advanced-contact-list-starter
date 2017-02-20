@@ -30,7 +30,8 @@ class App extends Component {
     axios.get('/contacts')
       .then(resp => {
         this.setState({
-          contacts: resp.data
+          contacts: resp.data,
+          actionHistory: []
         });
       })
       .catch(err => {
@@ -39,8 +40,8 @@ class App extends Component {
   }
 
 
-  popActionItem() {
-    const newActionHist = [...this.state.ActionHistory];
+  popActionItem(attributes) {
+    const newActionHist = this.state.actionHistory.filter(action => action._id !== attributes._id);
     newActionHist.pop();
     this.setState({
       actionHistory: newActionHist
@@ -74,11 +75,15 @@ class App extends Component {
   }
 
   handleAddContact(attributes) {
+    const newAction = {
+      _id: Math.random(),
+      item: 'added new contact'
+    }
     axios.post('/contacts', attributes)
       .then(resp => {
         this.setState({
           contacts: [...this.state.contacts, resp.data],
-          actionHistory: [...this.state.actionHistory, 'added new contact']
+          actionHistory: [...this.state.actionHistory, newAction]
         });
       })
       .catch(err => console.log(err));
@@ -87,7 +92,8 @@ class App extends Component {
 
   addContact(attributes) {
     const newContacts = this.state.contacts.filter(contact => contact._id !== attributes._id);
-    const actionItem = {
+    const newAction = {
+      _id: Math.random(),
       item: 'added contact'
     }
     axios.post('http://localhost:4000/addedContacts', attributes)
@@ -95,7 +101,7 @@ class App extends Component {
         this.setState({
           contacts: newContacts,
           addedContacts: [...this.state.addedContacts, resp.data],
-          actionHistory: [...this.state.actionHistory, actionItem]
+          actionHistory: [...this.state.actionHistory, newAction]
         });
       });
   }
@@ -130,12 +136,16 @@ class App extends Component {
   removeContact(attributes) {
     const id = attributes._id;
     const newContacts = this.state.addedContacts.filter(contact => contact._id !== attributes._id);
+    const newAction = {
+      _id: Math.random(),
+      item: 'removed Contact'
+    }
     axios.delete(`http://localhost:4000/addedContacts/${id}`)
       .then(resp => {
         this.setState({
           addedContacts: newContacts,
           contacts: [...this.state.contacts, attributes],
-          actionHistory: [...this.state.actionHistory, 'removed Contact']
+          actionHistory: [...this.state.actionHistory, newAction]
         });
       })
       .catch(err => console.log(`ERROR! ${err}`));
@@ -167,6 +177,7 @@ class App extends Component {
         />
         <h2>Action History</h2>
         <ActionHist
+          onBtnClick={this.popActionItem.bind(this)}
           actionHistory={this.state.actionHistory}
         />
       </div>

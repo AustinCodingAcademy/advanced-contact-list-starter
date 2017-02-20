@@ -7,7 +7,10 @@ class ActionHist extends Component {
         <ul className="contact-list">
           {this.props.actionHistory.map(action => {
             return (
-              <li key={Math.random()}>{action.item}</li>
+              <li key={action._id}>
+                {action.item}
+                <button onClick={() => this.props.onBtnClick(action._id)}>remove</button>
+              </li>
             );
           })}
         </ul>
@@ -20,4 +23,5 @@ export default ActionHist;
 
 ActionHist.propTypes = {
   actionHistory: PropTypes.array,
+  noBtnClick: PropTypes.func
 };
