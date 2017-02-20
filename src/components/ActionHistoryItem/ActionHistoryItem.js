@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactTimeout from 'react-timeout';
-import axios from 'axios';
+// import axios from 'axios';
 
 class ActionHistoryItem extends Component {
   constructor(props) {
