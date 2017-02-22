@@ -33,7 +33,7 @@ SelectedContact.propTypes = {
   searchValue: PropTypes.string,
   occupation: PropTypes.string.isRequired,
   onUnselect: PropTypes.func.isRequired,
-  _id: PropTypes.number.isRequired
+  _id: PropTypes.string.isRequired
 };
 
 export default SelectedContact;

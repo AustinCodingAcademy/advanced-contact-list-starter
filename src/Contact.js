@@ -39,7 +39,7 @@ Contact.propTypes = {
   onRemove: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   searchValue: PropTypes.string,
-  _id: PropTypes.number.isRequired
+  _id: PropTypes.string.isRequired
 };
 
 export default Contact;

@@ -17,23 +17,6 @@ export default class ContactForm extends Component {
     });
   }
 
-  // handleNameChange(event) {
-  //   this.setState({
-  //     name: event.target.value
-  //   });
-  // }
-  //
-  // handleOccupationChange(event) {
-  //   this.setState({
-  //     occupation: event.target.value
-  //   });
-  // }
-  //
-  // handleAvatarChange(event) {
-  //   this.setState({
-  //     avatar: event.target.value
-  //   });
-  // }
 
   handleSubmit(event) {
     event.preventDefault();

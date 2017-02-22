@@ -43,5 +43,5 @@ export default ContactName;
 ContactName.propTypes = {
   name: PropTypes.string.isRequired,
   searchValue: PropTypes.string,
-  id: PropTypes.number.isRequired
+  id: PropTypes.string.isRequired
 };

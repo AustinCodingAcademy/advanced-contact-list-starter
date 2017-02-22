@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ContactList from './ContactList';
-import SearchBar from './SearchBar.js';
+import SearchBar from './SearchBar/index';
 import SelectedContactList from './SelectedContactList';
 import ResetButton from './ResetButton';
 import ActionHistory from './ActionHistory';
@@ -78,7 +78,7 @@ class App extends Component {
       alert: true,
       alertMessage: 'add'
     });
-    axios.post('http://localhost:4000/contacts', attributes)
+    axios.post('/contacts', attributes)
       .then(response => {
         setTimeout( () => {
           this.setState({
@@ -105,7 +105,7 @@ class App extends Component {
       alert: true,
       alertMessage: 'delete'
     });
-    axios.delete(`http://localhost:4000/contacts/${id}`)
+    axios.delete(`/contacts/${id}`)
       .then(() => {
         setTimeout(() => {
           this.addAction('delete',id);
@@ -127,13 +127,17 @@ class App extends Component {
   }
 
   handleRemoveAction(id) {
-    const oldHist = this.state.actionHistory;
-    const newHistory = oldHist.filter(action => action._id !== id);
-    const newState = {
-      actionHistory: newHistory
-    };
-
-    this.setState(newState);
+    axios.delete(`/actions/${id}`)
+      .then(() => {
+        this.setState({
+          actionHistory: this.state.actionHistory.filter(action => {
+            return action._id !== id;
+          })
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
   }
 
@@ -143,7 +147,7 @@ class App extends Component {
       alert: true,
       alertMessage: 'get'
     });
-    axios.get('http://localhost:4000/contacts')
+    axios.get('/contacts')
       .then(response => {
         setTimeout( () => {
           this.setState({
@@ -164,8 +168,6 @@ class App extends Component {
     const contacts = this.state.originalState.contacts;
     const target = contacts.filter(contact => contact._id === id);
     const name = id ? target[0].name : null;
-    const newId = this.state.currentActionId + 1;
-    const time = Math.floor(Date.now() / 1000);
 
     let actionMessage;
 
@@ -193,19 +195,20 @@ class App extends Component {
         break;
     }
 
-    const newHistory = [{
-      _id: newId,
-      time,
+    const newAction = {
       actionMessage
-    }].concat(this.state.actionHistory);
+    };
 
-    this.setState((prevState) => {
-      return {
-        currentActionId: prevState.currentActionId + 1,
-        actionHistory: newHistory
-      };
-    });
-
+    axios.post('/actions', newAction)
+      .then(response => {
+        this.setState({
+          actionHistory: [response.data].concat(this.state.actionHistory)
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  // End addAction
   }
 
   addContact(id, list = this.state.contacts) {
