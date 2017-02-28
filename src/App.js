@@ -32,7 +32,7 @@ class App extends Component {
     this.setState({
       loading: true
     });
-    axios.get('http://localhost:4000/contacts')
+    axios.get('http://localhost:3001/contacts')
       .then((result) => {
         console.log('Loading successful', result);
         this.setState({
