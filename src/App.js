@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ContactList from './ContactList';
-import SearchBar from './SearchBar';
+import ContactList from './components/ContactList';
+import SearchBarContainer from './containers/SearchBarContainer';
 import axios from 'axios';
-import ContactForm from './ContactForm';
+import ContactForm from './components/ContactForm';
 import DefaultLayout from './components/layouts/DefaultLayout';
 
 /* eslint-disable max-len */
@@ -78,7 +78,7 @@ class App extends Component {
             Contact List!
           </h1>
           <ContactForm onSubmit={this.handleFormSubmit.bind(this)} />
-          <SearchBar onChange={this.handleSearchString.bind(this)} />
+          <SearchBarContainer />
           <ContactList contacts={this.state.contacts} onContactClick={this.handleContactSelect.bind(this)} />
         </div>
       </DefaultLayout>

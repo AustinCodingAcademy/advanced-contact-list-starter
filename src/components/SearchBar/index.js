@@ -1,19 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 
 export default class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: ''
-    };
-  }
-
   handleChange(event) {
-    this.setState({
-      value: event.target.value
-    });
-
     if (this.props.onChange) {
       this.props.onChange(event.target.value);
     }
@@ -24,7 +12,7 @@ export default class SearchBar extends Component {
       <input
         className="search-bar"
         type="text"
-        value={this.state.value}
+        value={this.props.value}
         onChange={event => this.handleChange(event)}
       />
     );
@@ -32,5 +20,6 @@ export default class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  value: PropTypes.string
 };
