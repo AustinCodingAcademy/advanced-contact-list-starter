@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ContactList from './ContactList';
-import SearchBar from './SearchBar';
+import SearchBar from './containers/SearchBar';
 import axios from 'axios';
 import SelectedContactList from './SelectedContactList';
 import ContactForm from './ContactForm';

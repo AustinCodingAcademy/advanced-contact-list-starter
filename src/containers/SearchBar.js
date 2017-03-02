@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { searchText } from '../actions/index';
 
 class SearchBar extends Component {
+
+  handleSearchText(event) {
+    this.props.onChange(event.target.value);
+  }
 
   render() {
     return (
@@ -11,8 +17,7 @@ class SearchBar extends Component {
           type="text"
           placeholder="Search"
           value={this.props.value}
-          thing={this.props.searchBar}
-          onChange={event => this.props.onChange(event)}
+          onChange={event => this.handleSearchText(event)}
           />
       </div>
     );
@@ -24,12 +29,14 @@ SearchBar.propTypes = {
   onChange: React.PropTypes.func.isRequired
 };
 
-// whatever is returned from this function will show up
-// as props from reducers
 function mapStateToProps(state) {
   return {
-    searchBar: state.searchBar
+    value: state.searchText
   };
 }
 
-export default connect(mapStateToProps)(SearchBar);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({onChange: searchText}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
