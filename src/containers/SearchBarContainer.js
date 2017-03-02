@@ -4,7 +4,8 @@ import {changeSearchText} from '../actions/index';
 
 const mapStateToProps = (state) => {
   return {
-    value: state.contactList.searchText
+    value: state.contactList.searchText,
+    errorMessage: state.contactList.contacts.error
   };
 };
 

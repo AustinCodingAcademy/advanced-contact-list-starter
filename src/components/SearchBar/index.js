@@ -9,17 +9,22 @@ export default class SearchBar extends Component {
 
   render() {
     return (
-      <input
-        className="search-bar"
-        type="text"
-        value={this.props.value}
-        onChange={event => this.handleChange(event)}
-      />
+      <div>
+
+        {this.props.errorMessage}
+        <input
+          className="search-bar"
+          type="text"
+          value={this.props.value}
+          onChange={event => this.handleChange(event)}
+        />
+      </div>
     );
   }
 }
 
 SearchBar.propTypes = {
   onChange: PropTypes.func,
+  errorMessage: PropTypes.string,
   value: PropTypes.string
 };
