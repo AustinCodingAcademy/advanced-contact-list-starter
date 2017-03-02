@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import uuid from 'node-uuid';
 
-import SearchBar from './SearchBar';
-import ContactList from './ContactList';
-import SelectedContactList from './SelectedContactList';
-import ResetButton from './ResetButton';
-import ContactForm from './ContactForm';
-import ActionHistoryList from './ActionHistoryList';
+import SearchBarContainer from './containers/SearchBarContainer';
+import ContactList from './components/ContactList';
+import SelectedContactList from './components/SelectedContactList';
+import ResetButton from './components/ResetButton';
+import ContactForm from './components/ContactForm';
+import ActionHistoryList from './components/ActionHistoryList';
 
 
 /* eslint-disable max-len */
@@ -39,12 +39,16 @@ class App extends Component {
       .catch(err => {
         console.log(`Error ${err}`);
       });
-  }
 
-  handleChange(event) {
-    this.setState({
-      searchText: event.target.value
-    });
+    axios.get('http://localhost:3001/actionHistory')
+      .then(resp => {
+        this.setState({
+          actionHistory: resp.data
+        });
+      })
+      .catch(err => {
+        console.log(`Error ${err}`);
+      });
   }
 
   handleSelectContact(contact) {
@@ -93,7 +97,7 @@ class App extends Component {
       })
       .catch(err => console.log(err));
 
-    // this.addAction('submit');
+    this.addAction('submit');
   }
 
   getFilteredContacts() {
@@ -117,12 +121,16 @@ class App extends Component {
   }
 
   handleRemoveAction(_id) {
-    this.setState({
-      actionHistory: this.state.actionHistory.filter(action => action._id !== _id)
-    });
+    axios.delete(`http://localhost:3001/actionHistory/${_id}`)
+      .then(() => {
+        this.setState({
+          actionHistory: this.state.actionHistory.filter(action => action._id !== _id)
+        });
+      })
+      .catch(err => console.log(err));
   }
 
-  addAction(actionType, contact) {
+  addAction(actionType, contact, attributes) {
 
     let actionMessage = '';
 
@@ -136,6 +144,9 @@ class App extends Component {
       case 'remove':
         actionMessage = `You have removed ${contact.name}`;
         break;
+      case 'submit':
+        actionMessage = 'You have created a new contact';
+        break;
       case 'reset':
         actionMessage = 'You have reseted the app';
         break;
@@ -143,15 +154,17 @@ class App extends Component {
         actionMessage = 'I must have forgot somthing';
     }
 
-    console.log(actionMessage);
-
     const newAction = this.buildNewAction(actionMessage);
 
     const newHistory = [...this.state.actionHistory, newAction];
 
-    this.setState({
-      actionHistory: newHistory
-    });
+    axios.post('http://localhost:3001/actionHistory', attributes)
+      .then(() => {
+        this.setState({
+          actionHistory: newHistory
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   buildNewAction(description) {
@@ -169,9 +182,7 @@ class App extends Component {
         </h1>
         <ContactForm onSubmit={this.handleSubmitContact.bind(this)} />
         <h2>Search</h2>
-        <SearchBar
-          value={this.state.searchText}
-          onChange={this.handleChange.bind(this)} />
+        <SearchBarContainer />
         <ResetButton
           onResetClick={this.resetContacts.bind(this)}
         />

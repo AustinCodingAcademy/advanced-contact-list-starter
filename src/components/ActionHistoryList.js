@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Action from './Action';
+import ActionListItem from './ActionListItem';
 
 const ActionHistoryList = props => {
   return (
@@ -11,7 +11,7 @@ const ActionHistoryList = props => {
           {props.actions.map(action => {
             console.log(action);
             return (
-              <Action
+              <ActionListItem
                 key={action._id}
                 action={action}
                 onRemoveClick={() => props.onRemoveAction(action._id)}
