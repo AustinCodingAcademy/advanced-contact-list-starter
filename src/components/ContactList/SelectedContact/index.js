@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ContactName from './ContactName';
+import ContactName from '../Contact/ContactName/index';
 
 
 

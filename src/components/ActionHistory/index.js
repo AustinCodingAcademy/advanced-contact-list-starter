@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Action from './Action';
+import Action from './Action/index';
 
 const ActionHistory = (props) => {
   return (

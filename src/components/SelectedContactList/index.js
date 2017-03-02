@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ContactList from './ContactList';
+import ContactList from '../ContactList/index';
 
 const SelectedContactList = (props) => {
   const selectable = true;

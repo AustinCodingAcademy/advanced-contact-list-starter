@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import LoadingWidget from './LoadingWidget';
+import LoadingWidget from './LoadingWidget/index';
 
 const AlertWindow = (props) => {
   let message = '';

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import Contact from './Contact.js';
-import SelectedContact from './SelectedContact';
+import Contact from './Contact/index';
+import SelectedContact from './SelectedContact/index';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 

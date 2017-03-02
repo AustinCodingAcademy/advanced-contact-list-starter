@@ -6,14 +6,14 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import ContactList from './ContactList';
-import SearchBar from './SearchBar/index';
-import SelectedContactList from './SelectedContactList';
-import ResetButton from './ResetButton';
-import ActionHistory from './ActionHistory';
-import ContactForm from './ContactForm';
-import AlertWindow from './AlertWindow';
-import AddContactButton from './AddContactButton';
+import ContactListContainer from './containers/ContactListContainer';
+import SearchBarContainer from './containers/SearchBarContainer';
+import SelectedContactList from './components/SelectedContactList/index';
+import ResetButton from './components/ResetButton/index';
+import ActionHistory from './components/ActionHistory/index';
+import ContactForm from './components/ContactForm/index';
+import AlertWindow from './components/AlertWindow/index';
+import AddContactButton from './components/AddContactButton/index';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -255,10 +255,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchBar
-          value={this.state.searchText}
-          onChange={this.handleSearchBarChange.bind(this)}
-        />
+        <SearchBarContainer />
         {/*
           This section mounts the ContactForm component
           depending on whether this.state.add is true.
@@ -284,9 +281,7 @@ class App extends Component {
         <ResetButton
           onReset={this.handleReset.bind(this)}
         />
-        <ContactList
-          contacts={this.getFilteredContacts()}
-          searchValue={this.state.searchText}
+        <ContactListContainer
           onRemove={this.handleRemoveContact.bind(this)}
           onDelete={this.handleDeleteContact.bind(this)}
           onSelect={this.handleSelect.bind(this)}

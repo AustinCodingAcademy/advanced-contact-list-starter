@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://alexjgaw.github.io/contact-list",
-  "proxy" : "http://localhost:3001",
+  "proxy": "http://localhost:3001",
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "enzyme": "^2.7.1",
@@ -19,7 +19,9 @@
     "foreman": "^2.0.0",
     "json-server": "^0.9.4",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0"
   },
   "scripts": {
     "start": "nf start",
