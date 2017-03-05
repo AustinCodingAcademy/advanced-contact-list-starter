@@ -6,7 +6,8 @@ import ContactForm from './components/ContactForm';
 import DefaultLayout from './components/layouts/DefaultLayout';
 
 /* eslint-disable max-len */
-class App extends Component {
+/* eslint-disable no-console */
+export default class App extends Component {
   constructor(props) {
     super(props);
 
@@ -85,5 +86,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
