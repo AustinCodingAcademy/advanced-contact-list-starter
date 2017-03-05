@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ContactList from './ContactList/ContactList';
-import SearchBar from './SearchBar/SearchBar';
+import SearchBarContainer from '../containers/SearchBarContainer';
 import SelectedContactsList from './SelectedContactsList/SelectedContactsList';
 import ResetButton from './ResetButton/ResetButton';
 import axios from 'axios';
@@ -71,7 +71,6 @@ class App extends Component {
   getActionHistoryFromDB() {
     axios.get('http://localhost:3001/actionhistory')
       .then(resp => {
-        console.log(resp.data);
         resp.data.sort((a, b) => {
           const idA = a._id;
           const idB = b._id;
@@ -261,12 +260,6 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  handleSearchBarChange(event) {
-    this.setState({
-      searchText: event.target.value
-    });
-  }
-
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
     const contacts = this.state.contacts;
@@ -310,10 +303,7 @@ class App extends Component {
           <h1>
             Searchable Contacts List
           </h1>
-          <SearchBar
-            value={this.state.searchText}
-            onChange={this.handleSearchBarChange.bind(this)}
-          />
+          <SearchBarContainer />
           <ContactList
             contacts={this.getFilteredContacts()}
             onClickRemove={this.handleRemoveContact.bind(this)}
