@@ -7,7 +7,8 @@ import SelectedContact from './SelectedContact/index';
 
 
 const ContactList = (props) => {
-
+  console.log('Inside ContactList component');
+  console.log(props);
   return (
     <ul className="contact-list">
       {props.contacts.map(contact => {
