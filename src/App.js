@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 
@@ -109,37 +107,10 @@ export default class App extends Component {
       <div className="App" >
         <SearchBar value={this.state.searchText}
           onChange={this.handleChange.bind(this)}
-    />
+        />
         <ContactList contacts={this.getFilteredContacts()}
-    />     
-=======
-=======
->>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
-/* eslint max-len: ["error", 1000]*/
-
-import React, { Component } from 'react';
-import ContactList from './ContactList';
-import SearchBar from './SearchBar';
-
-export default class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <SearchBar />
-        <ContactList />
-<<<<<<< HEAD
->>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
-=======
->>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
+        />
       </div>
     );
   }
 }
-<<<<<<< HEAD
-=======
-
-/* Fin! */
-<<<<<<< HEAD
->>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
-=======
->>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
