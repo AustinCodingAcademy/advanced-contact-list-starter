@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 
@@ -112,6 +113,8 @@ export default class App extends Component {
         <ContactList contacts={this.getFilteredContacts()}
     />     
 =======
+=======
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
 /* eslint max-len: ["error", 1000]*/
 
 import React, { Component } from 'react';
@@ -124,6 +127,9 @@ export default class App extends Component {
       <div className="App">
         <SearchBar />
         <ContactList />
+<<<<<<< HEAD
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
+=======
 >>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
       </div>
     );
@@ -133,4 +139,7 @@ export default class App extends Component {
 =======
 
 /* Fin! */
+<<<<<<< HEAD
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
+=======
 >>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd

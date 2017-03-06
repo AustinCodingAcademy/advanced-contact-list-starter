@@ -1,5 +1,6 @@
 /* eslint max-len: ["error", 1000]*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* UPDATED: up to Chapter 3 */
 
 import React from 'react';
@@ -20,6 +21,8 @@ const Contact = props => {
 
 export default Contact;
 =======
+=======
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
 
 import React, { Component } from 'react';
 
@@ -40,4 +43,7 @@ export default class Contact extends Component {
 }
 
 /* Fin! */
+<<<<<<< HEAD
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
+=======
 >>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd

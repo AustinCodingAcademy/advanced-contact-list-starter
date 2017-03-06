@@ -1,12 +1,16 @@
 /* eslint max-len: ["error", 1000]*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* UPDATED: up to Chapter 3 */
+=======
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
 =======
 >>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
 
 import React, { Component } from 'react';
 
 export default class SearchBar extends Component {
+<<<<<<< HEAD
 <<<<<<< HEAD
     render() {
         return ( <
@@ -25,6 +29,8 @@ SearchBar.propTypes = {
     onChange: React.PropTypes.func.isRequired
 };
 =======
+=======
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
   constructor() {
     super();
     this.state = {
@@ -49,4 +55,7 @@ SearchBar.propTypes = {
     );
   }
 }
+<<<<<<< HEAD
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
+=======
 >>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd

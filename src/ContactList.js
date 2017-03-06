@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { Component, PropTypes } from 'react';
 import Contact from './Contact';
 
@@ -18,6 +19,8 @@ export default class ContactList extends Component {
           })
         }
 =======
+=======
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
 /* eslint max-len: ["error", 1000]*/
 
 import React, {Component} from 'react';
@@ -76,6 +79,9 @@ export default class ContactList extends Component {
           />
           );
         })}
+<<<<<<< HEAD
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
+=======
 >>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
       </ul>
     );
@@ -83,11 +89,15 @@ export default class ContactList extends Component {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /* Following code makes your propTypes work! */
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.object),
 };
+=======
+/* Fin! */
+>>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
 =======
 /* Fin! */
 >>>>>>> 6261b595b54621a4e34f16c376439a22b1238abd
