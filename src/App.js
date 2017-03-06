@@ -10,8 +10,8 @@ import axios from 'axios';
 // import DefaultLayout from './components/layouts/DefaultLayout'
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       searchText: '',
@@ -38,7 +38,7 @@ export default class App extends Component {
     // })
 
 // axios.get in a then/catch promise statement
-    axios.get('http://localhost:4000/contacts')
+    axios.get('/contacts')
       .then(response => {
         this.setState({
           searchText: this.state.searchText,
@@ -47,7 +47,7 @@ export default class App extends Component {
       })
       
       .catch(error => {
-        console.log(`You Have An Error! ${error}`);
+        console.log(`Error in App axios.get! ${error}`);
       });
   }
 
