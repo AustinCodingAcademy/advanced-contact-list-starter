@@ -3,21 +3,21 @@
 
 import React, { Component } from 'react';
 import ContactList from './components/ContactList';
+import ContactForm from './components/ContactForm';
 import SearchBar from './SearchBar';
-// import SearchBarContainer from './containers/SearchBarContainer'
+// import SearchBarContainer from './containers/SearchBarContainer';
 import axios from 'axios';
-// import ContactForm from './components/ContactForm'
 // import DefaultLayout from './components/layouts/DefaultLayout'
 
 export default class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       searchText: '',
       contacts: []
-                // query: '',
-                // selectedContactIds: []
+      // query: '',
+      // selectedContactIds: []
     };
   }
 
@@ -33,21 +33,24 @@ export default class App extends Component {
 
   componentDidMount() {
     console.log('componentDidMount');
-            // this.setState({
-            //   loading: true
-            // })
+    // this.setState({
+    //   loading: true
+    // })
 
-            // axios.get in a then/catch promise statement 
+// axios.get in a then/catch promise statement
     axios.get('http://localhost:4000/contacts')
-                .then(response => {
-                  this.setState({
-                    contacts: response.data
-                  });
-                })
-                .catch(error => {
-                  console.log(`You Have An Error! ${error}`);
-                });
+      .then(response => {
+        this.setState({
+          searchText: this.state.searchText,
+          contacts: response.data
+        });
+      })
+      
+      .catch(error => {
+        console.log(`You Have An Error! ${error}`);
+      });
   }
+
         // .then((result) => {
         //   console.log('Loading successful', result)
         //   this.setState({
@@ -80,6 +83,28 @@ export default class App extends Component {
     });
   }
 
+  handleAddContact(attributes) {
+    axios.post('http://localhost:4000/contacts', attributes)
+      .then(response => {
+        this.setState({
+          contacts: [...this.state.contacts, response.data]
+        });
+      })
+      .catch(error => console.log(`You have an Error! ${error}`));
+  }
+
+  handleDeleteContact(_id) {
+    axios.delete(`http://localhost:4000/contacts/${_id}`)
+      .then(response => {
+        const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
+        
+        this.setState({
+          contacts: newContacts
+        });
+      })
+      .catch(error => console.log(`You have an ERROR! ${error}`));
+  }
+
     // handleContactSelect(contact) {
     //   const newSelectedIds = [
     //     ...this.state.selectedContactIds,
@@ -103,13 +128,11 @@ export default class App extends Component {
     // }
 
   render() {
-    return ( 
-      <div className="App" >
-        <SearchBar value={this.state.searchText}
-          onChange={this.handleChange.bind(this)}
-        />
-        <ContactList contacts={this.getFilteredContacts()}
-        />
+    return (
+      <div className="App">
+        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+        <SearchBar value={this.state.searchText} onChange={this.handleChange.bind(this)} />
+        <ContactList contacts={this.getFilteredContacts()} />
       </div>
     );
   }

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-console */
 import React, {Component, PropTypes} from 'react';
 
 export default class ContactForm extends Component {
@@ -5,7 +7,9 @@ export default class ContactForm extends Component {
     super(props);
 
     this.state = {
-      name: ''
+      name: '',
+      avatar: '',
+      occupation: ''
     };
   }
 
@@ -15,11 +19,24 @@ export default class ContactForm extends Component {
     });
   }
 
+  handleOccupationChange(event) {
+    this.setState({
+      occupation: event.target.value
+    });
+  }
+
+  handleAvatarChange(event) {
+    this.setState({
+      avatar: event.target.value
+    });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-
+    
+    const { name, occupation, avatar } = this.setState;
     console.log('Submit', this.state);
-    this.props.onSubmit(this.state);
+    this.props.onSubmit({ name, occupation, avatar });
   }
 
   render() {
@@ -32,11 +49,19 @@ export default class ContactForm extends Component {
           value={this.state.name}
           onChange={this.handleNameChange.bind(this)}
         />
+        
+        <label htmlFor="occupation">Occupation:</label>
+        <input
+          type="text"
+          name="occupation"
+          value={this.state.occupation}
+          onChange={this.handleOccupationChange.bind(this)}
+          />
 
         <input
           type="submit"
           value="+ Add New"
-          disabled={!this.state.name.trim()}
+          disabled={!this.state.name.trim() || !this.state.occupation.trim() || this.state.avatar.trim()}
         />
       </form>
     );

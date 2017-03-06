@@ -1,7 +1,9 @@
+/* eslint-disable max-len */
+/* eslint-disable no-console */
+
 import React, {Component, PropTypes} from 'react';
 import Contact from './Contact';
 
-/* eslint-disable max-len */
 export default class ContactList extends Component {
   render() {
     return (
@@ -11,7 +13,8 @@ export default class ContactList extends Component {
           name={contact.name}
           avatar={contact.avatar}
           occupation={contact.occupation}
-          onButtonClick={() => this.props.onContactClick(contact)}
+          onDeleteContact={this.handleDeleteContact.bind(this)}
+          onContactClick={() => this.props.onContactClick(contact)}
           onClick={() => {console.log('From contact list');}}
         />)}
       </ul>
@@ -21,6 +24,5 @@ export default class ContactList extends Component {
 
 ContactList.propTypes = {
   onContactClick: PropTypes.func.isRequired,
-
   contacts: PropTypes.array.isRequired
-}
+};

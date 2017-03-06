@@ -1,6 +1,8 @@
-import React, {PropTypes} from 'react';
-
+/* eslint-disable max-len */
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
+
+import React, {PropTypes} from 'react';
 const Contact = props => {
   return (
     <li className="contact" onClick={props.onClick}>
@@ -19,10 +21,7 @@ const Contact = props => {
 export default Contact;
 
 Contact.propTypes = {
-  // The naem of the contact, no more than 150 chars
   name: PropTypes.string.isRequired,
-
   onClick: PropTypes.func.isRequired,
-
   onButtonClick: PropTypes.func.isRequired
 };
