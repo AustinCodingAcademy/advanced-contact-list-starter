@@ -1,10 +1,6 @@
-/*
-  TODO: Remove setTimeout from axios requests
-  TODO: At the very least, change from 100 seconds in reset
 
-*/
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
 import ContactListContainer from './containers/ContactListContainer';
 import SearchBarContainer from './containers/SearchBarContainer';
@@ -16,6 +12,7 @@ import AlertWindow from './components/AlertWindow/index';
 import AddContactButton from './components/AddContactButton/index';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
+/* eslint no-console: 0 */
 
 class App extends Component {
   constructor(props) {
@@ -35,7 +32,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.contactsGetRequest();
+    this.props.onContactsLoad();
   }
 
   handleSearchBarChange(event) {
@@ -299,5 +296,9 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  onContactsLoad: PropTypes.func.isRequired
+};
 
 export default App;
