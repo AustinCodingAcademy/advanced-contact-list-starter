@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-console */
-let MongoClient = require('mongodb').MongoClient,
+const MongoClient = require('mongodb').MongoClient,
   assert = require('assert');
 
 // Connection URL
@@ -14,7 +14,7 @@ MongoClient.connect(url, function (err, db) {
   db.close();
 });
 
-var insertDocuments = function (db, callback) {
+const insertDocuments = function (db, callback) {
   // Get the documents collection
   const collection = db.collection('documents');
   // Insert some documents
