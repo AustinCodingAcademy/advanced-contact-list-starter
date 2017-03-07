@@ -5,10 +5,22 @@ import {combineReducers} from 'redux';
 
 import {
   CHANGE_SEARCH_TEXT,
-  CREATE_CONTACT_LOADING_ERROR
+  CREATE_CONTACT_LOADING_ERROR,
+  CONTACT_LIST_LOAD_SUCCESS,
+  CONTACT_LIST_LOAD,
+  CONTACT_LIST_LOAD_ERROR
 } from '../actions/index';
 
-function isLoading(state = false) {
+function isLoading(state = false, action) {
+  if (action.type === CONTACT_LIST_LOAD_SUCCESS) {
+    return false;
+  }
+  if (action.type === CONTACT_LIST_LOAD_ERROR) {
+    return false;
+  }
+  if (action.type === CONTACT_LIST_LOAD) {
+    return true;
+  }
   return state;
 }
 
@@ -20,7 +32,16 @@ function error(state = null, action) {
   return state;
 }
 
-function items(state = []) {
+function items(state = [], action) {
+  if (action.type === CONTACT_LIST_LOAD_SUCCESS) {
+    return action.items;
+  }
+  if (action.type === CONTACT_LIST_LOAD) {
+    return [];
+  }
+  if (action.type === CONTACT_LIST_LOAD_ERROR) {
+    return [];
+  }
   return state;
 }
 

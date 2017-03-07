@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ContactList from './components/ContactList';
 import SearchBarContainer from './containers/SearchBarContainer';
 import axios from 'axios';
@@ -28,24 +28,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
-    this.setState({
-      loading: true
-    });
-    axios.get('http://localhost:3001/contacts')
-      .then((result) => {
-        console.log('Loading successful', result);
-        this.setState({
-          loading: false,
-          contacts: result.data
-        });
-      }).catch(() => {
-        console.log('Handle error');
-        this.setState({
-          errorMessage: 'Loading failed',
-          loading: false
-        });
-      });
+    this.props.onContactLoad();
   }
 
   handleContactSelect(contact) {
@@ -85,5 +68,12 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  error: PropTypes.string,
+  isLoading: PropTypes.bool.isRequired,
+  onContactLoad: PropTypes.func.isRequired
+};
 
 export default App;
