@@ -115,7 +115,7 @@ export default class App extends Component {
     //     selectedContactIds: newSelectedIds
     //   })
     // }
-<<<<<HI HI HI HI>>>>>>
+
     // handleFormSubmit(values) {
     //   console.log('Handle submit', values)
     //   axios.post('http://localhost:4000/contacts', values)
