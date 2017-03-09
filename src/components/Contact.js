@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ContactName from './ContactName';
+import ContactNameContainer from '../containers/ContactNameContainer';
 
 const Contact = props => {
   return (
@@ -8,7 +8,7 @@ const Contact = props => {
         <img src={props.avatar} alt="avatar" />
       </div>
       <div className="contact-info">
-        <ContactName
+        <ContactNameContainer
           name={props.name}
           searchText={props.searchText}
         />

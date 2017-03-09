@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
 import uuid from 'node-uuid';
 
@@ -16,7 +16,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      searchText: '',
       contacts: [],
       selectedContacts: [],
       actionHistory: [],
@@ -25,22 +24,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/contacts')
-      .then(resp => {
-        this.setState({
-          contacts: resp.data,
-          originalState: {
-            searchText: '',
-            contacts: resp.data,
-            selectedContacts: []
-          }
-        });
-      })
-      .catch(err => {
-        console.log(`Error ${err}`);
-      });
-
-    axios.get('http://localhost:3001/actionHistory')
+    this.props.onContactsLoad();
+    /* axios.get('http://localhost:3001/actionHistory')
       .then(resp => {
         this.setState({
           actionHistory: resp.data
@@ -48,7 +33,7 @@ class App extends Component {
       })
       .catch(err => {
         console.log(`Error ${err}`);
-      });
+      });*/
   }
 
   handleSelectContact(contact) {
@@ -102,10 +87,10 @@ class App extends Component {
 
   getFilteredContacts() {
     // removes any white space before what the user searches for and makes the input all lowercase
-    const search = this.state.searchText.trim().toLowerCase();
+    const search = this.props.searchText.trim().toLowerCase();
 
     // this returns the filtered text the user inputs in the search bar
-    return this.state.contacts.filter(contact => {
+    return this.props.contacts.filter(contact => {
       return contact.name.toLowerCase().indexOf(search) >= 0;
     });
   }
@@ -204,5 +189,12 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  error: PropTypes.string,
+  isLoading: PropTypes.bool.isRequired,
+  onContactsLoad: PropTypes.func.isRequired
+};
 
 export default App;
