@@ -14,7 +14,6 @@ const ContactList = props => {
             avatar={contact.avatar}
             onSelectClick={() => props.onSelectContact(contact)}
             onRemoveClick={() => props.onRemoveContact(contact._id)}
-            searchText={props.searchText}
           />
         );
       })}
@@ -25,8 +24,7 @@ const ContactList = props => {
 ContactList.propTypes = {
   contacts: PropTypes.array.isRequired,
   onSelectContact: PropTypes.func.isRequired,
-  onRemoveContact: PropTypes.func.isRequired,
-  searchText: PropTypes.string.isRequired
+  onRemoveContact: PropTypes.func.isRequired
 };
 
 export default ContactList;

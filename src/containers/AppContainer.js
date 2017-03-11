@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
     contacts: state.contactList.contacts,
     error: state.contactList.message,
     isLoading: state.contactList.isLoading,
-
+    searchText: state.contactList.searchText
   };
 };
 

@@ -10,7 +10,6 @@ const Contact = props => {
       <div className="contact-info">
         <ContactNameContainer
           name={props.name}
-          searchText={props.searchText}
         />
         {props.occupation}
       </div>
@@ -21,12 +20,11 @@ const Contact = props => {
 };
 
 Contact.propTypes = {
-  name: PropTypes.string.isRequired,
   occupation: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   onSelectClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
-  searchText: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired
 };
 
 export default Contact;

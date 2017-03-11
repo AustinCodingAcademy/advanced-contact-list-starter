@@ -16,7 +16,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      contacts: [],
       selectedContacts: [],
       actionHistory: [],
       originalState: {}
@@ -42,7 +41,7 @@ class App extends Component {
       contact
     ];
 
-    const newContactsArray = this.state.contacts.filter(contactSelected => contactSelected !== contact);
+    const newContactsArray = this.props.contacts.filter(contactSelected => contactSelected !== contact);
 
     this.setState({
       selectedContacts: newSelectedContact,
@@ -54,7 +53,7 @@ class App extends Component {
 
   handleUnselectContact(contact) {
     const newSelectedContact = [
-      ...this.state.contacts,
+      ...this.props.contacts,
       contact
     ];
 
@@ -77,7 +76,7 @@ class App extends Component {
     axios.post('http://localhost:3001/contacts', attributes)
       .then(resp => {
         this.setState({
-          contacts: [...this.state.contacts, resp.data]
+          contacts: [...this.props.contacts, resp.data]
         });
       })
       .catch(err => console.log(err));
@@ -99,7 +98,7 @@ class App extends Component {
     axios.delete(`http://localhost:3001/contacts/${_id}`)
       .then(() => {
         this.setState({
-          contacts: this.state.contacts.filter(contact => contact._id !== _id)
+          contacts: this.props.contacts.filter(contact => contact._id !== _id)
         });
       })
       .catch(err => console.log(err));
