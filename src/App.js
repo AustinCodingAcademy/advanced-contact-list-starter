@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
-import ContactList from './ContactList/ContactList';
-import SearchBarContainer from '../containers/SearchBarContainer';
-import SelectedContactsList from './SelectedContactsList/SelectedContactsList';
-import ResetButton from './ResetButton/ResetButton';
+import React, { Component, PropTypes } from 'react';
+import ContactList from './components/ContactList/ContactList';
+import SearchBarContainer from './containers/SearchBarContainer';
+import SelectedContactsList from './components/SelectedContactsList/SelectedContactsList';
+import ResetButton from './components/ResetButton/ResetButton';
 import axios from 'axios';
-import ContactForm from './ContactForm/ContactForm';
-import ActionHistoryList from './ActionHistoryList/ActionHistoryList';
+import ContactForm from './components/ContactForm/ContactForm';
+import ActionHistoryList from './components/ActionHistoryList/ActionHistoryList';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 /* eslint max-len: [1, {"ignoreUrls": true}] */
 
@@ -17,8 +18,8 @@ class App extends Component {
 
     this.state = {
       searchText: '',
-      contacts: [],
       selectedContacts: [],
+      contacts: [],
       actionHistory: []
     };
   }
@@ -56,16 +57,7 @@ class App extends Component {
   }
 
   getContactsFromDB() {
-    axios.get('http://localhost:3001/contacts')
-      .then(resp => {
-        this.setState({
-          contacts: resp.data
-        });
-      })
-      .catch(err => {
-        console.log(`Error! ${err}`);
-        alert('Oh shoot! We ran into an error, sorry!');
-      });
+    this.props.onContactListLoad();
   }
 
   getActionHistoryFromDB() {
@@ -262,7 +254,7 @@ class App extends Component {
 
   getFilteredContacts() {
     const term = this.state.searchText.trim().toLowerCase();
-    const contacts = this.state.contacts;
+    const contacts = this.props.items;
 
     if (!term) {
       return contacts;
@@ -294,42 +286,57 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <ResetButton
-          onClickReset={this.handleReset.bind(this)}
-        />
-        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
-        <div className="contact-list-components">
-          <h1>
-            Searchable Contacts List
-          </h1>
-          <SearchBarContainer />
-          <ContactList
-            contacts={this.getFilteredContacts()}
-            onClickRemove={this.handleRemoveContact.bind(this)}
-            onClickSelect={this.handleSelectContact.bind(this)}
-            searchText={this.state.searchText}
+      <BrowserRouter>
+        <div className="App">
+          <Route exact path="/helloworld" render={() => <h2>Hello, World!</h2>}
+          />
+          <Route exact path="/topkek" render={() =>
+            <img src="http://i1.kym-cdn.com/entries/icons/original/000/018/784/topkek.png" alt="topkek" />
+          } />
+          <ResetButton
+            onClickReset={this.handleReset.bind(this)}
+          />
+          <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+          <div className="contact-list-components">
+            <h1>
+              Searchable Contacts List
+            </h1>
+            <SearchBarContainer />
+            <ContactList
+              contacts={this.getFilteredContacts()}
+              onClickRemove={this.handleRemoveContact.bind(this)}
+              onClickSelect={this.handleSelectContact.bind(this)}
+              searchText={this.state.searchText}
+            />
+          </div>
+          <div className="selected-contacts-components">
+            <h1>
+              Selected Contacts
+            </h1>
+            <SelectedContactsList
+              selectedContacts={this.state.selectedContacts}
+              onClickDeselect={this.handleDeselectContact.bind(this)}
+              checkForSelectedContact={this.checkForSelectedContact()}
+            />
+          </div>
+          <ActionHistoryList
+            actionHistory={this.state.actionHistory}
+            checkForUserActions={this.checkForUserActions()}
+            onClickClearHistory={this.handleClearHistory.bind(this)}
+            removeHistoryItem={this.handleRemoveHistoryItem.bind(this)}
           />
         </div>
-        <div className="selected-contacts-components">
-          <h1>
-            Selected Contacts
-          </h1>
-          <SelectedContactsList
-            selectedContacts={this.state.selectedContacts}
-            onClickDeselect={this.handleDeselectContact.bind(this)}
-            checkForSelectedContact={this.checkForSelectedContact()}
-          />
-        </div>
-        <ActionHistoryList
-          actionHistory={this.state.actionHistory}
-          checkForUserActions={this.checkForUserActions()}
-          onClickClearHistory={this.handleClearHistory.bind(this)}
-          removeHistoryItem={this.handleRemoveHistoryItem.bind(this)}
-        />
-      </div>
+      </BrowserRouter>
     );
   }
 }
+
+App.propTypes = {
+  // value: PropTypes.string,
+  onContactListLoad: PropTypes.func.isRequired,
+  items: PropTypes.array,
+  isLoading: PropTypes.boolean,
+  errorMessage: PropTypes.string
+};
 
 export default App;

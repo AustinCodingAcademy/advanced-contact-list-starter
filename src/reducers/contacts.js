@@ -1,26 +1,53 @@
 import {combineReducers} from 'redux';
 import {
-  CREATE_CONTACT_ITEM,
-  CREATE_CONTACT_LOADING_ERROR
+  CONTACTLIST_LOAD_START,
+  CONTACTLIST_LOAD_SUCCESS,
+  CONTACTLIST_LOAD_ERROR
 } from '../actions/index';
 
-function items(state = [], action) {
-  if (action.type === CREATE_CONTACT_ITEM) {
-    return action.contact;
+function isLoading(state = false, action) {
+  if (action.type === CONTACTLIST_LOAD_START) {
+    return true;
+  }
+  if (action.type === CONTACTLIST_LOAD_SUCCESS) {
+    return false;
+  }
+  if (action.type === CONTACTLIST_LOAD_ERROR) {
+    return false;
   }
   return state;
 }
 
-function error(state = null, action) {
-  if (action.type === CREATE_CONTACT_LOADING_ERROR) {
+function errorMessage(state = null, action) {
+  if (action.type === CONTACTLIST_LOAD_ERROR) {
     return action.message;
+  }
+  if (action.type === CONTACTLIST_LOAD_SUCCESS) {
+    return null;
+  }
+  if (action.type === CONTACTLIST_LOAD_START) {
+    return null;
+  }
+  return state;
+}
+
+function items(state = [], action) {
+  if (action.type === CONTACTLIST_LOAD_SUCCESS) {
+    return action.items;
+  }
+  if (action.type === CONTACTLIST_LOAD_START) {
+    return [];
+  }
+  if (action.type === CONTACTLIST_LOAD_ERROR) {
+    return [];
   }
   return state;
 }
 
 const contacts = combineReducers({
   items,
-  error
+  isLoading,
+  errorMessage
 });
 
 export default contacts;
