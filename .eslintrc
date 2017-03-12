@@ -9,6 +9,13 @@
 
     "extends": ["eslint:recommended", "plugin:react/recommended"],
 
+    "globals": {
+        "describe": true,
+        "expect": true,
+        "test": true,
+        "jest": true
+    },
+
     "env": {
         "browser": true,
         "es6": true,

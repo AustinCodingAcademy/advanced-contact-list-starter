@@ -26,7 +26,7 @@ body {
   box-sizing: border-box;
 }
 
-.contact-list {
+.contact-list, .selected-contacts-list {
   padding: 0;
 }
 
@@ -73,6 +73,25 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding-left: 35px;
+}
+
+.highlight-search-term {
+  color: #fff;
+  background-color: #000;
+}
+
+.selected-contacts-list {
+  padding: 0;
+}
+
+.selected-contacts-list p {
+  text-align: center;
+}
+
+.selected-contact {
+  background-color: #B9F6CA;
+  border-color: #fff;
+  padding: 2% 2%;
 }
 
 .profile {
@@ -128,4 +147,9 @@ body {
 .new-contact-form input[type="submit"]:disabled {
   background: gray;
   color: white;
+}
+
+.action-history-list {
+  list-style: none;
+  padding: 0;
 }
