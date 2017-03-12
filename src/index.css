@@ -11,23 +11,33 @@ body {
 
 .App {
   text-align: center;
-  width: 500px;
   margin: 0 auto;
   padding-top: 50px;
 }
 
 .search-bar {
   height: 35px;
-  width: 100%;
+  width: 500px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 18px;
   padding: 0 10px;
   box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 .contact-list {
   padding: 0;
+  /*margin-left: 250px;*/
+}
+
+.action-history-list{
+  float: left;
+}
+
+.selected-contact-list, .contact-list{
+  width: 500px;
+  float: left;
 }
 
 .contact {
@@ -100,7 +110,8 @@ body {
 }
 
 .new-contact-form {
-  margin-bottom: 10px;
+    width: 500px;
+    margin: 10px auto;
 }
 
 .new-contact-form label {
@@ -128,4 +139,41 @@ body {
 .new-contact-form input[type="submit"]:disabled {
   background: gray;
   color: white;
+}
+
+.highlight{
+  background-color: #00e8ff;
+}
+
+.button{
+  width: 100%;
+  font-size: 18px;
+}
+
+.reset-button{
+  background-color: #12d0b0;
+  width: 500px;
+  margin: 10px auto;
+  color: white;
+}
+
+.unselect-button, .select-button, .remove-button, .button{
+  height: 35px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  margin: 5px 0;
+}
+
+.unselect-button, .select-button, .remove-button{
+  font-size: 15px;
+}
+
+.remove-button{
+  background-color: #f00;
+}
+
+.unselect-button, .select-button{
+    background-color: #005eff;
 }
