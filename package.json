@@ -18,11 +18,13 @@
     "express": "^4.15.1",
     "foreman": "^2.0.0",
     "json-server": "^0.9.4",
+    "mongod": "^2.0.0",
     "mongodb": "^2.2.24",
     "mongoose": "^4.8.6",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
+    "react-router-dom": "next",
     "react-thunk": "^1.0.0",
     "redux": "^3.6.0",
     "redux-entity": "^4.1.1"

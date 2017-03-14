@@ -95,7 +95,7 @@ export default class App extends Component {
 
   handleDeleteContact(_id) {
     axios.delete(`http://localhost:4000/contacts/${_id}`)
-      .then(response => {
+      .then( = () => {
         const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
         
         this.setState({
