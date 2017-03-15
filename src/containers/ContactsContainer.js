@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import App from '../App';
+import Contacts from '../Contacts';
 import { contactListLoad } from '../actions/index.js';
 
 const mapStateToProps = (state) => {
@@ -21,4 +21,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(Contacts);
