@@ -9,6 +9,7 @@ import SearchBar from './SearchBar';
 import axios from 'axios';
 // import DefaultLayout from './components/layouts/DefaultLayout'
 
+
 export default class App extends Component {
   constructor() {
     super();
@@ -95,7 +96,7 @@ export default class App extends Component {
 
   handleDeleteContact(_id) {
     axios.delete(`http://localhost:4000/contacts/${_id}`)
-      .then( = () => {
+      .then( () => {
         const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
         
         this.setState({
@@ -137,3 +138,27 @@ export default class App extends Component {
     );
   }
 }
+
+
+// Express modules
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/contact-list');
+
+app.use(bodyParser.json());
+
+const PORT = 3001;
+
+app.listen(PORT, function (error, request, response) {
+  return response.status(500).send('Uh oh! Something went wrong!' + error);
+});
+
+app.listen(PORT, function (error) {
+  if (error) {
+    return console.log('You Have An Error!', error);
+  }
+  return console.log('Listening on: http://localhost:' + PORT);
+});

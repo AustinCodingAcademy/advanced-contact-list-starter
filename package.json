@@ -15,9 +15,11 @@
   "dependencies": {
     "axios": "^0.15.3",
     "babel": "^6.23.0",
-    "express": "^4.15.1",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
     "foreman": "^2.0.0",
     "json-server": "^0.9.4",
+    "middleware": "^1.0.0",
     "mongod": "^2.0.0",
     "mongodb": "^2.2.24",
     "mongoose": "^4.8.6",
