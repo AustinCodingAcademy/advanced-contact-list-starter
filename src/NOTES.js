@@ -1,22 +1,27 @@
-import React, {Component} from "react";
-import Profile from "./Profile";
-import Contacts from "./Contacts";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div className="router">
-          <Switch>
-            <Route exact path="/" component={Contacts} />
-            <Route exact path="/profile/:id" component={Profile} />
-            <Route render={() => <h2>Not Found!</h2>} />
-          </Switch>
+const Contact = (props) => {
+  return (
+    <Link to={`/profile/${props.id}`} className="contact-link">
+      <li className="contact">
+        <div className="image-cropper">
+          <img src={props.avatar} alt="avatar"/>
         </div>
-      </BrowserRouter>
-    );
-  }
+        <div className="contact-info">
+          <h2>{props.name}</h2>
+          {props.occupation}
+        </div>
+      </li>
+    </Link>
+  );
 }
 
-export default App
+Contact.propTypes = {
+  id: React.PropTypes.string.isRequired,
+  avatar: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
+  occupation: React.PropTypes.string.isRequired,
+}
+
+export default Contact;

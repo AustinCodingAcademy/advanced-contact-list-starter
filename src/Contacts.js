@@ -1,26 +1,56 @@
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 
-import React, { Component } from 'react';
-import ContactList from './components/ContactList';
-import ContactForm from './components/ContactForm';
-import SearchBar from './SearchBar';
+import React from 'react';
+// import ContactList from './components/ContactList';
+// import ContactForm from './components/ContactForm';
+// import SearchBar from './SearchBar';
 // import SearchBarContainer from './containers/SearchBarContainer';
-import axios from 'axios';
+// import axios from 'axios';
 // import DefaultLayout from './components/layouts/DefaultLayout'
+import { Link } from 'react-router-dom';
+
+const Contact = (props) => {
+  return (
+    <Link to={`/profile/${props.id}`} className="contact-link">
+      <li className="contact">
+        <div className="image-cropper">
+          <img src={props.avatar} alt="avatar" />
+        </div>
+        <div className="contact-info">
+          <h2>{props.name}</h2>
+          {props.occupation}
+        </div>
+      </li>
+    </Link>
+  );
+};
+
+Contact.propTypes = {
+  id: React.PropTypes.string.isRequired,
+  avatar: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
+  occupation: React.PropTypes.string.isRequired
+};
+
+export default Contact;
 
 
-export default class App extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      searchText: '',
-      contacts: []
+
+
+
+// export default class App extends Component {
+//   constructor() {
+//     super();
+
+//     this.state = {
+//       searchText: '',
+//       contacts: []
       // query: '',
       // selectedContactIds: []
-    };
-  }
+  //   };
+  // }
 
     // componentWillMount() {
     //   console.log('componentWillMount')
@@ -32,25 +62,25 @@ export default class App extends Component {
     //   })
     // }
 
-  componentDidMount() {
-    console.log('componentDidMount');
+  // componentDidMount() {
+  //   console.log('componentDidMount');
     // this.setState({
     //   loading: true
     // })
 
 // axios.get in a then/catch promise statement
-    axios.get('/contacts')
-      .then(response => {
-        this.setState({
-          searchText: this.state.searchText,
-          contacts: response.data
-        });
-      })
+  //   axios.get('/contacts')
+  //     .then(response => {
+  //       this.setState({
+  //         searchText: this.state.searchText,
+  //         contacts: response.data
+  //       });
+  //     })
       
-      .catch(error => {
-        console.log(`Error in App axios.get! ${error}`);
-      });
-  }
+  //     .catch(error => {
+  //       console.log(`Error in App axios.get! ${error}`);
+  //     });
+  // }
 
         // .then((result) => {
         //   console.log('Loading successful', result)
@@ -66,47 +96,47 @@ export default class App extends Component {
         //   })
         // })
 
-  handleChange(event) {
-    this.setState({
-      searchText: event.target.value
-    });
-  }
+  // handleChange(event) {
+  //   this.setState({
+  //     searchText: event.target.value
+  //   });
+  // }
 
-  getFilteredContacts() {
-    const term = this.state.searchText.trim().toLowerCase();
-    const contacts = this.state.contacts;
+  // getFilteredContacts() {
+  //   const term = this.state.searchText.trim().toLowerCase();
+  //   const contacts = this.state.contacts;
 
-    if (!term) {
-      return contacts;
-    }
-    return contacts.filter(contact => {
-      return contact.name.toLowerCase().search(term) >= 0;
-    });
-  }
+  //   if (!term) {
+  //     return contacts;
+  //   }
+  //   return contacts.filter(contact => {
+  //     return contact.name.toLowerCase().search(term) >= 0;
+  //   });
+  // }
 
-  handleAddContact(attributes) {
-    axios.post('http://localhost:4000/contacts', attributes)
-      .then(response => {
-        this.setState({
-          contacts: [...this.state.contacts, response.data]
-        });
-      })
-      .catch(error => console.log(`You have an Error! ${error}`));
-  }
+  // handleAddContact(attributes) {
+  //   axios.post('http://localhost:4000/contacts', attributes)
+  //     .then(response => {
+  //       this.setState({
+  //         contacts: [...this.state.contacts, response.data]
+  //       });
+  //     })
+  //     .catch(error => console.log(`You have an Error! ${error}`));
+  // }
 
-  handleDeleteContact(_id) {
-    axios.delete(`http://localhost:4000/contacts/${_id}`)
-      .then( () => {
-        const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
+  // handleDeleteContact(_id) {
+  //   axios.delete(`http://localhost:4000/contacts/${_id}`)
+  //     .then( () => {
+  //       const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
         
-        this.setState({
-          contacts: newContacts
-        });
-      })
-      .catch(error => console.log(`You have an ERROR! ${error}`));
-  }
+  //       this.setState({
+  //         contacts: newContacts
+  //       });
+  //     })
+  //     .catch(error => console.log(`You have an ERROR! ${error}`));
+  // }
 
-    // handleContactSelect(contact) {
+  //     handleContactSelect(contact) {
     //   const newSelectedIds = [
     //     ...this.state.selectedContactIds,
     //     contact._id
@@ -128,16 +158,16 @@ export default class App extends Component {
     //     })
     // }
 
-  render() {
-    return (
-      <div className="App">
-        <ContactForm onSubmit={this.handleAddContact.bind(this)} />
-        <SearchBar value={this.state.searchText} onChange={this.handleChange.bind(this)} />
-        <ContactList contacts={this.getFilteredContacts()} />
-      </div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div className="App">
+//         <ContactForm onSubmit={this.handleAddContact.bind(this)} />
+//         <SearchBar value={this.state.searchText} onChange={this.handleChange.bind(this)} />
+//         <ContactList contacts={this.getFilteredContacts()} />
+//       </div>
+//     );
+//   }
+// }
 
 
 // Express modules
