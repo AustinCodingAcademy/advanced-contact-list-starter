@@ -9,6 +9,13 @@
 
     "extends": ["eslint:recommended", "plugin:react/recommended"],
 
+    "globals": {
+      "describe": true,
+      "test": true,
+      "expect": true,
+      "jest": true
+    },
+
     "env": {
         "browser": true,
         "es6": true,
@@ -27,7 +34,9 @@
         "generators": true,
         "globalReturn": true,
         "jsx": true,
+        "max-length": false,
         "modules": true,
+        "no-console": [0],
         "objectLiteralComputedProperties": true,
         "objectLiteralDuplicateProperties": true,
         "objectLiteralShorthandMethods": true,
