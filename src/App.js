@@ -1,15 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import ProfileContainer from './containers/ProfileContainer';
+import ContactsContainer from './containers/ContactsContainer';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1>
-          Contact List!
-        </h1>
+const App = () => {
+  return (
+    <BrowserRouter>
+      <div className="router">
+        <Switch>
+          <Route exact path="/" component={ContactsContainer} />
+          <Route exact path="/profile/:id" component={ProfileContainer} />
+          <Route render={() => <h2>Not found!</h2>} />
+        </Switch>
       </div>
-    );
-  }
-}
+    </BrowserRouter>
+  );
+};
 
 export default App;
