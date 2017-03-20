@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ContactList from './ContactList';
 import AddedContactList from './AddedContactList';
 import SearchBar from './SearchBar';
+import SearchBarContainer from './containers/SearchBarContainer';
 import ContactForm from './ContactForm';
 import axios from 'axios';
 import ActionHist from './ActionHist';
 
-
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       searchText: '',
       contacts: [],
@@ -26,20 +26,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-    axios.get('/contacts')
+    // axios.get('/contacts')
+    //   .then(resp => {
+    //     this.setState({
+    //       contacts: resp.data,
+    //       actionHistory: []
+    //     });
+    //   });
+    this.props.onComponentMount();
+    axios.get('/addedContacts')
       .then(resp => {
         this.setState({
-          contacts: resp.data,
-          actionHistory: []
+          addedContacts: resp.data,
         });
       })
       .catch(err => {
-        console.log(`Error! ${err}`)
+        console.log(`Error! ${err}`);
       });
   }
-
-
   popActionItem(attributes) {
     const newActionHist = this.state.actionHistory.filter(action => action._id !== attributes._id);
     newActionHist.pop();
@@ -47,8 +51,6 @@ class App extends Component {
       actionHistory: newActionHist
     });
   }
-
-
   handleChange(event) {
     this.setState({
       searchText: event.target.value
@@ -78,8 +80,8 @@ class App extends Component {
     const newAction = {
       _id: Math.random(),
       item: 'added new contact'
-    }
-    axios.post('/contacts', attributes)
+    };
+    axios.post('http://localhost:3001/contacts', attributes)
       .then(resp => {
         this.setState({
           contacts: [...this.state.contacts, resp.data],
@@ -95,8 +97,8 @@ class App extends Component {
     const newAction = {
       _id: Math.random(),
       item: 'added contact'
-    }
-    axios.post('http://localhost:4000/addedContacts', attributes)
+    };
+    axios.post('/addedContacts', attributes)
       .then(resp => {
         this.setState({
           contacts: newContacts,
@@ -104,6 +106,7 @@ class App extends Component {
           actionHistory: [...this.state.actionHistory, newAction]
         });
       });
+    axios.delete(`/contacts/${attributes._id}`);
   }
 
   reset() {
@@ -115,7 +118,7 @@ class App extends Component {
       contacts: {all}
     });
     for (const added of this.state.addedContacts) {
-      axios.delete(`http://localhost:4000/addedContacts/${added._id}`);
+      axios.delete(`/addedContacts/${added._id}`);
     }
     this.setState({
       contacts: all,
@@ -125,7 +128,6 @@ class App extends Component {
   }
 
   popContact(contact) {
-
     const visContacts = [...this.state.contacts];
     visContacts[contact - 1].active = 'none';
     this.setState({
@@ -138,9 +140,9 @@ class App extends Component {
     const newContacts = this.state.addedContacts.filter(contact => contact._id !== attributes._id);
     const newAction = {
       _id: Math.random(),
-      item: 'removed Contact'
-    }
-    axios.delete(`http://localhost:4000/addedContacts/${id}`)
+      item: 'removed contact'
+    };
+    axios.delete(`/addedContacts/${id}`)
       .then(resp => {
         this.setState({
           addedContacts: newContacts,
@@ -156,6 +158,7 @@ class App extends Component {
     return (
 
       <div className="App">
+        <SearchBarContainer />
         <ContactForm
           onSubmit={this.handleAddContact.bind(this)}
         />
@@ -166,7 +169,7 @@ class App extends Component {
         <button onClick={() => this.reset()}>Reset</button>
         <ContactList
           onContactClick={this.addContact.bind(this)}
-          contacts={this.getFilteredContacts()}
+          contacts={this.props.contacts}
           search={this.state.searchText}
         />
         <h2>Added Contacts</h2>
@@ -187,3 +190,7 @@ class App extends Component {
 }
 
 export default App;
+
+App.propTypes = {
+  onComponentMount: PropTypes.func.isRequired,
+};
