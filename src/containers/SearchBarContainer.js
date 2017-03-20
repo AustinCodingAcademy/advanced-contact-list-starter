@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 import SearchBar from '../components/SearchBar/index';
-import {changeSearchText} from '../actions/index';
+import { changeSearchText } from '../actions/index.js';
 
 const mapStateToProps = (state) => {
   return {
-    value: state.contactList.searchText,
-    errorMessage: state.contactList.contacts.error
+    value: state.contactList.searchText
   };
 };
 

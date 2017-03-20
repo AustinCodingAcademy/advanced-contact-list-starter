@@ -2,16 +2,14 @@ import React from 'react';
 import SearchBar from '../index';
 import { shallow } from 'enzyme';
 
-describe('Footer', () => {
-  // Execute some tests
-  test('searchbar renders', () => {
+describe('SearchBar', () => {
+  test('SearchBar renders', () => {
     shallow(<SearchBar />);
   });
 
-  test('has initial value empty string', () => {
+  test('Has initial value empty string', () => {
     const searchBar = shallow(<SearchBar />);
 
-    // console.log(searchBar.state('value'));
     expect(searchBar.state('value')).toEqual('');
   });
 
@@ -28,10 +26,10 @@ describe('Footer', () => {
       }
     );
 
-    expect(handleChangeMock.mock.calls).toEqual(
-      [
-        ['testvalue']
-      ]
-    );
+    expect(handleChangeMock.mock.calls).toEqual([
+      ['testvalue']
+    ]);
+
   });
+
 });
