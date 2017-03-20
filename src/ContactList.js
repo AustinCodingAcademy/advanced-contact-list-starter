@@ -10,6 +10,7 @@ class ContactList extends Component {
             return (
               <Contact
                 key={contact._id}
+                id={contact._id}
                 name={contact.name}
                 avatar={contact.avatar}
                 occupation={contact.occupation}
