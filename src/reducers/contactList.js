@@ -4,7 +4,10 @@ import {
   CREATE_ALERT_MESSAGE,
   CONTACT_LIST_LOAD,
   CONTACT_LIST_LOAD_SUCCESS,
-  CONTACT_LIST_LOAD_ERROR
+  CONTACT_LIST_LOAD_ERROR,
+  CONTACT_LIST_ADD_CONTACT,
+  CONTACT_LIST_ADD_CONTACT_SUCCESS,
+  CONTACT_LIST_ADD_CONTACT_ERROR
  } from '../actions/index';
 
 /**
@@ -23,9 +26,12 @@ function searchText(state = '', action) {
 function alertIsVisible(state = false, action) {
   switch (action.type) {
     case CONTACT_LIST_LOAD:
+    case CONTACT_LIST_ADD_CONTACT:
       return true;
     case CONTACT_LIST_LOAD_SUCCESS:
     case CONTACT_LIST_LOAD_ERROR:
+    case CONTACT_LIST_ADD_CONTACT_SUCCESS:
+    case CONTACT_LIST_ADD_CONTACT_ERROR:
       return false;
   }
   return state;
@@ -38,6 +44,7 @@ function alertMessage(state = '', action) {
   switch (action.type) {
     case CREATE_ALERT_MESSAGE:
     case CONTACT_LIST_LOAD_ERROR:
+    case CONTACT_LIST_ADD_CONTACT_ERROR:
       return action.message;
   }
   return state;
@@ -57,6 +64,8 @@ function contacts(state = [], action) {
   switch (action.type) {
     case CONTACT_LIST_LOAD_SUCCESS:
       return action.contacts;
+    case CONTACT_LIST_ADD_CONTACT_SUCCESS:
+      return [...state, action.contact];
   }
   return state;
 }

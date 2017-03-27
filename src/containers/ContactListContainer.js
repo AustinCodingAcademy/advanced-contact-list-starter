@@ -2,8 +2,6 @@ import { connect } from 'react-redux';
 import ContactList from '../components/ContactList/index';
 
 const mapStateToProps = (state) => {
-  console.log('Inside ContactListContainer');
-  console.log(state);
   return {
     searchText: state.contactList.searchText,
     contacts: state.contactList.contacts.filter(contact => {

@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import Contacts from '../Contacts';
-import { contactListLoad } from '../actions/index.js';
+import {
+  contactListLoad,
+  contactListAddContact
+} from '../actions/index.js';
 
 const mapStateToProps = (state) => {
   return {
@@ -14,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onContactsLoad: () => {
       dispatch(contactListLoad());
+    },
+    onAddContact: (contact) => {
+      dispatch(contactListAddContact(contact));
     }
   };
 };

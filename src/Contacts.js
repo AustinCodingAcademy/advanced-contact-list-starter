@@ -64,30 +64,8 @@ class App extends Component {
     });
   }
 
-  handleAddContact(attributes) {
-    this.setState({
-      alert: true,
-      alertMessage: 'add'
-    });
-    axios.post('/contacts', attributes)
-      .then(response => {
-        setTimeout( () => {
-          this.setState({
-            alert: false,
-            add: false,
-            contacts: [...this.state.contacts, response.data],
-            originalState: {
-              searchText: '',
-              contacts: [...this.state.contacts, response.data],
-              selectedContacts: []
-            }
-          });
-          this.addAction('add', response.data._id);
-        }, 1000);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  handleAddContact(contact) {
+    this.props.onAddContact(contact);
   }
 
   handleDeleteContact(e, id) {
@@ -293,6 +271,7 @@ class App extends Component {
 
 App.propTypes = {
   onContactsLoad: PropTypes.func.isRequired,
+  onAddContact: PropTypes.func.isRequired,
   contacts: PropTypes.array.isRequired
 };
 

@@ -61,10 +61,10 @@ export function contactListAddContact(contact) {
   };
 }
 
-export function contactListAddContactSuccess(message) {
+export function contactListAddContactSuccess(contact) {
   return {
     type: CONTACT_LIST_ADD_CONTACT_SUCCESS,
-    message
+    contact
   };
 }
 
