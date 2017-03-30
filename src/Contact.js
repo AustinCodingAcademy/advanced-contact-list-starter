@@ -21,6 +21,7 @@ const Contact = props => {
 
 
 Contact.propTypes = {
+  id: React.PropTypes.number.isRequired,
   key: React.PropTypes.number.isRequired,
   avatar: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
