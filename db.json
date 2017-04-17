@@ -29,6 +29,12 @@
       "name": "Dana Scully",
       "occupation": "FBI Agent",
       "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
+    },
+    {
+      "name": "Ryan Price",
+      "avatar": "https://www.facebook.com/photo.php?fbid=10204557236720804&set=a.1394329148164.2045309.1530240434&type=3&theater",
+      "occupation": "Accountant",
+      "_id": 6
     }
   ]
 }
